@@ -29,8 +29,16 @@ namespace Beskonačni_Toranj
         private int width, height;
         private Color tracer;
 
+        //nepotrebno
         Bitmap image;
 
+        int leftWalkFrameCounter;
+        int rightWalkFrameCounter;
+        Bitmap stand;
+        List<Bitmap> leftWalks;
+        List<Bitmap> rightWalks;
+
+        
         //konstruktor
         public Player()
         {
@@ -43,6 +51,11 @@ namespace Beskonačni_Toranj
             goingRight = false;
             jumping = false;
             tracer = new Color();
+            leftWalkFrameCounter = 0;
+            rightWalkFrameCounter = 0;
+            leftWalks = new List<Bitmap>();
+            rightWalks = new List<Bitmap>();
+           
         }
 
         public int Score
@@ -105,11 +118,12 @@ namespace Beskonačni_Toranj
         //mozda treba? za animaciju kretanja, mozda dodati i kod ostalih charactera
         public void paint(object sender, PaintEventArgs e)
         {
+            Bitmap walkFrame = returnCurrentWalkFrame();
             //Console.WriteLine("Paint");
              e.Graphics.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.HighQuality;
              e.Graphics.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.HighQualityBicubic;
              e.Graphics.PixelOffsetMode = System.Drawing.Drawing2D.PixelOffsetMode.HighQuality;
-             e.Graphics.DrawImage(image, x, y, width, height);
+             e.Graphics.DrawImage(walkFrame, x, y, width, height);
            
         }
 
@@ -180,5 +194,56 @@ namespace Beskonačni_Toranj
             height = figure.Height;
             width = figure.Width;
         }
+
+        public void addImage(List<Bitmap> images)
+        {
+            stand = images[0];
+            leftWalks.Add(images[1]);
+            leftWalks.Add(images[2]);
+            leftWalks.Add(images[3]);
+            rightWalks.Add(images[4]);
+            rightWalks.Add(images[5]);
+            rightWalks.Add(images[6]);
+
+        }
+
+       
+        private Bitmap returnCurrentWalkFrame()
+        {
+            Bitmap returnValue;
+
+            if (goingLeft && leftWalkFrameCounter < leftWalks.Count)
+            {
+                returnValue = leftWalks[leftWalkFrameCounter];
+                leftWalkFrameCounter++;
+            }
+            else if (goingLeft)
+            {
+                leftWalkFrameCounter = 0;
+                returnValue = leftWalks[leftWalkFrameCounter];
+            }
+            else if (goingRight && rightWalkFrameCounter < rightWalks.Count)
+            {
+                returnValue = rightWalks[rightWalkFrameCounter];
+                leftWalkFrameCounter++;
+            }
+            else if (goingRight)
+            {
+                rightWalkFrameCounter = 0;
+                returnValue = rightWalks[rightWalkFrameCounter];
+            }
+            else 
+            {
+                returnValue = stand;
+            }
+
+            tracer = returnValue.GetPixel(1, 1);
+            returnValue.MakeTransparent(tracer);
+
+            return returnValue;
+            
+        }
+
+        
     }
 }

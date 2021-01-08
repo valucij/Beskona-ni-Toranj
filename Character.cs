@@ -14,7 +14,7 @@ namespace Beskonačni_Toranj
     {
         //predstavlja picturebox koji u windows formi predstavlja lika
         protected System.Windows.Forms.PictureBox figure;
-        private List<Bitmap> pictures;
+        protected List<Bitmap> pictures;
         //dodavanje pictureboxa koji je stvoren u windows formi i predstavljat ce lika
         public void addPictureBox(System.Windows.Forms.PictureBox figure)
         {
@@ -27,15 +27,7 @@ namespace Beskonačni_Toranj
             figure = null;
         }
 
-        public void addImage(List<Bitmap> images)
-        {
-            pictures = images;
-            
-        }
-
-        
-
-
+       
 
     }
 }

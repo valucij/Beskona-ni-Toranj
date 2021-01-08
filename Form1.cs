@@ -20,9 +20,21 @@ namespace Beskonačni_Toranj
             InitializeComponent();
           
             this.FormBorderStyle = FormBorderStyle.FixedSingle;
+
+            List<Bitmap> playerImages = new List<Bitmap>();
+            playerImages.Add(Properties.Resources.stand);
+            playerImages.Add(Properties.Resources.walkLeft_1);
+            playerImages.Add(Properties.Resources.walkLeft_2);
+            playerImages.Add(Properties.Resources.walkLeft_3);
+            playerImages.Add(Properties.Resources.walkRight_1);
+            playerImages.Add(Properties.Resources.walkRight_2);
+            playerImages.Add(Properties.Resources.walkRight_3);
+
+
             player = new Player();
             player.addPictureBox(playerPictureBox);
             player.addImage(Properties.Resources.stand);
+            player.addImage(playerImages);
 
             this.BackgroundImage = Properties.Resources.background;
             this.BackgroundImageLayout = ImageLayout.Stretch;
