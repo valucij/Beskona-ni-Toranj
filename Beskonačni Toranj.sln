@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30611.23
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Beskonačni Toranj", "Beskonačni Toranj.csproj", "{5FF448BD-AEA7-49FE-8996-56C14F81A368}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{5FF448BD-AEA7-49FE-8996-56C14F81A368}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5FF448BD-AEA7-49FE-8996-56C14F81A368}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5FF448BD-AEA7-49FE-8996-56C14F81A368}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5FF448BD-AEA7-49FE-8996-56C14F81A368}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {0E299328-67AF-459E-B624-41F9A7396470}
+	EndGlobalSection
+EndGlobal
