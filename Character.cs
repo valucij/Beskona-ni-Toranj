@@ -13,7 +13,7 @@ namespace Beskonačni_Toranj
     class Character : IImageControl
     {
         //predstavlja picturebox koji u windows formi predstavlja lika
-        private System.Windows.Forms.PictureBox figure;
+        protected System.Windows.Forms.PictureBox figure;
         private List<Bitmap> pictures;
         //dodavanje pictureboxa koji je stvoren u windows formi i predstavljat ce lika
         public void addPictureBox(System.Windows.Forms.PictureBox figure)
@@ -30,17 +30,10 @@ namespace Beskonačni_Toranj
         public void addImage(List<Bitmap> images)
         {
             pictures = images;
+            
         }
 
-        //mozda treba? za animaciju kretanja, mozda dodati i kod ostalih charactera
-        public void paint(object sender, PaintEventArgs e)
-        {
-        }
-
-        //timer tick mozda treba? mozda dodati i kod ostalih charactera
-        public void timerTick()
-        {
-        }
+        
 
 
 

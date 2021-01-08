@@ -22,6 +22,7 @@ namespace Beskonačni_Toranj
             this.FormBorderStyle = FormBorderStyle.FixedSingle;
             player = new Player();
             player.addPictureBox(playerPictureBox);
+            player.addImage(Properties.Resources.stand);
 
             this.BackgroundImage = Properties.Resources.background;
             this.BackgroundImageLayout = ImageLayout.Stretch;
@@ -56,7 +57,9 @@ namespace Beskonačni_Toranj
 
         private void gameTimer_Tick(object sender, EventArgs e)
         {
-            player.timerTick(sender, e);
+            player.timerTick(sender, e, this);
+            Invalidate();
+
         }
     }
 }

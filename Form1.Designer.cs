@@ -68,6 +68,7 @@
             // gameTimer
             // 
             this.gameTimer.Enabled = true;
+            this.gameTimer.Interval = 20;
             this.gameTimer.Tick += new System.EventHandler(this.gameTimer_Tick);
             // 
             // Form1
@@ -78,6 +79,7 @@
             this.Controls.Add(this.platformPictureBox_1);
             this.Controls.Add(this.groundPictureBox);
             this.Controls.Add(this.playerPictureBox);
+            this.DoubleBuffered = true;
             this.Name = "Form1";
             this.Text = "Form1";
             this.Paint += new System.Windows.Forms.PaintEventHandler(this.Form1_Paint);
