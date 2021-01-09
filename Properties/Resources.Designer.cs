@@ -103,9 +103,29 @@ namespace Beskonačni_Toranj.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap quitImage {
+            get {
+                object obj = ResourceManager.GetObject("quitImage", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap stand {
             get {
                 object obj = ResourceManager.GetObject("stand", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap startImage {
+            get {
+                object obj = ResourceManager.GetObject("startImage", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

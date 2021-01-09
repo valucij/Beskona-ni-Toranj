@@ -41,6 +41,8 @@
             this.platformPictureBox_7 = new System.Windows.Forms.PictureBox();
             this.platformPictureBox_8 = new System.Windows.Forms.PictureBox();
             this.platformPictureBox_9 = new System.Windows.Forms.PictureBox();
+            this.menuButton_1 = new System.Windows.Forms.PictureBox();
+            this.menuButton_2 = new System.Windows.Forms.PictureBox();
             ((System.ComponentModel.ISupportInitialize)(this.platformPictureBox_1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.groundPictureBox)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.playerPictureBox)).BeginInit();
@@ -52,6 +54,8 @@
             ((System.ComponentModel.ISupportInitialize)(this.platformPictureBox_7)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.platformPictureBox_8)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.platformPictureBox_9)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.menuButton_1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.menuButton_2)).BeginInit();
             this.SuspendLayout();
             // 
             // platformPictureBox_1
@@ -159,11 +163,33 @@
             this.platformPictureBox_9.TabStop = false;
             this.platformPictureBox_9.Tag = "platform";
             // 
+            // menuButton_1
+            // 
+            this.menuButton_1.Location = new System.Drawing.Point(39, 178);
+            this.menuButton_1.Name = "menuButton_1";
+            this.menuButton_1.Size = new System.Drawing.Size(100, 50);
+            this.menuButton_1.TabIndex = 11;
+            this.menuButton_1.TabStop = false;
+            this.menuButton_1.Tag = "button";
+            this.menuButton_1.Click += new System.EventHandler(this.startClick);
+            // 
+            // menuButton_2
+            // 
+            this.menuButton_2.Location = new System.Drawing.Point(39, 260);
+            this.menuButton_2.Name = "menuButton_2";
+            this.menuButton_2.Size = new System.Drawing.Size(100, 50);
+            this.menuButton_2.TabIndex = 12;
+            this.menuButton_2.TabStop = false;
+            this.menuButton_2.Tag = "button";
+            this.menuButton_2.Click += new System.EventHandler(this.quitClick);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(998, 649);
+            this.Controls.Add(this.menuButton_2);
+            this.Controls.Add(this.menuButton_1);
             this.Controls.Add(this.platformPictureBox_9);
             this.Controls.Add(this.platformPictureBox_8);
             this.Controls.Add(this.platformPictureBox_7);
@@ -192,6 +218,8 @@
             ((System.ComponentModel.ISupportInitialize)(this.platformPictureBox_7)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.platformPictureBox_8)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.platformPictureBox_9)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.menuButton_1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.menuButton_2)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -210,6 +238,8 @@
         private System.Windows.Forms.PictureBox platformPictureBox_7;
         private System.Windows.Forms.PictureBox platformPictureBox_8;
         private System.Windows.Forms.PictureBox platformPictureBox_9;
+        private System.Windows.Forms.PictureBox menuButton_1;
+        private System.Windows.Forms.PictureBox menuButton_2;
     }
 }
 

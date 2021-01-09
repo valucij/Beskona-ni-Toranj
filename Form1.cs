@@ -1,11 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace Beskonačni_Toranj
@@ -14,10 +9,6 @@ namespace Beskonačni_Toranj
     {
         //player kojeg korisnik moze pokretati
         Player player;
-        //jedno glavno tlo
-        Platform ground;
-        //platforma
-        Platform platform_1;
         //lista koja drzi sve platforme
         List<Platform> allPlatforms;
         //lista sadrzi platforme koje su samo u pojedinom trenutku vidljive na ekranu
@@ -26,6 +17,16 @@ namespace Beskonačni_Toranj
         int platformSpeed;
         //counter koji pazi koja se sljedeca platforma stavlja u one koje se vide na ekranu
         int putInVisiblePlatforms;
+        //zastavica koja pokazuje da li se platforme micu ili ne
+        bool platformMoving;
+        //zastavice koje pokazuju u kojem je modeu igra; da li je to meni, da li je to igra, ili da
+        //li je igra zavrsila
+        bool menuFlag;
+        bool gameFlag;
+        bool endgameFlag;
+
+        Menu menu;
+
         public Form1()
         {
             InitializeComponent();
@@ -51,16 +52,7 @@ namespace Beskonačni_Toranj
             this.BackgroundImage = Properties.Resources.background;
             this.BackgroundImageLayout = ImageLayout.Stretch;
 
-            //postavljanje tla
-            /*ground = new Platform();
-            ground.addPictureBox(groundPictureBox);
-            ground.addImage(Properties.Resources.b_fotfor_lush2);
-            */
             //inicijalizacija i postavljanje platformi
-            /* platform_1 = new Platform();
-             platform_1.addPictureBox(platformPictureBox_1);//mora ici prije postavljanja image
-             platform_1.addImage(Properties.Resources.b_fotfor_lush2);
-            */
             platformSpeed = 1;
 
             allPlatforms = new List<Platform>();
@@ -92,79 +84,170 @@ namespace Beskonačni_Toranj
             visiblePlatforms.Add(allPlatforms[5]);
 
             putInVisiblePlatforms = 6;
+            platformMoving = false;
 
+            menuFlag = true;
+            gameFlag = false;
+            endgameFlag = false;
+
+            menu = new Menu();
+            menu.addPictureBoxAndImage(menuButton_1, Properties.Resources.startImage);
+            menu.addPictureBoxAndImage(menuButton_2, Properties.Resources.quitImage);
+            
         }
 
         //akcije koje se obavljaju kad se pritisne neka tipka; sve se salje u odgovarajuce funkcije kod playera
         private void Form1_KeyDown(object sender, KeyEventArgs e)
         {
-            player.keyDown(sender, e);    
+            if (gameFlag)
+            {
+                player.keyDown(sender, e);
+            }
+            
         }
         //akcije koje se obavljaju kad se otpusti neka tipka; sve se salje u odgovarajuce funkcije kod playera
         private void Form1_KeyUp(object sender, KeyEventArgs e)
         {
-            player.keyUp(sender, e);
+            if (gameFlag)
+            {
+                player.keyUp(sender, e);
+            }
+            
         }
         //crtanje objekata u formi; sve se salje u odgovarajuce funckije clanova forme (playeri i platforme)
         private void Form1_Paint(object sender, PaintEventArgs e)
         {
-            player.paint(sender, e);
-            /*platform_1.platformPaint(sender, e);
-            ground.platformPaint(sender, e);
-           */
-            foreach (Platform p in visiblePlatforms)
-            {  
-                p.platformPaint(sender, e);
+            if (menuFlag)
+            {
+                menu.menuPaint(sender, e);
             }
+            else if (gameFlag)
+            {
+                player.paint(sender, e);
+                foreach (Platform p in visiblePlatforms)
+                {
+                    p.platformPaint(sender, e);
+                }
+            }
+            /*else if (endgameFlag)
+            {
+                menu.menuPaint(sender, e);
+            }*/
+            
         }
+
+        private void restartGame()
+        {
+            /* player.restart();
+             platformRestart();
+             */
+        }
+
+        /*private void platformRestart()
+        {
+            visiblePlatforms = null;
+            visiblePlatforms = new List<Platform>();
+            visiblePlatforms.Add(allPlatforms[0]);
+            visiblePlatforms.Add(allPlatforms[1]);
+            visiblePlatforms.Add(allPlatforms[2]);
+            visiblePlatforms.Add(allPlatforms[3]);
+            visiblePlatforms.Add(allPlatforms[4]);
+            visiblePlatforms.Add(allPlatforms[5]);
+
+            putInVisiblePlatforms = 6;
+            platformMoving = false;
+        }*/
+
         //akcije koje se obavljaju kako vrijeme tece; sve se salje u odgovarajuce funkcije clanova forme (playera i platforme)
         //na kraju se poziva funkcija koja crta objekte 
         private void gameTimer_Tick(object sender, EventArgs e)
         {
-            player.timerTick(sender, e, this);
-            
+
+            /*if (!player.Alive)
+            {
+                endgameFlag = true; 
+                // menuFlag = false; OVO TREBA ODKOMENTIRATI KAD SE NAPRAVI ENDGAME MODE
+                menuFlag = true;//OVO OBRISATI KAD SE NAPRAVI ENDGAME MODE
+                menu.Visible(true);//OVO OBRISATI KAD SE NAPRAVI ENDGAME MODE
+                gameFlag = false;
+                restartGame();
+            }*/
+
+            if (gameFlag)
+            {
+                player.timerTick(sender, e, this);
+                platformTick(); 
+            }
+            //mozda i tu treba provjeriti je li player ziv?
+            Invalidate();//poziva Form1_Paint metodu
+
+        }
+
+        private void platformTick()
+        {
+
             //provjeri koja je platforma "izasla" iz prozora, makni ju ih vidljivih platformi,
             //i stavi novu platformu u prozor, tj medu vidljive platforme
-
             for (int i = 0; i < allPlatforms.Count; i++)
             {
-                //Console.WriteLine(allPlatforms[i].Y);
                 if (allPlatforms[i].Y > 500)
                 {
-                    //Console.WriteLine(allPlatforms[i].Y);
                     visiblePlatforms.Remove(allPlatforms[i]);
                     allPlatforms[i].Y = -410;//postavi kao zadnju koja ce doci prema dolje
                     if (i + 1 == allPlatforms.Count)
                     {
-                        
+
                         visiblePlatforms.Add(allPlatforms[1]);//na 0 se nalazi ground
-                    }else 
+                    }
+                    else
                     {
-                       // Console.WriteLine("ovdje");
                         visiblePlatforms.Add(allPlatforms[putInVisiblePlatforms]);
 
                         if (putInVisiblePlatforms + 1 == allPlatforms.Count)
                         {
-                            
+
                             putInVisiblePlatforms = 1;
-                        }else 
+                        }
+                        else
                         {
-                           // Console.WriteLine("ovdje");
                             putInVisiblePlatforms++;
                         }
                     }
-                    
                 }
             }
 
-            //pomakni sve platforme prema dolje
+            //pomakni sve platforme prema "dolje"
             foreach (Platform p in allPlatforms)
-            {   
-                p.Y += platformSpeed;
+            {
+                if (player.Y < 200 && !platformMoving)
+                {
+                    platformMoving = true;
+                }
+                if (platformMoving)
+                {
+                    p.Y += platformSpeed;
+                }
+                
             }
+        }
 
-            Invalidate();
+        private void startClick(object sender, EventArgs e)
+        {
+            if (menuFlag)
+            {  
+                menuFlag = false;
+                gameFlag = true;
+                endgameFlag = false;
+                menu.Visible(false);
+            }
+        }
 
+        private void quitClick(object sender, EventArgs e)
+        {
+            if (menuFlag)
+            {
+                this.Close();
+            }
         }
     }
 }

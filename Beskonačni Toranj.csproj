@@ -54,6 +54,8 @@
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
     <Compile Include="IImageControl.cs" />
+    <Compile Include="Menu.cs" />
+    <Compile Include="MenuButton.cs" />
     <Compile Include="Platform.cs" />
     <Compile Include="Player.cs" />
     <Compile Include="Program.cs" />
@@ -116,6 +118,12 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\walkRight_3.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\quitImage.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\startImage.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -47,7 +47,8 @@ namespace Beskonačni_Toranj
         List<Bitmap> leftWalks;
         //slike playera dok hoda udesno
         List<Bitmap> rightWalks;
-
+        //zastavica koja govori da li je player ziv ili ne
+        bool alive;
         
         //konstruktor
         public Player()
@@ -65,6 +66,7 @@ namespace Beskonačni_Toranj
             rightWalkFrameCounter = 0;
             leftWalks = new List<Bitmap>();
             rightWalks = new List<Bitmap>();
+            alive = true;
         }
 
         public int Score
@@ -73,13 +75,13 @@ namespace Beskonačni_Toranj
             get { return score; }
         }
 
-        public int Speed
+        public int JumpSpeed
         {
             set { jumpSpeed = value; }
             get { return jumpSpeed; }
         }
 
-        public int Gravity
+        public int Force
         {
             set { force = value; }
             get { return force; }
@@ -90,6 +92,23 @@ namespace Beskonačni_Toranj
             get { return name; }
         }
 
+        public int X
+        {
+            get { return x; }
+            set { x = value; }
+        }
+
+        public int Y
+        {
+            get { return y; }
+            set { y = value; }
+        }
+
+        public bool Alive
+        {
+            set { alive = value; }
+            get { return alive; }
+        }
         //funkcija koja obavlja sto se dogada s playerom kad se tipka pritisnuta, poziva se is Form1.Form1_KeyDown
         //za kretanje ulijevo -> A / strelica ulijevo
         //za kretanje udesno -> D / strelica udesno
@@ -149,6 +168,12 @@ namespace Beskonačni_Toranj
         //picture box;
         public void timerTick(object sender, EventArgs e, Form1 form)
         {
+
+            if(figure.Location.Y > 500)
+            {
+                alive = false;
+                //return;
+            }
             //pomakni playera gore ili dolje, ovisno o jumpSpeedu
             figure.Top += jumpSpeed;
 
@@ -188,6 +213,7 @@ namespace Beskonačni_Toranj
                         force = 8;
                         figure.Top = x.Top - figure.Height + 26;
                         jumpSpeed = 0;
+                        score++;
                     }
                 }
             }
@@ -265,6 +291,20 @@ namespace Beskonačni_Toranj
             returnValue.MakeTransparent(tracer);
             
             return returnValue;
+        }
+
+        public void restart()
+        {
+            score = 0;
+            jumpSpeed = 10;
+            figureSpeed = 10;
+            force = 8;
+            goingLeft = false;
+            goingRight = false;
+            jumping = false;
+            leftWalkFrameCounter = 0;
+            rightWalkFrameCounter = 0;       
+            alive = true;
         }
 
     }
