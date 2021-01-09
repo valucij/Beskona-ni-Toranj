@@ -11,8 +11,12 @@ namespace Beskonačni_Toranj
         Player player;
         //lista koja drzi sve platforme
         List<Platform> allPlatforms;
+        //lista svih platformi koje ce biti potrebne za restart igre
+        List<Platform> copyAllPlatforms;
         //lista sadrzi platforme koje su samo u pojedinom trenutku vidljive na ekranu
         List<Platform> visiblePlatforms;
+        //lista svih vidljivih platformi koje ce biti potrebne za restart igre
+        List<Platform> copyVisiblePlatforms;
         //brzina kojom se krecu platforme
         int platformSpeed;
         //counter koji pazi koja se sljedeca platforma stavlja u one koje se vide na ekranu
@@ -93,7 +97,9 @@ namespace Beskonačni_Toranj
             menu = new Menu();
             menu.addPictureBoxAndImage(menuButton_1, Properties.Resources.startImage);
             menu.addPictureBoxAndImage(menuButton_2, Properties.Resources.quitImage);
-            
+
+            copyAllPlatforms = new List<Platform>(allPlatforms);
+            copyVisiblePlatforms = new List<Platform>(visiblePlatforms);
         }
 
         //akcije koje se obavljaju kad se pritisne neka tipka; sve se salje u odgovarajuce funkcije kod playera
@@ -129,41 +135,37 @@ namespace Beskonačni_Toranj
                     p.platformPaint(sender, e);
                 }
             }
-            /*else if (endgameFlag)
+            else if (endgameFlag)
             {
                 menu.menuPaint(sender, e);
-            }*/
+            }
             
         }
 
         private void restartGame()
         {
-            /* player.restart();
-             platformRestart();
-             */
+             player.restart();
+             platformRestart(); 
         }
 
-        /*private void platformRestart()
+        //TREBA SKROZ RESETIRATI PLATFORME NA POCETNE POZICIJE
+        private void platformRestart()
         {
             visiblePlatforms = null;
-            visiblePlatforms = new List<Platform>();
-            visiblePlatforms.Add(allPlatforms[0]);
-            visiblePlatforms.Add(allPlatforms[1]);
-            visiblePlatforms.Add(allPlatforms[2]);
-            visiblePlatforms.Add(allPlatforms[3]);
-            visiblePlatforms.Add(allPlatforms[4]);
-            visiblePlatforms.Add(allPlatforms[5]);
+            allPlatforms = null;
+            visiblePlatforms = new List<Platform>(copyVisiblePlatforms);
+            allPlatforms = new List<Platform>(copyAllPlatforms);
 
             putInVisiblePlatforms = 6;
             platformMoving = false;
-        }*/
+        }
 
         //akcije koje se obavljaju kako vrijeme tece; sve se salje u odgovarajuce funkcije clanova forme (playera i platforme)
         //na kraju se poziva funkcija koja crta objekte 
         private void gameTimer_Tick(object sender, EventArgs e)
         {
 
-            /*if (!player.Alive)
+            if (!player.Alive)
             {
                 endgameFlag = true; 
                 // menuFlag = false; OVO TREBA ODKOMENTIRATI KAD SE NAPRAVI ENDGAME MODE
@@ -171,7 +173,7 @@ namespace Beskonačni_Toranj
                 menu.Visible(true);//OVO OBRISATI KAD SE NAPRAVI ENDGAME MODE
                 gameFlag = false;
                 restartGame();
-            }*/
+            }
 
             if (gameFlag)
             {

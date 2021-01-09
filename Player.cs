@@ -305,6 +305,11 @@ namespace Beskonačni_Toranj
             leftWalkFrameCounter = 0;
             rightWalkFrameCounter = 0;       
             alive = true;
+            figure.Location = new Point(100, 350);
+
+            x = 100;
+            y = 350;
+
         }
 
     }
