@@ -49,6 +49,10 @@ namespace Beskonačni_Toranj
         List<Bitmap> rightWalks;
         //zastavica koja govori da li je player ziv ili ne
         bool alive;
+        //originalne informacije
+        private int originalX;
+        private int originalY;
+
         
         //konstruktor
         public Player()
@@ -240,6 +244,9 @@ namespace Beskonačni_Toranj
 
             height = figure.Height;
             width = figure.Width;
+
+            originalX = x;
+            originalY = y;
         }
 
         //dodaj razne slike za playera, kako bi mogli napraviti animaciju;
@@ -292,7 +299,7 @@ namespace Beskonačni_Toranj
             
             return returnValue;
         }
-
+        //funkcija resetira playera; postavlja sve informacije na one originalne
         public void restart()
         {
             score = 0;
@@ -307,8 +314,8 @@ namespace Beskonačni_Toranj
             alive = true;
             figure.Location = new Point(100, 350);
 
-            x = 100;
-            y = 350;
+            x = originalX;
+            y = originalY;
 
         }
 

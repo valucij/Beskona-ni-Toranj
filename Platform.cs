@@ -21,6 +21,9 @@ namespace Beskonačni_Toranj
         private int x, y;
         //informacije o velicini platforme
         private int width, height;
+        //originalne informacije, informacije o platformi pri stvaranju
+        private int originalX, originalY;
+        private int originalWidth, originalHeight;
 
         //konstruktor
         public Platform()
@@ -72,6 +75,11 @@ namespace Beskonačni_Toranj
 
             height = platform.Height;
             width = platform.Width;
+
+            originalHeight = height;
+            originalWidth = width;
+            originalX = x;
+            originalY = y;
         }
 
         public int X
@@ -84,6 +92,42 @@ namespace Beskonačni_Toranj
         {
             get { return y; }
             set { y = value; platform.Location = new Point(x, value); }
+        }
+
+        public int OriginalX
+        {
+            set { originalX = value; }
+            get { return originalX; }
+        }
+
+        public int OriginalY
+        {
+            set { originalY = value; }
+            get { return originalY; }
+        }
+
+        public int OriginalHeight
+        {
+            set { originalHeight = value; }
+            get { return originalHeight; }
+        }
+        public int OriginalWidth
+        {
+            set { originalWidth= value; }
+            get { return originalWidth; }
+        }
+
+        //funkcija resetira platformu na pocetnu poziciju
+        public void restart()
+        {
+            x = originalX;
+            y = originalY;
+            width = originalWidth;
+            height = originalHeight;
+            //jako bitno je i resetirati picturebox koji je dodjeljen platformi, jer 
+            //po njemu se sve orijentira 
+            platform.Location = new Point(originalX, originalY);
+
         }
     }
 }

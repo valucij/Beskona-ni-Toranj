@@ -142,19 +142,30 @@ namespace Beskonačni_Toranj
             
         }
 
+        //funckija restartira igru, restartira playera i platforme
         private void restartGame()
         {
              player.restart();
              platformRestart(); 
         }
 
-        //TREBA SKROZ RESETIRATI PLATFORME NA POCETNE POZICIJE
+        //funckija restarta platforme na njihov pocetni polozaj
         private void platformRestart()
         {
+            foreach (Platform p in allPlatforms)
+            {
+                p.restart();
+            }
+
+            //ponovno postavljanje pocetnih vidljivih platformi
             visiblePlatforms = null;
-            allPlatforms = null;
-            visiblePlatforms = new List<Platform>(copyVisiblePlatforms);
-            allPlatforms = new List<Platform>(copyAllPlatforms);
+            visiblePlatforms = new List<Platform>();
+            visiblePlatforms.Add(allPlatforms[0]);
+            visiblePlatforms.Add(allPlatforms[1]);
+            visiblePlatforms.Add(allPlatforms[2]);
+            visiblePlatforms.Add(allPlatforms[3]);
+            visiblePlatforms.Add(allPlatforms[4]);
+            visiblePlatforms.Add(allPlatforms[5]);
 
             putInVisiblePlatforms = 6;
             platformMoving = false;
@@ -232,7 +243,8 @@ namespace Beskonačni_Toranj
                 
             }
         }
-
+        //akcije koje se obavljaju kad se klikne na gumb za start u menuu; klik je dopusten
+        //samo ako se nalazimo u menu modeu
         private void startClick(object sender, EventArgs e)
         {
             if (menuFlag)
@@ -243,7 +255,8 @@ namespace Beskonačni_Toranj
                 menu.Visible(false);
             }
         }
-
+        //akcije koje se obavljaju kad se klikne na gumb za quit u menuu; klik je dopusten
+        //samo ako se nalazimo u menu modeu; aplikacije se gasi
         private void quitClick(object sender, EventArgs e)
         {
             if (menuFlag)
