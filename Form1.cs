@@ -264,5 +264,11 @@ namespace Beskonačni_Toranj
                 this.Close();
             }
         }
+
+        Projectil p;
+        private void Form1_Click(object sender, EventArgs e)
+        {
+            p.projectilClick(sender, e, this, MousePosition.X, MousePosition.Y);
+        }
     }
 }
