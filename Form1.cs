@@ -31,6 +31,13 @@ namespace Beskonačni_Toranj
 
         Menu menu;
 
+        Platform ground;
+        private bool groundFlag;
+
+
+        Boss boss;
+        Platform bossPlatform;
+        private bool bossFlag;
         public Form1()
         {
             InitializeComponent();
@@ -53,14 +60,23 @@ namespace Beskonačni_Toranj
             player.addImage(playerImages);
 
             //postavljanje pozadinske slike
-            this.BackgroundImage = Properties.Resources.background;
-            this.BackgroundImageLayout = ImageLayout.Stretch;
+            //this.BackgroundImage = Properties.Resources.background;
+            //this.BackgroundImageLayout = ImageLayout.Stretch;
+
+            this.BackColor = Color.Black;
 
             //inicijalizacija i postavljanje platformi
             platformSpeed = 1;
 
             allPlatforms = new List<Platform>();
-            allPlatforms.Add(new Platform(groundPictureBox, Properties.Resources.b_fotfor_lush2));
+
+            ground = new Platform();
+            ground.addPictureBox(groundPictureBox);
+            ground.addImage(Properties.Resources.b_fotfor_lush2);
+            groundFlag = true;
+
+            //allPlatforms.Add(new Platform(groundPictureBox, Properties.Resources.b_fotfor_lush2));
+            allPlatforms.Add(ground);
             allPlatforms.Add(new Platform(platformPictureBox_1, Properties.Resources.b_fotfor_lush2));
             allPlatforms.Add(new Platform(platformPictureBox_2, Properties.Resources.b_fotfor_lush2));
             allPlatforms.Add(new Platform(platformPictureBox_3, Properties.Resources.b_fotfor_lush2));
@@ -100,6 +116,22 @@ namespace Beskonačni_Toranj
 
             copyAllPlatforms = new List<Platform>(allPlatforms);
             copyVisiblePlatforms = new List<Platform>(visiblePlatforms);
+
+            player.addProjectilPictureBox(projectilPictureBox);
+            player.addProjectilImage(Properties.Resources.projectil_1);
+            player.addProjectilImage(Properties.Resources.projectil_2);
+            player.addProjectilImage(Properties.Resources.projectil_3);
+            player.addProjectilImage(Properties.Resources.projectil_4);
+            player.addProjectilImage(Properties.Resources.projectil_5);
+
+            bossPlatform = new Platform();
+            bossFlag = false;
+            boss = new Boss();
+
+            boss.addPictureBox(bossPictureBox);
+            boss.addProjectilPictureBox(bossProjectilPictureBox);
+            //dodati jos slike
+
         }
 
         //akcije koje se obavljaju kad se pritisne neka tipka; sve se salje u odgovarajuce funkcije kod playera
@@ -146,12 +178,25 @@ namespace Beskonačni_Toranj
         private void restartGame()
         {
              player.restart();
-             platformRestart(); 
+             platformRestart();
+            bossFlag = false;
         }
 
         //funckija restarta platforme na njihov pocetni polozaj
         private void platformRestart()
         {
+            List<Platform> tmp = new List<Platform>();
+            tmp.Add(ground);
+
+            foreach (Platform p in allPlatforms)
+            {
+                tmp.Add(p);
+            }
+
+            allPlatforms = tmp;
+            groundFlag = true;
+
+
             foreach (Platform p in allPlatforms)
             {
                 p.restart();
@@ -203,14 +248,22 @@ namespace Beskonačni_Toranj
             //i stavi novu platformu u prozor, tj medu vidljive platforme
             for (int i = 0; i < allPlatforms.Count; i++)
             {
-                if (allPlatforms[i].Y > 500)
+                
+                if (allPlatforms[i].Y > 490)
                 {
                     visiblePlatforms.Remove(allPlatforms[i]);
                     allPlatforms[i].Y = -410;//postavi kao zadnju koja ce doci prema dolje
+
                     if (i + 1 == allPlatforms.Count)
                     {
-
-                        visiblePlatforms.Add(allPlatforms[1]);//na 0 se nalazi ground
+                        if (groundFlag)
+                        {
+                            visiblePlatforms.Add(allPlatforms[1]);//na 0 se nalazi ground
+                        }
+                        else {
+                            visiblePlatforms.Add(allPlatforms[0]);//izbacen je ground
+                        }
+                       
                     }
                     else
                     {
@@ -219,13 +272,20 @@ namespace Beskonačni_Toranj
                         if (putInVisiblePlatforms + 1 == allPlatforms.Count)
                         {
 
-                            putInVisiblePlatforms = 1;
+                            putInVisiblePlatforms = 0;//oke je jer se remova ground
                         }
                         else
                         {
                             putInVisiblePlatforms++;
                         }
                     }
+                    if (groundFlag)
+                    {
+                        allPlatforms.Remove(ground);
+                        groundFlag = false;
+                        putInVisiblePlatforms--;
+                    }
+                    
                 }
             }
 
@@ -265,10 +325,41 @@ namespace Beskonačni_Toranj
             }
         }
 
-        Projectil p;
+       // Projectil p;
         private void Form1_Click(object sender, EventArgs e)
         {
-            p.projectilClick(sender, e, this, MousePosition.X, MousePosition.Y);
+           
+            if (gameFlag)
+            {
+                //Console.WriteLine("tu");
+               // player.click(sender, e, this, MousePosition.X, MousePosition.Y);
+            }
+
+        }
+
+        private void Form1_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            player.keyPress(sender, e);
+        }
+
+        public void bossIsHit()
+        {
+            boss.Life -= 1;
+        }
+
+        private void bossTickProjectil(object sender, EventArgs e)
+        {
+            boss.bossTickProjectil(sender, e, this);
+        }
+
+        private void bossTickSides(object sender, EventArgs e)
+        {
+            boss.bossTickSides(sender, e, this);
+        }
+
+        private void bossTickMovement(object sender, EventArgs e)
+        {
+            boss.bossTickMovement(sender, e, this);
         }
     }
 }

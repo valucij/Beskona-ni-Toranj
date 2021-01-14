@@ -27,6 +27,20 @@ namespace Beskonačni_Toranj
             figure = null;
         }
 
+        public void addImage(List<Bitmap> pictures)
+        {
+            this.pictures = pictures;
+        }
+
+        public void addImage(Bitmap picture)
+        {
+            if (this.pictures == null)
+            {
+                this.pictures = new List<Bitmap>();
+            }
+            this.pictures.Add(picture);
+        }
+
        
 
     }

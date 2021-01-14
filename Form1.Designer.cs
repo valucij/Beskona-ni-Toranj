@@ -43,6 +43,12 @@
             this.platformPictureBox_9 = new System.Windows.Forms.PictureBox();
             this.menuButton_1 = new System.Windows.Forms.PictureBox();
             this.menuButton_2 = new System.Windows.Forms.PictureBox();
+            this.projectilPictureBox = new System.Windows.Forms.PictureBox();
+            this.bossTickProjectil = new System.Windows.Forms.Timer(this.components);
+            this.bossTickSide = new System.Windows.Forms.Timer(this.components);
+            this.bossTickMovement = new System.Windows.Forms.Timer(this.components);
+            this.bossPictureBox = new System.Windows.Forms.PictureBox();
+            this.bossProjectilPictureBox = new System.Windows.Forms.PictureBox();
             ((System.ComponentModel.ISupportInitialize)(this.platformPictureBox_1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.groundPictureBox)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.playerPictureBox)).BeginInit();
@@ -56,6 +62,9 @@
             ((System.ComponentModel.ISupportInitialize)(this.platformPictureBox_9)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.menuButton_1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.menuButton_2)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.projectilPictureBox)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.bossPictureBox)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.bossProjectilPictureBox)).BeginInit();
             this.SuspendLayout();
             // 
             // platformPictureBox_1
@@ -84,6 +93,7 @@
             this.playerPictureBox.Size = new System.Drawing.Size(80, 112);
             this.playerPictureBox.TabIndex = 0;
             this.playerPictureBox.TabStop = false;
+            this.playerPictureBox.Tag = "player";
             // 
             // gameTimer
             // 
@@ -183,11 +193,59 @@
             this.menuButton_2.Tag = "button";
             this.menuButton_2.Click += new System.EventHandler(this.quitClick);
             // 
+            // projectilPictureBox
+            // 
+            this.projectilPictureBox.Location = new System.Drawing.Point(198, 499);
+            this.projectilPictureBox.Name = "projectilPictureBox";
+            this.projectilPictureBox.Size = new System.Drawing.Size(60, 45);
+            this.projectilPictureBox.TabIndex = 13;
+            this.projectilPictureBox.TabStop = false;
+            this.projectilPictureBox.Tag = "projectil";
+            // 
+            // bossTickProjectil
+            // 
+            this.bossTickProjectil.Enabled = true;
+            this.bossTickProjectil.Interval = 1000;
+            this.bossTickProjectil.Tick += new System.EventHandler(this.bossTickProjectil);
+            // 
+            // bossTickSide
+            // 
+            this.bossTickSide.Enabled = true;
+            this.bossTickSide.Interval = 10000;
+            this.bossTickSide.Tick += new System.EventHandler(this.bossTickSides);
+            // 
+            // bossTickMovement
+            // 
+            this.bossTickMovement.Enabled = true;
+            this.bossTickMovement.Interval = 20;
+            this.bossTickMovement.Tick += new System.EventHandler(this.bossTickMovement);
+            // 
+            // bossPictureBox
+            // 
+            this.bossPictureBox.Location = new System.Drawing.Point(519, 441);
+            this.bossPictureBox.Name = "bossPictureBox";
+            this.bossPictureBox.Size = new System.Drawing.Size(99, 147);
+            this.bossPictureBox.TabIndex = 14;
+            this.bossPictureBox.TabStop = false;
+            this.bossPictureBox.Tag = "boss";
+            // 
+            // bossProjectilPictureBox
+            // 
+            this.bossProjectilPictureBox.Location = new System.Drawing.Point(510, 494);
+            this.bossProjectilPictureBox.Name = "bossProjectilPictureBox";
+            this.bossProjectilPictureBox.Size = new System.Drawing.Size(44, 49);
+            this.bossProjectilPictureBox.TabIndex = 15;
+            this.bossProjectilPictureBox.TabStop = false;
+            this.bossProjectilPictureBox.Tag = "bossProjectil";
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(998, 649);
+            this.Controls.Add(this.bossProjectilPictureBox);
+            this.Controls.Add(this.bossPictureBox);
+            this.Controls.Add(this.projectilPictureBox);
             this.Controls.Add(this.menuButton_2);
             this.Controls.Add(this.menuButton_1);
             this.Controls.Add(this.platformPictureBox_9);
@@ -202,11 +260,12 @@
             this.Controls.Add(this.groundPictureBox);
             this.Controls.Add(this.playerPictureBox);
             this.DoubleBuffered = true;
+            this.KeyPreview = true;
             this.Name = "Form1";
             this.Text = "Form1";
-            this.Click += new System.EventHandler(this.Form1_Click);
             this.Paint += new System.Windows.Forms.PaintEventHandler(this.Form1_Paint);
             this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Form1_KeyDown);
+            this.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.Form1_KeyPress);
             this.KeyUp += new System.Windows.Forms.KeyEventHandler(this.Form1_KeyUp);
             ((System.ComponentModel.ISupportInitialize)(this.platformPictureBox_1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.groundPictureBox)).EndInit();
@@ -221,6 +280,9 @@
             ((System.ComponentModel.ISupportInitialize)(this.platformPictureBox_9)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.menuButton_1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.menuButton_2)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.projectilPictureBox)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.bossPictureBox)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.bossProjectilPictureBox)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -241,6 +303,12 @@
         private System.Windows.Forms.PictureBox platformPictureBox_9;
         private System.Windows.Forms.PictureBox menuButton_1;
         private System.Windows.Forms.PictureBox menuButton_2;
+        private System.Windows.Forms.PictureBox projectilPictureBox;
+        private System.Windows.Forms.Timer bossTickProjectil;
+        private System.Windows.Forms.Timer bossTickSide;
+        private System.Windows.Forms.Timer bossTickMovement;
+        private System.Windows.Forms.PictureBox bossPictureBox;
+        private System.Windows.Forms.PictureBox bossProjectilPictureBox;
     }
 }
 

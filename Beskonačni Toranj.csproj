@@ -46,6 +46,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Boss.cs" />
     <Compile Include="Character.cs" />
     <Compile Include="Form1.cs">
       <SubType>Form</SubType>
@@ -59,6 +60,7 @@
     <Compile Include="Platform.cs" />
     <Compile Include="Player.cs" />
     <Compile Include="Program.cs" />
+    <Compile Include="Projectil.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
@@ -124,6 +126,21 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\startImage.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\projectil_1.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\projectil_2.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\projectil_3.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\projectil_4.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\projectil_5.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

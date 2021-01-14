@@ -53,7 +53,10 @@ namespace Beskonačni_Toranj
         private int originalX;
         private int originalY;
 
-        
+        Projectil projectil;
+
+        private int life;
+
         //konstruktor
         public Player()
         {
@@ -71,6 +74,8 @@ namespace Beskonačni_Toranj
             leftWalks = new List<Bitmap>();
             rightWalks = new List<Bitmap>();
             alive = true;
+            projectil = new Projectil();
+            life = 10;
         }
 
         public int Score
@@ -113,6 +118,12 @@ namespace Beskonačni_Toranj
             set { alive = value; }
             get { return alive; }
         }
+
+        public int Life
+        {
+            set { life = value; }
+            get { return life; }
+        }
         //funkcija koja obavlja sto se dogada s playerom kad se tipka pritisnuta, poziva se is Form1.Form1_KeyDown
         //za kretanje ulijevo -> A / strelica ulijevo
         //za kretanje udesno -> D / strelica udesno
@@ -128,10 +139,12 @@ namespace Beskonačni_Toranj
                 goingRight = true;
 
             }
-            else if ( (e.KeyCode == Keys.Up || e.KeyCode == Keys.W) && !jumping)
+            else if ((e.KeyCode == Keys.Up || e.KeyCode == Keys.W) && !jumping)
             {
                 jumping = true;
             }
+         
+
         }
         //funckija koja obavlja sto se dogada s playerom kad je tipka pustena, poziva se iz Form1.Form1_KeyUp
         public void keyUp(object sender, KeyEventArgs e)
@@ -149,6 +162,8 @@ namespace Beskonačni_Toranj
             {
                 jumping = false;
             }
+           
+            
         }
         //funkcija koja crta playera; poziva se iz Form1.Form1_Paint; na pocetku funckije se odreduje koji ce se
         //walking frame crtati, tj koja ce se slika koja predstavlja playera crtati. To je odredeno time da li
@@ -163,6 +178,8 @@ namespace Beskonačni_Toranj
              e.Graphics.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.HighQualityBicubic;
              e.Graphics.PixelOffsetMode = System.Drawing.Drawing2D.PixelOffsetMode.HighQuality;
              e.Graphics.DrawImage(walkFrame, x, y, width, height);
+
+            projectil.paint(sender, e);
            
         }
 
@@ -172,8 +189,15 @@ namespace Beskonačni_Toranj
         //picture box;
         public void timerTick(object sender, EventArgs e, Form1 form)
         {
+            
+            projectil.projectilTick(sender, e, form);
+            if (projectil.isHit(form))
+            {
+                score += 2;
+                form.bossIsHit();
+            }
 
-            if(figure.Location.Y > 500)
+            if(figure.Location.Y > 500 || life <= 0)
             {
                 alive = false;
                 //return;
@@ -218,6 +242,23 @@ namespace Beskonačni_Toranj
                         figure.Top = x.Top - figure.Height + 26;
                         jumpSpeed = 0;
                         score++;
+                    }
+                }
+
+                if (x.Tag == "boss" )
+                {
+
+                    if (figure.Bounds.IntersectsWith(x.Bounds) )
+                    {
+                        life--;
+                    }
+                }
+
+                if (x.Tag == "bossProjectil")
+                {
+                    if (figure.Bounds.IntersectsWith(x.Bounds))
+                    {
+                        life--;
                     }
                 }
             }
@@ -299,6 +340,25 @@ namespace Beskonačni_Toranj
             
             return returnValue;
         }
+
+        internal void keyPress(object sender, KeyPressEventArgs e)
+        {
+            if (e.KeyChar == 'J' || e.KeyChar == 'j')
+            {
+                projectil.Left = true;
+                projectil.Fired = true;
+                projectil.X = x;
+                projectil.Y = y - 10;
+            }
+            else if (e.KeyChar == 'L' || e.KeyChar == 'l')
+            {
+                projectil.Right = true;
+                projectil.Fired = true;
+                projectil.X = x;
+                projectil.Y = y - 10;
+            }
+        }
+
         //funkcija resetira playera; postavlja sve informacije na one originalne
         public void restart()
         {
@@ -313,11 +373,33 @@ namespace Beskonačni_Toranj
             rightWalkFrameCounter = 0;       
             alive = true;
             figure.Location = new Point(100, 350);
+            life = 10;
 
             x = originalX;
             y = originalY;
 
         }
 
+        public void addProjectilImage(Bitmap image)
+        {
+            projectil.addImage(image);
+        }
+
+        public void addProjectilImage(List<Bitmap> image)
+        {
+            projectil.addImage(image);
+        }
+
+        public void addProjectilPictureBox(PictureBox picturebox)
+        {
+            projectil.addPictureBox(picturebox);
+        }
+
+        public void removeProjectilPictureBox()
+        {
+            projectil.removePictureBox();
+        }
+
+       
     }
 }
