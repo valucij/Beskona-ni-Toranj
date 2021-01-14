@@ -206,7 +206,7 @@
             // 
             this.bossTickProjectil.Enabled = true;
             this.bossTickProjectil.Interval = 1000;
-            this.bossTickProjectil.Tick += new System.EventHandler(this.bossTickProjectil);
+            this.bossTickProjectil.Tick += new System.EventHandler(this.bossTickProjectilFunction);
             // 
             // bossTickSide
             // 
@@ -218,7 +218,7 @@
             // 
             this.bossTickMovement.Enabled = true;
             this.bossTickMovement.Interval = 20;
-            this.bossTickMovement.Tick += new System.EventHandler(this.bossTickMovement);
+            this.bossTickMovement.Tick += new System.EventHandler(this.bossTickMovementFunction);
             // 
             // bossPictureBox
             // 

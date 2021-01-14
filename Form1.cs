@@ -347,7 +347,7 @@ namespace Beskonačni_Toranj
             boss.Life -= 1;
         }
 
-        private void bossTickProjectil(object sender, EventArgs e)
+        private void bossTickProjectilFunction(object sender, EventArgs e)
         {
             boss.bossTickProjectil(sender, e, this);
         }
@@ -357,7 +357,7 @@ namespace Beskonačni_Toranj
             boss.bossTickSides(sender, e, this);
         }
 
-        private void bossTickMovement(object sender, EventArgs e)
+        private void bossTickMovementFunction(object sender, EventArgs e)
         {
             boss.bossTickMovement(sender, e, this);
         }
