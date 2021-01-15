@@ -8,38 +8,38 @@ using System.Windows.Forms;
 
 namespace Beskonačni_Toranj
 {
+
+
     class ProjectilShotByPlayer:Projectil
     {
+        //konstruktor
+        public ProjectilShotByPlayer() : base() {
+            x = 0;
+            y = 0;
+        }
+
+
         //vraća je li character pogođen, poziva se iz player.tick ili boss.tick
-        public override bool isHit(Form1 form)
+        public override bool hasHit(Form1 form)
         {
-            if (!fired)
-            {
-                return false;
-            }
+            //ako metak nije ispucan uopce, vraca false jer nista ne moze biti pogodjeno
+            if (!fired) return false;
+
+            //ako je metak ispucan
             foreach (Control c in form.Controls)
             {
-                if ((string)c.Tag == "enemy" || (string)c.Tag == "boss" /*|| c.Tag == "player"*/)
+                //ako pogodi neprijatelja/bossa baca true
+                if (((string)c.Tag == "enemy" || (string)c.Tag == "boss" ) && figure.Bounds.IntersectsWith(c.Bounds))
                 {
-                    if (figure.Bounds.IntersectsWith(c.Bounds) && fired)
-                    {
-                        right = false;
-                        left = false;
-                        fired = false;
-                        return true;
-                    }
+                    this.reset();
+                    return true;
                 }
 
-                if ((string)c.Tag == "platform" || (string)c.Tag == "ground")
+                //ako pogodi tlo, vraca false
+                if (((string)c.Tag == "platform" || (string)c.Tag == "ground") && figure.Bounds.IntersectsWith(c.Bounds))
                 {
-                    if (figure.Bounds.IntersectsWith(c.Bounds) && fired)
-                    {
-                        right = false;
-                        left = false;
-                        fired = false;
-                        return false;//vraca false, jer iako je pogodeno, nije neprijatelj pogoden, a to nas jedino zanima
-                    }
-
+                    this.reset();
+                    return false;
                 }
 
             }

@@ -8,7 +8,7 @@ using System.Windows.Forms;
 
 namespace Beskonačni_Toranj
 {
-    class Boss : Character
+    class Boss : Enemy
     {
         //brzina boss-a
         private int bossSpeed;
@@ -16,8 +16,6 @@ namespace Beskonačni_Toranj
         Color tracer;
         //metak od neprijatelja
         ProjectilShotByBoss projectil;
-        //zastavica koja opisuje je li boss ispucao projektil
-        private bool fired;
         //jel na lijevoj ili desnoj strani ekrana sece
         private bool leftSide, rightSide;
         //jel se boss krece lijevo ili desno
@@ -27,11 +25,12 @@ namespace Beskonačni_Toranj
         //counter koji broji koji frame da prikaze
         private int frameCounter;
 
+
+
         public Boss()
         {
             tracer = new Color();
             projectil = new ProjectilShotByBoss();
-            fired = false;
             bossSpeed = 3;
             leftSide = false;
             rightSide = true;
@@ -49,11 +48,14 @@ namespace Beskonačni_Toranj
             //figure.Location = new Point(x, y);
         }
 
+        //funkcija koja updatea stanje projektila
         public void bossTickProjectil(object sender, EventArgs e, Form1 form)
         {
-            projectil.Fired = true;
+            //funkcija koja updatea projektil
             projectil.projectilTick(sender, e, form);
-            projectil.isHit(form);
+
+            //ako je projektil udario o charactera, vraca se informacija formi
+            if(projectil.hasHit(form)) form.playerIsHit();
         }
 
         public void bossTickSides(object sender, EventArgs e, Form1 form)
@@ -64,6 +66,7 @@ namespace Beskonačni_Toranj
                 leftSide = false;
                 projectil.Left = false;
                 projectil.Right = true;
+                
                 changePosition();
             }
             else {
@@ -71,6 +74,7 @@ namespace Beskonačni_Toranj
                 rightSide = false;
                 projectil.Left = true;
                 projectil.Right = false;
+                
                 changePosition();
             }
 
@@ -168,7 +172,6 @@ namespace Beskonačni_Toranj
         {
             tracer = new Color();
             projectil = new ProjectilShotByBoss();
-            fired = false;
             bossSpeed = 3;
             leftSide = false;
             rightSide = true;

@@ -24,11 +24,17 @@ namespace Beskonačni_Toranj
         //originalne informacije, informacije o platformi pri stvaranju
         private int originalX, originalY;
         private int originalWidth, originalHeight;
+        //pointer na enemya koji mozebitno sjedi na platformi
+       Enemy enemy;
+        //pointer na bossa koji mozda sjedi na platformi;
+       Boss boss;
 
         //konstruktor
         public Platform()
         {
             tracer = new Color();
+            enemy = null;
+            boss = null;
         }
 
         public Platform(System.Windows.Forms.PictureBox figure, Bitmap image)
@@ -36,6 +42,8 @@ namespace Beskonačni_Toranj
             tracer = new Color();
             platform = figure;
             addImage(image);
+            enemy = null;
+            boss = null;
         }
 
         //dodjeljuje klasi odgovarajuci picture box, kako bi lakse bilo crtati sliku platforme bez nagadanja gdje

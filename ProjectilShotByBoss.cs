@@ -10,40 +10,37 @@ namespace Beskonačni_Toranj
 {
     class ProjectilShotByBoss:Projectil
     {
-        public override bool isHit(Form1 form)
-        {
-            if (!fired)
-            {
-                return false;
-            }
+        public ProjectilShotByBoss() :base () {
+            x = 0;
+            y = 0;
+        }
 
+        public override bool hasHit(Form1 form)
+        {
+            //ako metak nije ispucan vrati false
+            if (!fired)  return false;
+
+            //ako je metak ispucan
             foreach (Control c in form.Controls)
             {
-
-                if ((string)c.Tag == "platform" || (string)c.Tag == "ground")
+                //ako boss pogodi platformu ili tlo, vraca false
+                if (((string)c.Tag == "platform" || (string)c.Tag == "ground") && figure.Bounds.IntersectsWith(c.Bounds))
                 {
-                    if (figure.Bounds.IntersectsWith(c.Bounds) && fired)
-                    {
-                        right = false;
-                        left = false;
-                        fired = false;
-                        return false;//vraca false, jer iako je pogodeno, nije neprijatelj pogoden, a to nas jedino zanima
-                    }
 
+                        this.reset();
+                        return false;
                 }
 
-                if ((string)c.Tag == "player")
+                //ako boss pogodi playera, vraca true
+                if ((string)c.Tag == "player" && figure.Bounds.IntersectsWith(c.Bounds))
                 {
-                    if (figure.Bounds.IntersectsWith(c.Bounds) && fired)
-                    {
-                        right = false;
-                        left = false;
-                        fired = false;
-                        return false;//vraca false
-                    }
+                        this.reset();
+                        return false;
                 }
 
             }
+
+            //inace vrati false
             return false;
         }
 

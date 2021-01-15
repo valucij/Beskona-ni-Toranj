@@ -3,6 +3,17 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
 
+/* struktura forme
+ * >podaci
+ * >konstruktor
+ * >funkcije za crtanje
+ * >obrada pritiska tipke/klika miša
+ * >glavni ticker za igru 
+ * >ticker za bossa
+ * >restart
+ * >pucanje (isHit funkcije)
+ */
+
 namespace Beskonačni_Toranj
 {
     public partial class Form1 : Form
@@ -16,6 +27,8 @@ namespace Beskonačni_Toranj
 
         //player kojeg korisnik moze pokretati
         Player player;
+        //Enemy obican
+        Enemy enemy;
         //Neprijatelj protiv kojeg se igrac bori
         Boss boss;
         //lista koja drzi sve platforme
@@ -43,45 +56,41 @@ namespace Beskonačni_Toranj
         //zastavica koja pokazuje je li boss u ekranu
         private bool bossFlag;
 
+        //KONSTRUKTOR
         public Form1()
         {
             InitializeComponent();
-          
-            this.FormBorderStyle = FormBorderStyle.FixedSingle;
 
-            //ucitavanje slika za playera
-            List<Bitmap> playerImages = new List<Bitmap>();
-            playerImages.Add(Properties.Resources.stand);
-            playerImages.Add(Properties.Resources.walkLeft_1);
-            playerImages.Add(Properties.Resources.walkLeft_2);
-            playerImages.Add(Properties.Resources.walkLeft_3);
-            playerImages.Add(Properties.Resources.walkRight_1);
-            playerImages.Add(Properties.Resources.walkRight_2);
-            playerImages.Add(Properties.Resources.walkRight_3);
+            //zastavice za tok igre postavlja, stavlja nas an pocetni menu
+            menuFlag = true;
+            gameFlag = false;
+            endgameFlag = false;
 
-            //inicijalizacija playera, postavljanje pictureboxa i slika
+            //konstruiram meni
+            menu = new Menu();
+
+            //inicijalizacija playera
             player = new Player();
-            player.addPictureBox(playerPictureBox);
-            player.addImage(Properties.Resources.stand);
-            player.addImage(playerImages);
 
+            //inicijaliziram bossa, njegovu platformu i flag
+            boss = new Boss();
+            bossPlatform = new Platform();
+            bossFlag = false;
 
+            //inicijalizacija tla (klase platforma)
+            ground = new Platform();
+            groundFlag = true;
 
-            //postavljanje pozadinske slike
-            //this.BackgroundImage = Properties.Resources.background;
-            //this.BackgroundImageLayout = ImageLayout.Stretch;
-
-            this.BackColor = Color.Black;
+            //inicijaliziram brzinu igre (tj brzinu kojom platforme idu)
+            platformSpeed = 1;
+            //nevidljivih platforma je 6 
+            putInVisiblePlatforms = 6;
+            //da li se platforme micu
+            platformMoving = false;
 
             //inicijalizacija i postavljanje platformi
-            platformSpeed = 1;
-
             allPlatforms = new List<Platform>();
-
-            ground = new Platform();
-            ground.addPictureBox(groundPictureBox);
-            ground.addImage(Properties.Resources.b_fotfor_lush2);
-            groundFlag = true;
+           
 
             //allPlatforms.Add(new Platform(groundPictureBox, Properties.Resources.b_fotfor_lush2));
             allPlatforms.Add(ground);
@@ -112,31 +121,48 @@ namespace Beskonačni_Toranj
             visiblePlatforms.Add(allPlatforms[4]);
             visiblePlatforms.Add(allPlatforms[5]);
 
-            //nevidljivih platforma je 6 
-            putInVisiblePlatforms = 6;
-            //da li se platforme micu
-            platformMoving = false;
-
-            //zastavice za tok igre postavlja, stavlja nas an pocetni menu
-            menuFlag = true;
-            gameFlag = false;
-            endgameFlag = false;
-
-            //konstruiram meni
-            menu = new Menu();
-            menu.addPictureBoxAndImage(menuButton_1, Properties.Resources.startImage);
-            menu.addPictureBoxAndImage(menuButton_2, Properties.Resources.quitImage);
-
-            //inicijaliziram liste platformi (kopiju liste i vidljive)
+            //kopije lista platformi
             copyAllPlatforms = new List<Platform>(allPlatforms);
             copyVisiblePlatforms = new List<Platform>(visiblePlatforms);
 
-            //inicijaliziram bossa, njegovu platformu i flag
-            bossPlatform = new Platform();
-            bossFlag = false;
-            boss = new Boss();
+            //--------------------------------------dodavanje slika i grafike-----------------------
+            this.FormBorderStyle = FormBorderStyle.FixedSingle;
 
-            //dodajem slike 
+            //postavljanje boje pozadine
+            this.BackColor = Color.Black;
+
+            //postavljanje pozadinske slike
+            this.BackgroundImage = Properties.Resources.background;
+            this.BackgroundImageLayout = ImageLayout.Stretch;
+
+            //dodajem slike za menu buttons 
+            menu.addPictureBoxAndImage(menuButton_1, Properties.Resources.startImage);
+            menu.addPictureBoxAndImage(menuButton_2, Properties.Resources.quitImage);
+
+            //dodajem slike za tlo
+            ground.addPictureBox(groundPictureBox);
+            ground.addImage(Properties.Resources.b_fotfor_lush2);
+
+            //ucitavanje slika za playera
+            List<Bitmap> playerImages = new List<Bitmap>();
+            playerImages.Add(Properties.Resources.stand);
+            playerImages.Add(Properties.Resources.walkLeft_1);
+            playerImages.Add(Properties.Resources.walkLeft_2);
+            playerImages.Add(Properties.Resources.walkLeft_3);
+            playerImages.Add(Properties.Resources.walkRight_1);
+            playerImages.Add(Properties.Resources.walkRight_2);
+            playerImages.Add(Properties.Resources.walkRight_3);
+
+            //postavljanje slika za playera
+            player.addPictureBox(playerPictureBox);
+            player.addImage(Properties.Resources.stand);
+            player.addImage(playerImages);
+
+            //dodajem slike za bossa
+            boss.addPictureBox(bossPictureBox);
+
+
+            //dodajem slike za projektil playera
             player.addProjectilPictureBox(projectilPictureBox);
 
             player.addProjectilImage(Properties.Resources.projectil_1);
@@ -145,35 +171,18 @@ namespace Beskonačni_Toranj
             player.addProjectilImage(Properties.Resources.projectil_4);
             player.addProjectilImage(Properties.Resources.projectil_5);
 
-            boss.addPictureBox(bossPictureBox);
+            //dodajem slike za projektil bossa
             boss.addProjectilPictureBox(bossProjectilPictureBox);
 
+            player.addProjectilImage(Properties.Resources.projectil_1);
+            player.addProjectilImage(Properties.Resources.projectil_2);
+            player.addProjectilImage(Properties.Resources.projectil_3);
+            player.addProjectilImage(Properties.Resources.projectil_4);
+            player.addProjectilImage(Properties.Resources.projectil_5);
+
 
         }
-
-
-        //akcije koje se obavljaju kad se pritisne neka tipka; sve se salje u odgovarajuce funkcije kod playera
-        private void Form1_KeyDown(object sender, KeyEventArgs e)
-        {
-            if (gameFlag)
-            {
-                player.keyDown(sender, e);
-            }
-            
-        }
-
-
-        //akcije koje se obavljaju kad se otpusti neka tipka; sve se salje u odgovarajuce funkcije kod playera
-        private void Form1_KeyUp(object sender, KeyEventArgs e)
-        {
-            if (gameFlag)
-            {
-                player.keyUp(sender, e);
-            }
-            
-        }
-
-
+        //------------------------------------------------CRTANJE---------------------------------------------------------------------------------------------------------------------------------------------------
         //crtanje objekata u formi; sve se salje u odgovarajuce funckije clanova forme (playeri i platforme)
         private void Form1_Paint(object sender, PaintEventArgs e)
         {
@@ -193,11 +202,187 @@ namespace Beskonačni_Toranj
             {
                 menu.menuPaint(sender, e);
             }
+
+        }
+
+        //------------------------------------------------OBRADA PRITISKA TIPKI / KLIKA MIŠA-----------------------------------------------------------------------------------------------------------------
+        //akcije koje se obavljaju kad se pritisne neka tipka; sve se salje u odgovarajuce funkcije kod playera
+        private void Form1_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (gameFlag)
+            {
+                player.keyDown(sender, e);
+            }
             
         }
 
-        //funckija restartira igru, restartira playera i platforme
-        private void restartGame()
+        //akcije koje se obavljaju kad se otpusti neka tipka; sve se salje u odgovarajuce funkcije kod playera
+        private void Form1_KeyUp(object sender, KeyEventArgs e)
+        {
+            if (gameFlag)
+            {
+                player.keyUp(sender, e);
+            }
+            
+        }
+
+        //forma javlja playeru da je pritisnut key za pucanje 
+        private void Form1_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            player.keyPress(sender, e);
+        }
+
+        //akcije koje se obavljaju kad se klikne na gumb za start u menuu; klik je dopusten
+        //samo ako se nalazimo u menu modeu
+        private void startClick(object sender, EventArgs e)
+        {
+            if (menuFlag)
+            {
+                menuFlag = false;
+                gameFlag = true;
+                endgameFlag = false;
+                menu.Visible(false);
+            }
+        }
+
+
+        //akcije koje se obavljaju kad se klikne na gumb za quit u menuu; klik je dopusten
+        //samo ako se nalazimo u menu modeu; aplikacije se gasi
+        private void quitClick(object sender, EventArgs e)
+        {
+            if (menuFlag)
+            {
+                this.Close();
+            }
+        }
+
+        // Projectil p;
+        private void Form1_Click(object sender, EventArgs e)
+        {
+
+            if (gameFlag)
+            {
+                //Console.WriteLine("tu");
+                // player.click(sender, e, this, MousePosition.X, MousePosition.Y);
+            }
+
+        }
+
+        //---------------------------------------------------GLAVNI TICKER za igru-------------------------------------------------------------------------------------
+
+        //akcije koje se obavljaju kako vrijeme tece; sve se salje u odgovarajuce funkcije clanova forme (playera i platforme)
+        //na kraju se poziva funkcija koja crta objekte 
+        private void gameTimer_Tick(object sender, EventArgs e)
+        {
+
+            if (!player.Alive)
+            {
+                endgameFlag = true;
+
+                // menuFlag = false; OVO TREBA ODKOMENTIRATI KAD SE NAPRAVI ENDGAME MODE
+                menuFlag = true;//OVO OBRISATI KAD SE NAPRAVI ENDGAME MODE
+                menu.Visible(true);//OVO OBRISATI KAD SE NAPRAVI ENDGAME MODE
+                gameFlag = false;
+                restartGame();
+            }
+
+            if (gameFlag)
+            {
+                player.timerTick(sender, e, this);
+                platformTick();
+            }
+            //mozda i tu treba provjeriti je li player ziv?
+            Invalidate();//poziva Form1_Paint metodu
+
+        }
+
+        //---------------------------------------------TICKER za platformu-------------------------------------------------------------------------------------------
+        private void platformTick()
+        {
+
+            //provjeri koja je platforma "izasla" iz prozora, makni ju ih vidljivih platformi,
+            //i stavi novu platformu u prozor, tj medu vidljive platforme
+            for (int i = 0; i < allPlatforms.Count; i++)
+            {
+
+                if (allPlatforms[i].Y > 490)
+                {
+                    visiblePlatforms.Remove(allPlatforms[i]);
+                    allPlatforms[i].Y = -410;//postavi kao zadnju koja ce doci prema dolje
+
+                    if (i + 1 == allPlatforms.Count)
+                    {
+                        if (groundFlag)
+                        {
+                            visiblePlatforms.Add(allPlatforms[1]);//na 0 se nalazi ground
+                        }
+                        else
+                        {
+                            visiblePlatforms.Add(allPlatforms[0]);//izbacen je ground
+                        }
+
+                    }
+                    else
+                    {
+                        visiblePlatforms.Add(allPlatforms[putInVisiblePlatforms]);
+
+                        if (putInVisiblePlatforms + 1 == allPlatforms.Count)
+                        {
+                            putInVisiblePlatforms = 0;//oke je jer se remova ground
+                        }
+                        else
+                        {
+                            putInVisiblePlatforms++;
+                        }
+                    }
+                    if (groundFlag)
+                    {
+                        allPlatforms.Remove(ground);
+                        groundFlag = false;
+                        putInVisiblePlatforms--;
+                    }
+
+                }
+            }
+
+            //pomakni sve platforme prema "dolje"
+            foreach (Platform p in allPlatforms)
+            {
+                if (player.Y < 200 && !platformMoving)
+                {
+                    platformMoving = true;
+                }
+                if (platformMoving)
+                {
+                    p.Y += platformSpeed;
+                }
+
+            }
+        }
+
+
+        //-------------------------------------------------TICKERI za bossa--------------------------------------------------------------------------------------------------------------------
+
+        private void bossTickProjectilFunction(object sender, EventArgs e)
+        {
+            boss.bossTickProjectil(sender, e, this);
+        }
+
+        private void bossTickSides(object sender, EventArgs e)
+        {
+            boss.bossTickSides(sender, e, this);
+        }
+
+        private void bossTickMovementFunction(object sender, EventArgs e)
+        {
+            boss.bossTickMovement(sender, e, this);
+        }
+
+
+    //----------------------------------------------------------RESTART funkcije--------------------------------------------------------------------------------------------------------------------------
+
+    //funkcija restartira igru, restartira playera i platforme
+    private void restartGame()
         {
             //restartam charactere
              player.restart();
@@ -245,135 +430,8 @@ namespace Beskonačni_Toranj
             platformMoving = false;
         }
 
-        //akcije koje se obavljaju kako vrijeme tece; sve se salje u odgovarajuce funkcije clanova forme (playera i platforme)
-        //na kraju se poziva funkcija koja crta objekte 
-        private void gameTimer_Tick(object sender, EventArgs e)
-        {
 
-            if (!player.Alive)
-            {
-                endgameFlag = true; 
-
-                // menuFlag = false; OVO TREBA ODKOMENTIRATI KAD SE NAPRAVI ENDGAME MODE
-                menuFlag = true;//OVO OBRISATI KAD SE NAPRAVI ENDGAME MODE
-                menu.Visible(true);//OVO OBRISATI KAD SE NAPRAVI ENDGAME MODE
-                gameFlag = false;
-                restartGame(); 
-            }
-
-            if (gameFlag)
-            {
-                player.timerTick(sender, e, this);
-                platformTick(); 
-            }
-            //mozda i tu treba provjeriti je li player ziv?
-            Invalidate();//poziva Form1_Paint metodu
-
-        }
-
-        private void platformTick()
-        {
-
-            //provjeri koja je platforma "izasla" iz prozora, makni ju ih vidljivih platformi,
-            //i stavi novu platformu u prozor, tj medu vidljive platforme
-            for (int i = 0; i < allPlatforms.Count; i++)
-            {
-                
-                if (allPlatforms[i].Y > 490)
-                {
-                    visiblePlatforms.Remove(allPlatforms[i]);
-                    allPlatforms[i].Y = -410;//postavi kao zadnju koja ce doci prema dolje
-
-                    if (i + 1 == allPlatforms.Count)
-                    {
-                        if (groundFlag)
-                        {
-                            visiblePlatforms.Add(allPlatforms[1]);//na 0 se nalazi ground
-                        }
-                        else {
-                            visiblePlatforms.Add(allPlatforms[0]);//izbacen je ground
-                        }
-                       
-                    }
-                    else
-                    {
-                        visiblePlatforms.Add(allPlatforms[putInVisiblePlatforms]);
-
-                        if (putInVisiblePlatforms + 1 == allPlatforms.Count)
-                        {
-                            putInVisiblePlatforms = 0;//oke je jer se remova ground
-                        }
-                        else
-                        {
-                            putInVisiblePlatforms++;
-                        }
-                    }
-                    if (groundFlag)
-                    {
-                        allPlatforms.Remove(ground);
-                        groundFlag = false;
-                        putInVisiblePlatforms--;
-                    }
-                    
-                }
-            }
-
-            //pomakni sve platforme prema "dolje"
-            foreach (Platform p in allPlatforms)
-            {
-                if (player.Y < 200 && !platformMoving)
-                {
-                    platformMoving = true;
-                }
-                if (platformMoving)
-                {
-                    p.Y += platformSpeed;
-                }
-                
-            }
-        }
-
-
-        //akcije koje se obavljaju kad se klikne na gumb za start u menuu; klik je dopusten
-        //samo ako se nalazimo u menu modeu
-        private void startClick(object sender, EventArgs e)
-        {
-            if (menuFlag)
-            {  
-                menuFlag = false;
-                gameFlag = true;
-                endgameFlag = false;
-                menu.Visible(false);
-            }
-        }
-
-
-        //akcije koje se obavljaju kad se klikne na gumb za quit u menuu; klik je dopusten
-        //samo ako se nalazimo u menu modeu; aplikacije se gasi
-        private void quitClick(object sender, EventArgs e)
-        {
-            if (menuFlag)
-            {
-                this.Close();
-            }
-        }
-
-       // Projectil p;
-        private void Form1_Click(object sender, EventArgs e)
-        {
-           
-            if (gameFlag)
-            {
-                //Console.WriteLine("tu");
-               // player.click(sender, e, this, MousePosition.X, MousePosition.Y);
-            }
-
-        }
-
-        private void Form1_KeyPress(object sender, KeyPressEventArgs e)
-        {
-            player.keyPress(sender, e);
-        }
+        //---------------------------------PUCANJE-----------------------------------------------------------------------------------------------------------------------------
 
         public void playerIsHit() 
         {
@@ -385,19 +443,16 @@ namespace Beskonačni_Toranj
             boss.isHit();
         }
 
-        private void bossTickProjectilFunction(object sender, EventArgs e)
+        public void enemyIsHit() 
         {
-            boss.bossTickProjectil(sender, e, this);
+
+            enemy.isHit();
+        
         }
 
-        private void bossTickSides(object sender, EventArgs e)
+        private void bossProjectilPictureBox_Click(object sender, EventArgs e)
         {
-            boss.bossTickSides(sender, e, this);
-        }
 
-        private void bossTickMovementFunction(object sender, EventArgs e)
-        {
-            boss.bossTickMovement(sender, e, this);
         }
     }
 }

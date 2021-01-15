@@ -20,7 +20,8 @@ namespace Beskonačni_Toranj
         //zastavica unutar ove klase kako bi se kontroliralo crtanje projektila
         protected bool fired;
         protected bool left, right;
-
+         
+        //konstruktor
         public Projectil()
         {
             images = new List<Bitmap>();
@@ -30,8 +31,51 @@ namespace Beskonačni_Toranj
             fired = false;
             left = false;
             right = false;
-          
+            x = 0;
+            y = 0;
         }
+
+        //--------------------------------------------funkcije vezane uz pucanje---------------------------------
+
+        //funkcija koja postavlja zastavice i koordinate za pucanje lijevo
+        public void pucajlijevo(int shooter_x, int shooter_y)
+        {
+            left = true;
+            right = false;
+            fired = true;
+            x = shooter_x;
+            y = shooter_y - 10;
+        }
+
+        //funkcija koja postavlja zastavice i koordinate za pucanje desno
+        public void pucajdesno(int shooter_x, int shooter_y)
+        {
+            right = true;
+            left = false;
+            fired = true;
+            x = shooter_x;
+            y = shooter_y - 10;
+
+        }
+
+        //funkcija koja postavlja zastavicu i koordinate za pucanje u kojem god smjeru da su vec zastavice postavljene
+        public void pucaj(int shooter_x, int shooter_y) {
+            fired = true;
+            x = shooter_x;
+            y = shooter_y - 10;
+        }
+
+        //funkcija koja vraca metak u cahuru (na pocetno stanje)
+        public void reset() {
+            frameCounter = 0;
+            fired = false;
+            left = false;
+            right = false;
+            x = 0;
+            y = 0;
+        }
+
+        //---------------------------------------------funkcije vezane uz slike-----------------------------------
 
         //funkcija koja dodaje PictureBox
         public void addPictureBox(PictureBox figure)
@@ -96,12 +140,11 @@ namespace Beskonačni_Toranj
 
 
   
+        //crta metak
         public void paint(object sender, PaintEventArgs e)
         {
-            if (!fired)
-            {
-                return;
-            }
+            //ako metak nije ispucan ne crtam ga
+            if (!fired)  return;
 
             Bitmap frame = returnNewFrame();
             e.Graphics.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.HighQuality;
@@ -132,84 +175,37 @@ namespace Beskonačni_Toranj
 
         public void projectilTick(object sender, EventArgs e, Form1 form)
         {
+            //ako nije metak ispucan, ne moram ga tick-ati
+            if (!fired) return;
 
-            if (!fired)
+            //Ako je metak ispucan, prvo ga pomakni
+                if (right)
+                {
+                    x += projectilSpeed;
+                }
+                else if (left)
+                {
+                    x -= projectilSpeed;
+                }
+
+            //ako je metak izasao van granica ekrana
+            if (x + width > form.ClientSize.Width || x < 0 || y + height > form.ClientSize.Height || y < 0)
             {
+                this.reset();
                 return;
-            }
+                };
 
-            if (right)
-            {
-                x += projectilSpeed;
-            }else if (left)
-            {        
-                x -= projectilSpeed;
-            }
+            //inace updateaj sliku metka
+            figure.Location = new Point(x, y);
 
-
-                figure.Location = new Point(x, y);
-
-                if (x + width > form.ClientSize.Width || x < 0)
-                {
-                    left = false;
-                    right = false;
-                    fired = false;
-                }
-
-                if (y + height > form.ClientSize.Height || y < 0)
-                {
-                    left = false;
-                    right = false;
-                    fired = false;
-                }
 
         }
 
+        //-------------------------------------------------------isHit virtualna funkcija
 
         //vraća je li character pogođen, poziva se iz player.tick ili boss.tick
-        public virtual bool isHit(Form1 form)
+        public virtual bool hasHit(Form1 form)
         {
-            if (!fired)
-            {
-                return false;
-            }
-            foreach (Control c in form.Controls)
-            {
-                if ((string)c.Tag == "enemy" || (string)c.Tag == "boss" /*|| c.Tag == "player"*/)
-                {
-                    if (figure.Bounds.IntersectsWith(c.Bounds) && fired)
-                    {
-                        right = false;
-                        left = false;
-                        fired = false;
-                        return true;
-                    }
-                }
-
-                if ((string)c.Tag == "platform" || (string)c.Tag == "ground")
-                {
-                    if (figure.Bounds.IntersectsWith(c.Bounds) && fired)
-                    {
-                        right = false;
-                        left = false;
-                        fired = false;
-                        return false;//vraca false, jer iako je pogodeno, nije neprijatelj pogoden, a to nas jedino zanima
-                    }
-                    
-                }
-
-                if ((string)c.Tag == "player")
-                {
-                    if (figure.Bounds.IntersectsWith(c.Bounds) && fired)
-                    {
-                        right = false;
-                        left = false;
-                        fired = false;
-                        return false;//vraca false
-                    }
-                }
-               
-            }
             return false;
         }
 

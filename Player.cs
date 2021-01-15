@@ -44,13 +44,12 @@ namespace Beskonačni_Toranj
         //slike playera dok hoda udesno
         List<Bitmap> rightWalks;
 
+        //metak koja player ispucava klase projectil
+        ProjectilShotByPlayer projectil;
 
         //originalne informacije
         private int originalX;
         private int originalY;
-
-        //metak koja player ispucava klase projectil
-        ProjectilShotByPlayer projectil;
 
         //konstruktor
         public Player()
@@ -72,6 +71,8 @@ namespace Beskonačni_Toranj
             projectil = new ProjectilShotByPlayer();
             life = 10;
         }
+
+        //--------------------------FUNKCIJE KOJE  SE BAVE ODGOVOROM PLAYERA NA GUMBE------------------------------------------------------------------------------------------------
 
         //funkcija koja obavlja sto se dogada s playerom kad se tipka pritisnuta, poziva se is Form1.Form1_KeyDown
         //za kretanje ulijevo -> A / strelica ulijevo
@@ -113,24 +114,23 @@ namespace Beskonačni_Toranj
             }  
         }
 
-
-        //funkcija koja crta playera; poziva se iz Form1.Form1_Paint; na pocetku funckije se odreduje koji ce se
-        //walking frame crtati, tj koja ce se slika koja predstavlja playera crtati. To je odredeno time da li
-        //se player krece prema desno, lijevo ili da li skace/stoji
-        //Napisane su Smoothingmode, interpolationmode i pixeloffsetmode kako bi se sto lijepse resizeala slika
-        //napomena, ne crta se picturebox, vec se crtaju slike playera
-        public void paint(object sender, PaintEventArgs e)
+ 
+        //funkcija koja se bavi pritiskama tipki za pucanje
+        internal void keyPress(object sender, KeyPressEventArgs e)
         {
-            Bitmap walkFrame = returnCurrentWalkFrame();
-            
-             e.Graphics.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.HighQuality;
-             e.Graphics.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.HighQualityBicubic;
-             e.Graphics.PixelOffsetMode = System.Drawing.Drawing2D.PixelOffsetMode.HighQuality;
-             e.Graphics.DrawImage(walkFrame, x, y, width, height);
+            if (e.KeyChar == 'J' || e.KeyChar == 'j')
+            {
+                projectil.pucajlijevo(x, y);
+            }
 
-            projectil.paint(sender, e);
-           
+            else if (e.KeyChar == 'L' || e.KeyChar == 'l')
+            {
+                projectil.pucajdesno(x, y);
+            }
         }
+
+
+        //--------------------------FUNKCIJE KOJE SE BAVE LOGISTIKOM PLAYERA------------------------------------------------------------------------------------------------
 
         //akcije koje se obavljaju kako vrijeme tece; tu se obavlja pokretanje playera, detekcija da li player dotice 
         //platforme i ostalo; sve se obavlja na pictureboxu koji je stvoren u formi, tek se onda to prebacuje u informacije
@@ -138,11 +138,10 @@ namespace Beskonačni_Toranj
         //picture box;
         public void timerTick(object sender, EventArgs e, Form1 form)
         {
-            
             projectil.projectilTick(sender, e, form);
 
             //ako je lupio svojim projektilom
-            if (projectil.isHit(form))
+            if (projectil.hasHit(form))
             {
                 //ovo se tice playera kad boss pogodi
                 score += 2;
@@ -151,7 +150,9 @@ namespace Beskonačni_Toranj
                 form.bossIsHit();
             }
 
-            if(figure.Location.Y > 500 || life <= 0)
+
+
+            if (figure.Location.Y > 500 || life <= 0)
             {
                 alive = false;
                 //return;
@@ -226,6 +227,67 @@ namespace Beskonačni_Toranj
             
         }
 
+        public void playerTickprojectil(object sender, EventArgs e, Form1 form)
+        {
+            //prvo obnovi projektil ako je ziv
+            projectil.projectilTick(sender, e, form);
+
+            //ako je lupio svojim projektilom
+            if (projectil.hasHit(form))
+            {
+                //ovo se tice playera kad boss pogodi
+                score += 2;
+
+                //ovo javlja info formi da je boss pogodjen
+                form.bossIsHit();
+            }
+
+        }
+
+        //funkcija resetira playera; postavlja sve informacije na one originalne
+        public void restart()
+        {
+            //ponavljam sve iz konstruktora
+            score = 0;
+            jumpSpeed = 10;
+            figureSpeed = 10;
+            force = 8;
+            goingLeft = false;
+            goingRight = false;
+            jumping = false;
+            leftWalkFrameCounter = 0;
+            rightWalkFrameCounter = 0;       
+            alive = true;
+            figure.Location = new Point(100, 350);
+            life = 10;
+            projectil = new ProjectilShotByPlayer();
+
+            //vracam na pocetnu poziciju
+            x = originalX;
+            y = originalY;
+
+        }
+
+        //----------------------------FUNKCIJE KOJE SE BAVE CRTANJEM/SLIKOM PLAYERA--------------------------------------------------------------------------------------------------------
+
+        //funkcija koja crta playera; poziva se iz Form1.Form1_Paint; na pocetku funckije se odreduje koji ce se
+        //walking frame crtati, tj koja ce se slika koja predstavlja playera crtati. To je odredeno time da li
+        //se player krece prema desno, lijevo ili da li skace/stoji
+        //Napisane su Smoothingmode, interpolationmode i pixeloffsetmode kako bi se sto lijepse resizeala slika
+        //napomena, ne crta se picturebox, vec se crtaju slike playera
+        public void paint(object sender, PaintEventArgs e)
+        {
+            Bitmap walkFrame = returnCurrentWalkFrame();
+
+            e.Graphics.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.HighQuality;
+            e.Graphics.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.HighQualityBicubic;
+            e.Graphics.PixelOffsetMode = System.Drawing.Drawing2D.PixelOffsetMode.HighQuality;
+            e.Graphics.DrawImage(walkFrame, x, y, width, height);
+
+            projectil.paint(sender, e);
+
+        }
+
         //dodaj sliku playera; za playera nepotreba funkcija ako se zeli napraviti animacija kretanja
         public override void addImage(Bitmap image)
         {
@@ -294,58 +356,12 @@ namespace Beskonačni_Toranj
             //ucini da pozadina slike bude transparentna, tako da se vidi samo player, ne i pozadina slike
             tracer = returnValue.GetPixel(1, 1);
             returnValue.MakeTransparent(tracer);
-            
+
             return returnValue;
         }
 
-        //funkcija resetira playera; postavlja sve informacije na one originalne
-        public void restart()
-        {
-            //ponavljam sve iz konstruktora
-            score = 0;
-            jumpSpeed = 10;
-            figureSpeed = 10;
-            force = 8;
-            goingLeft = false;
-            goingRight = false;
-            jumping = false;
-            leftWalkFrameCounter = 0;
-            rightWalkFrameCounter = 0;       
-            alive = true;
-            figure.Location = new Point(100, 350);
-            life = 10;
-            projectil = new ProjectilShotByPlayer();
 
-            //vracam na pocetnu poziciju
-            x = originalX;
-            y = originalY;
-
-        }
-
-        //-----------------------------FUNKCIJE VEZANJE ZA PROJEKTIL/PUCANJE
-
-        //funkcija koja se bavi pritiskama tipki za pucanje
-        internal void keyPress(object sender, KeyPressEventArgs e)
-        {
-            if (e.KeyChar == 'J' || e.KeyChar == 'j')
-            {
-                projectil.Left = true;
-                projectil.Right = false;
-                projectil.Fired = true;
-                projectil.X = x;
-                projectil.Y = y - 10;
-            }
-
-            else if (e.KeyChar == 'L' || e.KeyChar == 'l')
-            {
-                projectil.Right = true;
-                projectil.Left = false;
-                projectil.Fired = true;
-                projectil.X = x;
-                projectil.Y = y - 10;
-            }
-        }
-
+        //-----------------------------FUNKCIJE VEZANJE ZA PROJEKTIL/PUCANJE------------------------------------------------------------------------------------------------
         public void addProjectilImage(Bitmap image)
         {
             projectil.addImage(image);
@@ -366,7 +382,8 @@ namespace Beskonačni_Toranj
             projectil.removePictureBox();
         }
 
-        //-------------------------------SVOJSTVA-----------------------------
+
+        //-------------------------------SVOJSTVA-----------------------------------------------------------------------------------------------------------------------------
         public override int X
         {
             set { x = value; figure.Location = new Point(value, figure.Location.Y); }

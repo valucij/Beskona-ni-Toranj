@@ -22,6 +22,8 @@ namespace Beskonačni_Toranj
         protected int life;
         //zastavica koja govori da li je player ziv ili ne
         protected bool alive;
+        //flag koji govori je li character visible;
+        protected bool visible;
 
         //predstavlja picturebox koji u windows formi predstavlja lika
         protected System.Windows.Forms.PictureBox figure;
@@ -53,10 +55,12 @@ namespace Beskonačni_Toranj
             this.pictures.Add(picture);
         }
 
+        //-------------------------------LIK POGODJEN
         public virtual void isHit(){
             life--;
             if (life <= 0) alive = false;
         }
+
         //------------------------------SVOJSTVA--------------------------------------
         public virtual int X
         {
@@ -89,6 +93,13 @@ namespace Beskonačni_Toranj
         {
             set { alive = value; }
             get { return alive; }
+        }
+
+        public bool Visible 
+        {
+            set { visible = value; }
+            get{ return visible;  }
+        
         }
     }
 }
