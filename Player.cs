@@ -27,10 +27,6 @@ namespace Beskonačni_Toranj
         private bool goingRight;
         private bool jumping;
 
-        //informacije oko toga gdje se player nalazi u prostoru
-        private int x, y;
-        //informacije oko velicine playera
-        private int width, height;
         //element koji nam sluzi kako bi rubove slika playera ucinili transparentnim
         private Color tracer;
 
@@ -47,15 +43,14 @@ namespace Beskonačni_Toranj
         List<Bitmap> leftWalks;
         //slike playera dok hoda udesno
         List<Bitmap> rightWalks;
-        //zastavica koja govori da li je player ziv ili ne
-        bool alive;
+
+
         //originalne informacije
         private int originalX;
         private int originalY;
 
-        Projectil projectil;
-
-        private int life;
+        //metak koja player ispucava klase projectil
+        ProjectilShotByPlayer projectil;
 
         //konstruktor
         public Player()
@@ -74,56 +69,10 @@ namespace Beskonačni_Toranj
             leftWalks = new List<Bitmap>();
             rightWalks = new List<Bitmap>();
             alive = true;
-            projectil = new Projectil();
+            projectil = new ProjectilShotByPlayer();
             life = 10;
         }
 
-        public int Score
-        {
-            set { score = value; }
-            get { return score; }
-        }
-
-        public int JumpSpeed
-        {
-            set { jumpSpeed = value; }
-            get { return jumpSpeed; }
-        }
-
-        public int Force
-        {
-            set { force = value; }
-            get { return force; }
-        }
-
-        public string Name
-        {
-            get { return name; }
-        }
-
-        public int X
-        {
-            get { return x; }
-            set { x = value; }
-        }
-
-        public int Y
-        {
-            get { return y; }
-            set { y = value; }
-        }
-
-        public bool Alive
-        {
-            set { alive = value; }
-            get { return alive; }
-        }
-
-        public int Life
-        {
-            set { life = value; }
-            get { return life; }
-        }
         //funkcija koja obavlja sto se dogada s playerom kad se tipka pritisnuta, poziva se is Form1.Form1_KeyDown
         //za kretanje ulijevo -> A / strelica ulijevo
         //za kretanje udesno -> D / strelica udesno
@@ -142,10 +91,10 @@ namespace Beskonačni_Toranj
             else if ((e.KeyCode == Keys.Up || e.KeyCode == Keys.W) && !jumping)
             {
                 jumping = true;
-            }
-         
-
+            }  
         }
+
+
         //funckija koja obavlja sto se dogada s playerom kad je tipka pustena, poziva se iz Form1.Form1_KeyUp
         public void keyUp(object sender, KeyEventArgs e)
         {
@@ -161,10 +110,10 @@ namespace Beskonačni_Toranj
             else if (e.KeyCode == Keys.Space || e.KeyCode == Keys.Up || e.KeyCode == Keys.W)
             {
                 jumping = false;
-            }
-           
-            
+            }  
         }
+
+
         //funkcija koja crta playera; poziva se iz Form1.Form1_Paint; na pocetku funckije se odreduje koji ce se
         //walking frame crtati, tj koja ce se slika koja predstavlja playera crtati. To je odredeno time da li
         //se player krece prema desno, lijevo ili da li skace/stoji
@@ -191,9 +140,14 @@ namespace Beskonačni_Toranj
         {
             
             projectil.projectilTick(sender, e, form);
+
+            //ako je lupio svojim projektilom
             if (projectil.isHit(form))
             {
+                //ovo se tice playera kad boss pogodi
                 score += 2;
+
+                //ovo javlja info formi da je boss pogodjen
                 form.bossIsHit();
             }
 
@@ -202,6 +156,7 @@ namespace Beskonačni_Toranj
                 alive = false;
                 //return;
             }
+
             //pomakni playera gore ili dolje, ovisno o jumpSpeedu
             figure.Top += jumpSpeed;
 
@@ -210,6 +165,7 @@ namespace Beskonačni_Toranj
             {
                 jumping = false;
             }
+
             //ako je u procesu skakanja, smanjuj force ("snagu skakanja"), tj polako zaustavljaj skakanje;
             //i je jumpSpeed manje od 0
             if (jumping)
@@ -233,7 +189,7 @@ namespace Beskonačni_Toranj
 
             foreach (Control x in form.Controls)
             {
-                if (x.Tag == "platform" || x.Tag == "ground") 
+                if ((string)x.Tag == "platform" || (string)x.Tag == "ground") 
                 {
                    
                     if (figure.Bounds.IntersectsWith(x.Bounds) && !jumping && x.Top > figure.Top)//detekcija da li player stoji na platformi
@@ -245,7 +201,7 @@ namespace Beskonačni_Toranj
                     }
                 }
 
-                if (x.Tag == "boss" )
+                if ((string)x.Tag == "boss" )
                 {
 
                     if (figure.Bounds.IntersectsWith(x.Bounds) )
@@ -254,7 +210,7 @@ namespace Beskonačni_Toranj
                     }
                 }
 
-                if (x.Tag == "bossProjectil")
+                if ((string)x.Tag == "bossProjectil")
                 {
                     if (figure.Bounds.IntersectsWith(x.Bounds))
                     {
@@ -269,8 +225,9 @@ namespace Beskonačni_Toranj
             height = figure.Height;
             
         }
+
         //dodaj sliku playera; za playera nepotreba funkcija ako se zeli napraviti animacija kretanja
-        public void addImage(Bitmap image)
+        public override void addImage(Bitmap image)
         {
             this.image = image;
             tracer = image.GetPixel(1, 1);
@@ -292,7 +249,7 @@ namespace Beskonačni_Toranj
 
         //dodaj razne slike za playera, kako bi mogli napraviti animaciju;
         //slike treba rasporediti u slike za stajanje, hodanje ulijevo i udesno
-        public void addImage(List<Bitmap> images)
+        public override void addImage(List<Bitmap> images)
         {
             stand = images[0];
             leftWalks.Add(images[1]);
@@ -341,27 +298,10 @@ namespace Beskonačni_Toranj
             return returnValue;
         }
 
-        internal void keyPress(object sender, KeyPressEventArgs e)
-        {
-            if (e.KeyChar == 'J' || e.KeyChar == 'j')
-            {
-                projectil.Left = true;
-                projectil.Fired = true;
-                projectil.X = x;
-                projectil.Y = y - 10;
-            }
-            else if (e.KeyChar == 'L' || e.KeyChar == 'l')
-            {
-                projectil.Right = true;
-                projectil.Fired = true;
-                projectil.X = x;
-                projectil.Y = y - 10;
-            }
-        }
-
         //funkcija resetira playera; postavlja sve informacije na one originalne
         public void restart()
         {
+            //ponavljam sve iz konstruktora
             score = 0;
             jumpSpeed = 10;
             figureSpeed = 10;
@@ -374,10 +314,36 @@ namespace Beskonačni_Toranj
             alive = true;
             figure.Location = new Point(100, 350);
             life = 10;
+            projectil = new ProjectilShotByPlayer();
 
+            //vracam na pocetnu poziciju
             x = originalX;
             y = originalY;
 
+        }
+
+        //-----------------------------FUNKCIJE VEZANJE ZA PROJEKTIL/PUCANJE
+
+        //funkcija koja se bavi pritiskama tipki za pucanje
+        internal void keyPress(object sender, KeyPressEventArgs e)
+        {
+            if (e.KeyChar == 'J' || e.KeyChar == 'j')
+            {
+                projectil.Left = true;
+                projectil.Right = false;
+                projectil.Fired = true;
+                projectil.X = x;
+                projectil.Y = y - 10;
+            }
+
+            else if (e.KeyChar == 'L' || e.KeyChar == 'l')
+            {
+                projectil.Right = true;
+                projectil.Left = false;
+                projectil.Fired = true;
+                projectil.X = x;
+                projectil.Y = y - 10;
+            }
         }
 
         public void addProjectilImage(Bitmap image)
@@ -400,6 +366,40 @@ namespace Beskonačni_Toranj
             projectil.removePictureBox();
         }
 
-       
+        //-------------------------------SVOJSTVA-----------------------------
+        public override int X
+        {
+            set { x = value; figure.Location = new Point(value, figure.Location.Y); }
+            get { return x; }
+        }
+
+        public override int Y
+        {
+            set { y = value; figure.Location = new Point(figure.Location.X, value); }
+            get { return y; }
+        }
+
+        public int Score
+        {
+            set { score = value; }
+            get { return score; }
+        }
+
+        public int JumpSpeed
+        {
+            set { jumpSpeed = value; }
+            get { return jumpSpeed; }
+        }
+
+        public int Force
+        {
+            set { force = value; }
+            get { return force; }
+        }
+
+        public string Name
+        {
+            get { return name; }
+        }
     }
 }

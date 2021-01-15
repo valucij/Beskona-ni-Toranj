@@ -10,28 +10,35 @@ namespace Beskonačni_Toranj
 {
     class Boss : Character
     {
-        private int x, y;
-        private int width, height;
-        private int life;
+        //brzina boss-a
         private int bossSpeed;
+        //boja tracer objekta za testiranje
         Color tracer;
-        Projectil projectil;
-
+        //metak od neprijatelja
+        ProjectilShotByBoss projectil;
+        //zastavica koja opisuje je li boss ispucao projektil
         private bool fired;
+        //jel na lijevoj ili desnoj strani ekrana sece
         private bool leftSide, rightSide;
+        //jel se boss krece lijevo ili desno
         private bool left, right;
-
+        //slike boss-a (lista je da generiramo kretanje)
         List<Bitmap> images;
+        //counter koji broji koji frame da prikaze
         private int frameCounter;
 
         public Boss()
         {
             tracer = new Color();
-            projectil = new Projectil();
+            projectil = new ProjectilShotByBoss();
             fired = false;
             bossSpeed = 3;
             leftSide = false;
             rightSide = true;
+            alive = true;
+
+            left = true;
+            right = false;
 
             images = new List<Bitmap>();
             frameCounter = 0;
@@ -40,34 +47,6 @@ namespace Beskonačni_Toranj
             x = 571;
             y = 447;
             //figure.Location = new Point(x, y);
-        }
-
-        public int X
-        {
-            set { x = value; figure.Location = new Point(value, figure.Location.Y); }
-            get { return x; }
-        }
-        
-        public int Y
-        {
-            set { y = value; figure.Location = new Point(figure.Location.X, value); }
-            get { return y; }
-        }
-
-        public int Width
-        {
-            set { width = value; }
-            get { return width; }
-        }
-        public int Height
-        {
-            set { height = value; }
-            get { return height; }
-        }
-        public int Life
-        {
-            set { life = value; }
-            get { return life; }
         }
 
         public void bossTickProjectil(object sender, EventArgs e, Form1 form)
@@ -128,7 +107,7 @@ namespace Beskonačni_Toranj
                 left = true;
             }
 
-            figure.Location = new Point(x, y); 
+            figure.Location = new Point(x, y);
         }
 
         public void paint(object sender, PaintEventArgs e)
@@ -144,14 +123,14 @@ namespace Beskonačni_Toranj
 
         }
 
-        public void addImage(List<Bitmap> images)
+        public override void addImage(List<Bitmap> images)
         {
             this.images = images;
             copyFigureInformation();
 
         }
 
-        public void addImage(Bitmap image)
+        public override void addImage(Bitmap image)
         {
             this.images.Add(image);
             copyFigureInformation();
@@ -185,6 +164,29 @@ namespace Beskonačni_Toranj
             return returnValue;
         }
 
+        public void restart()
+        {
+            tracer = new Color();
+            projectil = new ProjectilShotByBoss();
+            fired = false;
+            bossSpeed = 3;
+            leftSide = false;
+            rightSide = true;
+            alive = true;
+
+            left = true;
+            right = false;
+
+            images = new List<Bitmap>();
+            frameCounter = 0;
+
+            //ista pocetna pozicija
+            x = 571;
+            y = 447;
+            //figure.Location = new Point(x, y);
+
+        }
+
         private void changePosition()
         {
             if (leftSide)
@@ -192,7 +194,7 @@ namespace Beskonačni_Toranj
                 x = 112;
                 y = 441;
             }
-            else 
+            else
             {
                 x = 571;
                 y = 441;
@@ -202,7 +204,7 @@ namespace Beskonačni_Toranj
 
         }
 
-
+        //-------------------------------------STVARI VEZANE UZ PUCANJE/PROJEKTIL-------------
         public void addProjectilImage(Bitmap image)
         {
             projectil.addImage(image);
@@ -223,6 +225,7 @@ namespace Beskonačni_Toranj
             projectil.removePictureBox();
         }
 
+      
 
     }
 }

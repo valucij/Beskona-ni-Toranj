@@ -10,16 +10,16 @@ namespace Beskonačni_Toranj
 {
     class Projectil : IImageControl
     {
-        private PictureBox figure;
-        private int x, y;
-        private int width, height;
-        private int projectilSpeed;
-        private Color tracer;
-        private List<Bitmap> images;
-        private int frameCounter;
+        protected PictureBox figure;
+        protected int x, y;
+        protected int width, height;
+        protected int projectilSpeed;
+        protected Color tracer;
+        protected List<Bitmap> images;
+        protected int frameCounter;
         //zastavica unutar ove klase kako bi se kontroliralo crtanje projektila
-        private bool fired;
-        private bool left, right;
+        protected bool fired;
+        protected bool left, right;
 
         public Projectil()
         {
@@ -33,16 +33,20 @@ namespace Beskonačni_Toranj
           
         }
 
+        //funkcija koja dodaje PictureBox
         public void addPictureBox(PictureBox figure)
         {
             this.figure = figure;
         }
 
+        //funkcija koja miče PictureBox
         public void removePictureBox()
         {
             this.figure = null;
         }
 
+
+        //------------------------------------------------svojstva--------------------------------------------------
         public int X
         {
             set { x = value; figure.Location = new Point(value, figure.Location.Y); }
@@ -54,8 +58,6 @@ namespace Beskonačni_Toranj
             set { y = value; figure.Location = new Point(figure.Location.X, value); }
             get { return y; }
         }
-
-       
 
         public int Width
         {
@@ -91,6 +93,8 @@ namespace Beskonačni_Toranj
             set { right = value; }
             get { return right; }
         }
+
+
   
         public void paint(object sender, PaintEventArgs e)
         {
@@ -141,25 +145,29 @@ namespace Beskonačni_Toranj
             {        
                 x -= projectilSpeed;
             }
-            
-            figure.Location = new Point(x, y);
-            
-            if (x + width > form.ClientSize.Width || x < 0)
-            {
-                left = false;
-                right = false;
-                fired = false;
-            }
 
-            if (y + height > form.ClientSize.Height || y < 0)
-            {
-                left = false;
-                right = false;
-                fired = false;
-            }
+
+                figure.Location = new Point(x, y);
+
+                if (x + width > form.ClientSize.Width || x < 0)
+                {
+                    left = false;
+                    right = false;
+                    fired = false;
+                }
+
+                if (y + height > form.ClientSize.Height || y < 0)
+                {
+                    left = false;
+                    right = false;
+                    fired = false;
+                }
+
         }
-        //poziva se iz player.tick ili boss.tick
-        public bool isHit(Form1 form)
+
+
+        //vraća je li character pogođen, poziva se iz player.tick ili boss.tick
+        public virtual bool isHit(Form1 form)
         {
             if (!fired)
             {
@@ -167,7 +175,7 @@ namespace Beskonačni_Toranj
             }
             foreach (Control c in form.Controls)
             {
-                if (c.Tag == "enemy" || c.Tag == "boss" /*|| c.Tag == "player"*/)
+                if ((string)c.Tag == "enemy" || (string)c.Tag == "boss" /*|| c.Tag == "player"*/)
                 {
                     if (figure.Bounds.IntersectsWith(c.Bounds) && fired)
                     {
@@ -178,7 +186,7 @@ namespace Beskonačni_Toranj
                     }
                 }
 
-                if (c.Tag == "platform" || c.Tag == "ground")
+                if ((string)c.Tag == "platform" || (string)c.Tag == "ground")
                 {
                     if (figure.Bounds.IntersectsWith(c.Bounds) && fired)
                     {
@@ -190,7 +198,7 @@ namespace Beskonačni_Toranj
                     
                 }
 
-                if (c.Tag == "player")
+                if ((string)c.Tag == "player")
                 {
                     if (figure.Bounds.IntersectsWith(c.Bounds) && fired)
                     {
@@ -205,7 +213,7 @@ namespace Beskonačni_Toranj
             return false;
         }
 
-     
+        //vrati novi BitMap frame (tj sliku projektila među frameovima)
         public Bitmap returnNewFrame()
         {
             Bitmap returnValue = images[0];

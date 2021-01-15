@@ -8,3 +8,13 @@ C:\Users\Lucija\Documents\Računarski praktikum 3\Beskonačni Toranj\obj\Debug\B
 C:\Users\Lucija\Documents\Računarski praktikum 3\Beskonačni Toranj\obj\Debug\Beskonačni Toranj.csproj.CoreCompileInputs.cache
 C:\Users\Lucija\Documents\Računarski praktikum 3\Beskonačni Toranj\obj\Debug\Beskonačni Toranj.exe
 C:\Users\Lucija\Documents\Računarski praktikum 3\Beskonačni Toranj\obj\Debug\Beskonačni Toranj.pdb
+C:\Users\Iva\Documents\GitHub\Beskona-ni-Toranj\bin\Debug\Beskonačni Toranj.exe.config
+C:\Users\Iva\Documents\GitHub\Beskona-ni-Toranj\bin\Debug\Beskonačni Toranj.exe
+C:\Users\Iva\Documents\GitHub\Beskona-ni-Toranj\bin\Debug\Beskonačni Toranj.pdb
+C:\Users\Iva\Documents\GitHub\Beskona-ni-Toranj\obj\Debug\Beskonačni Toranj.csprojAssemblyReference.cache
+C:\Users\Iva\Documents\GitHub\Beskona-ni-Toranj\obj\Debug\Beskonačni_Toranj.Form1.resources
+C:\Users\Iva\Documents\GitHub\Beskona-ni-Toranj\obj\Debug\Beskonačni_Toranj.Properties.Resources.resources
+C:\Users\Iva\Documents\GitHub\Beskona-ni-Toranj\obj\Debug\Beskonačni Toranj.csproj.GenerateResource.cache
+C:\Users\Iva\Documents\GitHub\Beskona-ni-Toranj\obj\Debug\Beskonačni Toranj.csproj.CoreCompileInputs.cache
+C:\Users\Iva\Documents\GitHub\Beskona-ni-Toranj\obj\Debug\Beskonačni Toranj.exe
+C:\Users\Iva\Documents\GitHub\Beskona-ni-Toranj\obj\Debug\Beskonačni Toranj.pdb
