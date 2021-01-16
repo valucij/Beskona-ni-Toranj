@@ -49,7 +49,7 @@ namespace Beskonačni_Toranj
         }
 
         //funkcija koja updatea stanje projektila
-        public void bossTickProjectil(object sender, EventArgs e, Form1 form)
+       /* public void bossTickProjectil(object sender, EventArgs e, Form1 form)
         {
             //funkcija koja updatea projektil
             projectil.projectilTick(sender, e, form);
@@ -78,7 +78,7 @@ namespace Beskonačni_Toranj
                 changePosition();
             }
 
-        }
+        }*/
 
         public void bossTickMovement(object sender, EventArgs e, Form1 form)
         {
