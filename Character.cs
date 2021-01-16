@@ -58,6 +58,7 @@ namespace Beskonačni_Toranj
         //-------------------------------LIK POGODJEN
         public virtual void isHit(){
             life--;
+            Console.WriteLine("life " + life);
             if (life <= 0) alive = false;
         }
 

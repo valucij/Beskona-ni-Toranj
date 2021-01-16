@@ -132,7 +132,7 @@ namespace Beskonačni_Toranj
             this.BackColor = Color.Black;
 
             //postavljanje pozadinske slike
-            this.BackgroundImage = Properties.Resources.background;
+            //this.BackgroundImage = Properties.Resources.background;
             this.BackgroundImageLayout = ImageLayout.Stretch;
 
             //dodajem slike za menu buttons 
@@ -160,6 +160,7 @@ namespace Beskonačni_Toranj
 
             //dodajem slike za bossa
             boss.addPictureBox(bossPictureBox);
+            boss.addImage(Properties.Resources.bossPicture);
 
 
             //dodajem slike za projektil playera
@@ -174,13 +175,16 @@ namespace Beskonačni_Toranj
             //dodajem slike za projektil bossa
             boss.addProjectilPictureBox(bossProjectilPictureBox);
 
-            player.addProjectilImage(Properties.Resources.projectil_1);
-            player.addProjectilImage(Properties.Resources.projectil_2);
-            player.addProjectilImage(Properties.Resources.projectil_3);
-            player.addProjectilImage(Properties.Resources.projectil_4);
-            player.addProjectilImage(Properties.Resources.projectil_5);
+            boss.addProjectilImage(Properties.Resources.projectil_1);
+            boss.addProjectilImage(Properties.Resources.projectil_2);
+            boss.addProjectilImage(Properties.Resources.projectil_3);
+            boss.addProjectilImage(Properties.Resources.projectil_4);
+            boss.addProjectilImage(Properties.Resources.projectil_5);
 
 
+            //ovo obrisati, ovo je samo za testiranje, mijenjamo polazaj playera, samo za testiranje bossa
+            player.X = 282;
+            player.Y = 400;
         }
         //------------------------------------------------CRTANJE---------------------------------------------------------------------------------------------------------------------------------------------------
         //crtanje objekata u formi; sve se salje u odgovarajuce funckije clanova forme (playeri i platforme)
@@ -197,6 +201,7 @@ namespace Beskonačni_Toranj
                 {
                     p.platformPaint(sender, e);
                 }
+                boss.paint(sender, e);
             }
             else if (endgameFlag)
             {
@@ -363,7 +368,7 @@ namespace Beskonačni_Toranj
 
         //-------------------------------------------------TICKERI za bossa--------------------------------------------------------------------------------------------------------------------
 
-        private void bossTickProjectilFunction(object sender, EventArgs e)
+       /* private void bossTickProjectilFunction(object sender, EventArgs e)
         {
             boss.bossTickProjectil(sender, e, this);
         }
@@ -371,7 +376,7 @@ namespace Beskonačni_Toranj
         private void bossTickSides(object sender, EventArgs e)
         {
             boss.bossTickSides(sender, e, this);
-        }
+        }*/
 
         private void bossTickMovementFunction(object sender, EventArgs e)
         {

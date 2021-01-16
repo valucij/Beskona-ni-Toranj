@@ -103,6 +103,16 @@ namespace Beskonačni_Toranj.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap bossPicture {
+            get {
+                object obj = ResourceManager.GetObject("bossPicture", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap projectil_1 {
             get {
                 object obj = ResourceManager.GetObject("projectil_1", resourceCulture);

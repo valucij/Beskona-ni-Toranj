@@ -35,7 +35,7 @@ namespace Beskonačni_Toranj
                 if ((string)c.Tag == "player" && figure.Bounds.IntersectsWith(c.Bounds))
                 {
                         this.reset();
-                        return false;
+                        return true;
                 }
 
             }

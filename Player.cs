@@ -69,7 +69,7 @@ namespace Beskonačni_Toranj
             rightWalks = new List<Bitmap>();
             alive = true;
             projectil = new ProjectilShotByPlayer();
-            life = 10;
+            life = 10;//VRATITI BROJ ZIVOTA NA 10
         }
 
         //--------------------------FUNKCIJE KOJE  SE BAVE ODGOVOROM PLAYERA NA GUMBE------------------------------------------------------------------------------------------------
@@ -150,8 +150,6 @@ namespace Beskonačni_Toranj
                 form.bossIsHit();
             }
 
-
-
             if (figure.Location.Y > 500 || life <= 0)
             {
                 alive = false;
@@ -188,36 +186,39 @@ namespace Beskonačni_Toranj
                 figure.Left += figureSpeed;
             }
 
-            foreach (Control x in form.Controls)
+            foreach (Control c in form.Controls)
             {
-                if ((string)x.Tag == "platform" || (string)x.Tag == "ground") 
+                if ((string)c.Tag == "platform" || (string)c.Tag == "ground") 
                 {
                    
-                    if (figure.Bounds.IntersectsWith(x.Bounds) && !jumping && x.Top > figure.Top)//detekcija da li player stoji na platformi
+                    if (figure.Bounds.IntersectsWith(c.Bounds) && !jumping && c.Top > figure.Top)//detekcija da li player stoji na platformi
                     {
                         force = 8;
-                        figure.Top = x.Top - figure.Height + 26;
+                        figure.Top = c.Top - figure.Height + 26;
                         jumpSpeed = 0;
                         score++;
                     }
                 }
 
-                if ((string)x.Tag == "boss" )
+                if ((string)c.Tag == "boss" || (string)c.Tag == "enemy")
                 {
 
-                    if (figure.Bounds.IntersectsWith(x.Bounds) )
+                    if (figure.Bounds.IntersectsWith(c.Bounds) )
                     {
                         life--;
                     }
                 }
 
-                if ((string)x.Tag == "bossProjectil")
+               /* if ((string)c.Tag == "bossProjectil")
                 {
-                    if (figure.Bounds.IntersectsWith(x.Bounds))
+                    //Console.WriteLine("ima ga");
+                    //Console.WriteLine("c.bounds: " + c.Bounds + ", figure.location: " + figure.Location.X);
+                    if (figure.Bounds.IntersectsWith(c.Bounds))
                     {
                         life--;
+                        Console.WriteLine("ovdje smo");
                     }
-                }
+                }*/
             }
             //uzmi informacije iz pictureboxa, kako bi znali nacrtati playera
             x = figure.Location.X;
@@ -260,7 +261,7 @@ namespace Beskonačni_Toranj
             alive = true;
             figure.Location = new Point(100, 350);
             life = 10;
-            projectil = new ProjectilShotByPlayer();
+            //projectil = new ProjectilShotByPlayer(); OVO NE, MAKNUTI OVO NE!
 
             //vracam na pocetnu poziciju
             x = originalX;

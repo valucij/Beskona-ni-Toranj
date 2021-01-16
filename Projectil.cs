@@ -11,6 +11,7 @@ namespace Beskonačni_Toranj
     class Projectil : IImageControl
     {
         protected PictureBox figure;
+        //sluze samo za crtanje
         protected int x, y;
         protected int width, height;
         protected int projectilSpeed;
@@ -43,8 +44,12 @@ namespace Beskonačni_Toranj
             left = true;
             right = false;
             fired = true;
+            figure.Location = new Point(shooter_x, shooter_y + 10);
+
             x = shooter_x;
-            y = shooter_y - 10;
+            y = shooter_y + 10;
+
+          //  Console.WriteLine("lijevo figure.location.x " + figure.Location.X);
         }
 
         //funkcija koja postavlja zastavice i koordinate za pucanje desno
@@ -53,16 +58,25 @@ namespace Beskonačni_Toranj
             right = true;
             left = false;
             fired = true;
-            x = shooter_x;
-            y = shooter_y - 10;
 
+            figure.Location = new Point(shooter_x, shooter_y + 10);
+
+            x = shooter_x;
+            y = shooter_y + 10;
+
+            //Console.WriteLine("puca desno");
+           // Console.WriteLine("desno figure.location.x " + figure.Location.X);
         }
 
         //funkcija koja postavlja zastavicu i koordinate za pucanje u kojem god smjeru da su vec zastavice postavljene
         public void pucaj(int shooter_x, int shooter_y) {
             fired = true;
+
+            figure.Location = new Point(shooter_x, shooter_y + 10);
+
             x = shooter_x;
-            y = shooter_y - 10;
+            y = shooter_y + 10;
+
         }
 
         //funkcija koja vraca metak u cahuru (na pocetno stanje)
@@ -73,6 +87,8 @@ namespace Beskonačni_Toranj
             right = false;
             x = 0;
             y = 0;
+
+            figure.Location = new Point(0, 0);
         }
 
         //---------------------------------------------funkcije vezane uz slike-----------------------------------
@@ -181,11 +197,11 @@ namespace Beskonačni_Toranj
             //Ako je metak ispucan, prvo ga pomakni
                 if (right)
                 {
-                    x += projectilSpeed;
+                    figure.Left += projectilSpeed;
                 }
                 else if (left)
                 {
-                    x -= projectilSpeed;
+                    figure.Left -= projectilSpeed;
                 }
 
             //ako je metak izasao van granica ekrana
@@ -196,8 +212,13 @@ namespace Beskonačni_Toranj
                 };
 
             //inace updateaj sliku metka
-            figure.Location = new Point(x, y);
+            //figure.Location = new Point(x, y);
 
+            //uzimamo te informacije iz figura da znamo nacrtati projectil
+            x = figure.Location.X;
+            y = figure.Location.Y;
+            width = figure.Width;
+            height = figure.Height;
 
         }
 

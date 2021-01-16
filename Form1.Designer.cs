@@ -44,8 +44,6 @@
             this.menuButton_1 = new System.Windows.Forms.PictureBox();
             this.menuButton_2 = new System.Windows.Forms.PictureBox();
             this.projectilPictureBox = new System.Windows.Forms.PictureBox();
-            this.bossTickProjectil = new System.Windows.Forms.Timer(this.components);
-            this.bossTickSide = new System.Windows.Forms.Timer(this.components);
             this.bossTickMovement = new System.Windows.Forms.Timer(this.components);
             this.bossPictureBox = new System.Windows.Forms.PictureBox();
             this.bossProjectilPictureBox = new System.Windows.Forms.PictureBox();
@@ -69,20 +67,20 @@
             // 
             // platformPictureBox_1
             // 
-            this.platformPictureBox_1.Location = new System.Drawing.Point(207, 336);
-            this.platformPictureBox_1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.platformPictureBox_1.Location = new System.Drawing.Point(276, 414);
+            this.platformPictureBox_1.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.platformPictureBox_1.Name = "platformPictureBox_1";
-            this.platformPictureBox_1.Size = new System.Drawing.Size(115, 52);
+            this.platformPictureBox_1.Size = new System.Drawing.Size(153, 64);
             this.platformPictureBox_1.TabIndex = 2;
             this.platformPictureBox_1.TabStop = false;
             this.platformPictureBox_1.Tag = "platform";
             // 
             // groundPictureBox
             // 
-            this.groundPictureBox.Location = new System.Drawing.Point(-10, 483);
-            this.groundPictureBox.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.groundPictureBox.Location = new System.Drawing.Point(-13, 594);
+            this.groundPictureBox.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.groundPictureBox.Name = "groundPictureBox";
-            this.groundPictureBox.Size = new System.Drawing.Size(770, 72);
+            this.groundPictureBox.Size = new System.Drawing.Size(1027, 89);
             this.groundPictureBox.TabIndex = 1;
             this.groundPictureBox.TabStop = false;
             this.groundPictureBox.Tag = "ground";
@@ -90,10 +88,10 @@
             // playerPictureBox
             // 
             this.playerPictureBox.BackColor = System.Drawing.Color.Black;
-            this.playerPictureBox.Location = new System.Drawing.Point(84, 398);
-            this.playerPictureBox.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.playerPictureBox.Location = new System.Drawing.Point(112, 490);
+            this.playerPictureBox.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.playerPictureBox.Name = "playerPictureBox";
-            this.playerPictureBox.Size = new System.Drawing.Size(60, 91);
+            this.playerPictureBox.Size = new System.Drawing.Size(80, 112);
             this.playerPictureBox.TabIndex = 0;
             this.playerPictureBox.TabStop = false;
             this.playerPictureBox.Tag = "player";
@@ -106,90 +104,90 @@
             // 
             // platformPictureBox_2
             // 
-            this.platformPictureBox_2.Location = new System.Drawing.Point(478, 255);
-            this.platformPictureBox_2.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.platformPictureBox_2.Location = new System.Drawing.Point(637, 314);
+            this.platformPictureBox_2.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.platformPictureBox_2.Name = "platformPictureBox_2";
-            this.platformPictureBox_2.Size = new System.Drawing.Size(115, 52);
+            this.platformPictureBox_2.Size = new System.Drawing.Size(153, 64);
             this.platformPictureBox_2.TabIndex = 3;
             this.platformPictureBox_2.TabStop = false;
             this.platformPictureBox_2.Tag = "platform";
             // 
             // platformPictureBox_3
             // 
-            this.platformPictureBox_3.Location = new System.Drawing.Point(265, 169);
-            this.platformPictureBox_3.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.platformPictureBox_3.Location = new System.Drawing.Point(353, 208);
+            this.platformPictureBox_3.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.platformPictureBox_3.Name = "platformPictureBox_3";
-            this.platformPictureBox_3.Size = new System.Drawing.Size(115, 52);
+            this.platformPictureBox_3.Size = new System.Drawing.Size(153, 64);
             this.platformPictureBox_3.TabIndex = 4;
             this.platformPictureBox_3.TabStop = false;
             this.platformPictureBox_3.Tag = "platform";
             // 
             // platformPictureBox_4
             // 
-            this.platformPictureBox_4.Location = new System.Drawing.Point(112, 38);
-            this.platformPictureBox_4.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.platformPictureBox_4.Location = new System.Drawing.Point(149, 47);
+            this.platformPictureBox_4.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.platformPictureBox_4.Name = "platformPictureBox_4";
-            this.platformPictureBox_4.Size = new System.Drawing.Size(115, 52);
+            this.platformPictureBox_4.Size = new System.Drawing.Size(153, 64);
             this.platformPictureBox_4.TabIndex = 5;
             this.platformPictureBox_4.TabStop = false;
             this.platformPictureBox_4.Tag = "platform";
             // 
             // platformPictureBox_5
             // 
-            this.platformPictureBox_5.Location = new System.Drawing.Point(430, -31);
-            this.platformPictureBox_5.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.platformPictureBox_5.Location = new System.Drawing.Point(573, -38);
+            this.platformPictureBox_5.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.platformPictureBox_5.Name = "platformPictureBox_5";
-            this.platformPictureBox_5.Size = new System.Drawing.Size(115, 52);
+            this.platformPictureBox_5.Size = new System.Drawing.Size(153, 64);
             this.platformPictureBox_5.TabIndex = 6;
             this.platformPictureBox_5.TabStop = false;
             this.platformPictureBox_5.Tag = "platform";
             // 
             // platformPictureBox_6
             // 
-            this.platformPictureBox_6.Location = new System.Drawing.Point(154, 245);
-            this.platformPictureBox_6.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.platformPictureBox_6.Location = new System.Drawing.Point(205, 302);
+            this.platformPictureBox_6.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.platformPictureBox_6.Name = "platformPictureBox_6";
-            this.platformPictureBox_6.Size = new System.Drawing.Size(115, 52);
+            this.platformPictureBox_6.Size = new System.Drawing.Size(153, 64);
             this.platformPictureBox_6.TabIndex = 7;
             this.platformPictureBox_6.TabStop = false;
             this.platformPictureBox_6.Tag = "platform";
             // 
             // platformPictureBox_7
             // 
-            this.platformPictureBox_7.Location = new System.Drawing.Point(416, 102);
-            this.platformPictureBox_7.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.platformPictureBox_7.Location = new System.Drawing.Point(555, 126);
+            this.platformPictureBox_7.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.platformPictureBox_7.Name = "platformPictureBox_7";
-            this.platformPictureBox_7.Size = new System.Drawing.Size(115, 52);
+            this.platformPictureBox_7.Size = new System.Drawing.Size(153, 64);
             this.platformPictureBox_7.TabIndex = 8;
             this.platformPictureBox_7.TabStop = false;
             this.platformPictureBox_7.Tag = "platform";
             // 
             // platformPictureBox_8
             // 
-            this.platformPictureBox_8.Location = new System.Drawing.Point(186, 38);
-            this.platformPictureBox_8.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.platformPictureBox_8.Location = new System.Drawing.Point(248, 47);
+            this.platformPictureBox_8.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.platformPictureBox_8.Name = "platformPictureBox_8";
-            this.platformPictureBox_8.Size = new System.Drawing.Size(115, 52);
+            this.platformPictureBox_8.Size = new System.Drawing.Size(153, 64);
             this.platformPictureBox_8.TabIndex = 9;
             this.platformPictureBox_8.TabStop = false;
             this.platformPictureBox_8.Tag = "platform";
             // 
             // platformPictureBox_9
             // 
-            this.platformPictureBox_9.Location = new System.Drawing.Point(416, -7);
-            this.platformPictureBox_9.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.platformPictureBox_9.Location = new System.Drawing.Point(555, -9);
+            this.platformPictureBox_9.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.platformPictureBox_9.Name = "platformPictureBox_9";
-            this.platformPictureBox_9.Size = new System.Drawing.Size(115, 52);
+            this.platformPictureBox_9.Size = new System.Drawing.Size(153, 64);
             this.platformPictureBox_9.TabIndex = 10;
             this.platformPictureBox_9.TabStop = false;
             this.platformPictureBox_9.Tag = "platform";
             // 
             // menuButton_1
             // 
-            this.menuButton_1.Location = new System.Drawing.Point(29, 145);
-            this.menuButton_1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.menuButton_1.Location = new System.Drawing.Point(39, 178);
+            this.menuButton_1.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.menuButton_1.Name = "menuButton_1";
-            this.menuButton_1.Size = new System.Drawing.Size(75, 41);
+            this.menuButton_1.Size = new System.Drawing.Size(100, 50);
             this.menuButton_1.TabIndex = 11;
             this.menuButton_1.TabStop = false;
             this.menuButton_1.Tag = "button";
@@ -197,10 +195,10 @@
             // 
             // menuButton_2
             // 
-            this.menuButton_2.Location = new System.Drawing.Point(29, 211);
-            this.menuButton_2.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.menuButton_2.Location = new System.Drawing.Point(39, 260);
+            this.menuButton_2.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.menuButton_2.Name = "menuButton_2";
-            this.menuButton_2.Size = new System.Drawing.Size(75, 41);
+            this.menuButton_2.Size = new System.Drawing.Size(100, 50);
             this.menuButton_2.TabIndex = 12;
             this.menuButton_2.TabStop = false;
             this.menuButton_2.Tag = "button";
@@ -208,25 +206,13 @@
             // 
             // projectilPictureBox
             // 
-            this.projectilPictureBox.Location = new System.Drawing.Point(148, 405);
-            this.projectilPictureBox.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.projectilPictureBox.Location = new System.Drawing.Point(205, 597);
+            this.projectilPictureBox.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.projectilPictureBox.Name = "projectilPictureBox";
-            this.projectilPictureBox.Size = new System.Drawing.Size(45, 37);
+            this.projectilPictureBox.Size = new System.Drawing.Size(60, 46);
             this.projectilPictureBox.TabIndex = 13;
             this.projectilPictureBox.TabStop = false;
             this.projectilPictureBox.Tag = "projectil";
-            // 
-            // bossTickProjectil
-            // 
-            this.bossTickProjectil.Enabled = true;
-            this.bossTickProjectil.Interval = 1000;
-            this.bossTickProjectil.Tick += new System.EventHandler(this.bossTickProjectilFunction);
-            // 
-            // bossTickSide
-            // 
-            this.bossTickSide.Enabled = true;
-            this.bossTickSide.Interval = 10000;
-            this.bossTickSide.Tick += new System.EventHandler(this.bossTickSides);
             // 
             // bossTickMovement
             // 
@@ -236,20 +222,20 @@
             // 
             // bossPictureBox
             // 
-            this.bossPictureBox.Location = new System.Drawing.Point(389, 358);
-            this.bossPictureBox.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.bossPictureBox.Location = new System.Drawing.Point(728, 475);
+            this.bossPictureBox.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.bossPictureBox.Name = "bossPictureBox";
-            this.bossPictureBox.Size = new System.Drawing.Size(74, 119);
+            this.bossPictureBox.Size = new System.Drawing.Size(81, 115);
             this.bossPictureBox.TabIndex = 14;
             this.bossPictureBox.TabStop = false;
             this.bossPictureBox.Tag = "boss";
             // 
             // bossProjectilPictureBox
             // 
-            this.bossProjectilPictureBox.Location = new System.Drawing.Point(382, 401);
-            this.bossProjectilPictureBox.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.bossProjectilPictureBox.Location = new System.Drawing.Point(892, 594);
+            this.bossProjectilPictureBox.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.bossProjectilPictureBox.Name = "bossProjectilPictureBox";
-            this.bossProjectilPictureBox.Size = new System.Drawing.Size(33, 40);
+            this.bossProjectilPictureBox.Size = new System.Drawing.Size(44, 49);
             this.bossProjectilPictureBox.TabIndex = 15;
             this.bossProjectilPictureBox.TabStop = false;
             this.bossProjectilPictureBox.Tag = "bossProjectil";
@@ -257,9 +243,9 @@
             // 
             // Form1
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(748, 527);
+            this.ClientSize = new System.Drawing.Size(997, 649);
             this.Controls.Add(this.bossProjectilPictureBox);
             this.Controls.Add(this.bossPictureBox);
             this.Controls.Add(this.projectilPictureBox);
@@ -278,7 +264,7 @@
             this.Controls.Add(this.playerPictureBox);
             this.DoubleBuffered = true;
             this.KeyPreview = true;
-            this.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.Name = "Form1";
             this.Text = "Form1";
             this.Paint += new System.Windows.Forms.PaintEventHandler(this.Form1_Paint);
@@ -322,8 +308,6 @@
         private System.Windows.Forms.PictureBox menuButton_1;
         private System.Windows.Forms.PictureBox menuButton_2;
         private System.Windows.Forms.PictureBox projectilPictureBox;
-        private System.Windows.Forms.Timer bossTickProjectil;
-        private System.Windows.Forms.Timer bossTickSide;
         private System.Windows.Forms.Timer bossTickMovement;
         private System.Windows.Forms.PictureBox bossPictureBox;
         private System.Windows.Forms.PictureBox bossProjectilPictureBox;
