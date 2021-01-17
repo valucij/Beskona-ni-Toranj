@@ -133,6 +133,12 @@
   <data name="b_fotfor_lush3" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\b_fotfor_lush3.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="highscoreImage" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\highscoreImage.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="playerImage" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\playerImage.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="projectil_1" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\projectil_1.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>

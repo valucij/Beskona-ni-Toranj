@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.VisualBasic;
+using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
@@ -55,6 +56,8 @@ namespace Beskonačni_Toranj
         Platform ground;
         //zastavica koja pokazuje je li boss u ekranu
         private bool bossFlag;
+
+        private string playerName;
 
         //KONSTRUKTOR
         public Form1()
@@ -138,6 +141,8 @@ namespace Beskonačni_Toranj
             //dodajem slike za menu buttons 
             menu.addPictureBoxAndImage(menuButton_1, Properties.Resources.startImage);
             menu.addPictureBoxAndImage(menuButton_2, Properties.Resources.quitImage);
+            menu.addPictureBoxAndImage(menuButton_3, Properties.Resources.playerImage);
+            menu.addPictureBoxAndImage(menuButton_4, Properties.Resources.highscoreImage);
 
             //dodajem slike za tlo
             ground.addPictureBox(groundPictureBox);
@@ -185,6 +190,10 @@ namespace Beskonačni_Toranj
             //ovo obrisati, ovo je samo za testiranje, mijenjamo polazaj playera, samo za testiranje bossa
             player.X = 282;
             player.Y = 400;
+            //ovdje zavrsava ono sto treba obrisati
+
+            playerName = "default";
+            
         }
         //------------------------------------------------CRTANJE---------------------------------------------------------------------------------------------------------------------------------------------------
         //crtanje objekata u formi; sve se salje u odgovarajuce funckije clanova forme (playeri i platforme)
@@ -258,6 +267,18 @@ namespace Beskonačni_Toranj
             if (menuFlag)
             {
                 this.Close();
+            }
+        }
+
+        //akcije koje se obavljaju kad se klikne na gumb za unos imena playera u menuu; klik je dopusten
+        //samo ako se nalazimo u menu modeu; otvara se prozor gdje unosimo ime lika
+        private void playerClick(object sender, EventArgs e)
+        {
+            //Console.WriteLine("player name prije unosa: " + playerName);
+            if (menuFlag)
+            {
+                string playerName = Interaction.InputBox("Unesite svoje ime!", "Player name input", "Player", 100, 100);
+              //  Console.WriteLine(playerName);
             }
         }
 
@@ -455,9 +476,17 @@ namespace Beskonačni_Toranj
         
         }
 
-        private void bossProjectilPictureBox_Click(object sender, EventArgs e)
-        {
 
+
+        private void highscoreClick(object sender, EventArgs e)
+        {
+            //treba napisati jos
         }
+
+        //moguce da je ova funckija slucajno stvorena
+        /*  private void bossProjectilPictureBox_Click(object sender, EventArgs e)
+          {
+
+          }*/
     }
 }

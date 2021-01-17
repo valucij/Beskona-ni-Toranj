@@ -47,6 +47,8 @@
             this.bossTickMovement = new System.Windows.Forms.Timer(this.components);
             this.bossPictureBox = new System.Windows.Forms.PictureBox();
             this.bossProjectilPictureBox = new System.Windows.Forms.PictureBox();
+            this.menuButton_3 = new System.Windows.Forms.PictureBox();
+            this.menuButton_4 = new System.Windows.Forms.PictureBox();
             ((System.ComponentModel.ISupportInitialize)(this.platformPictureBox_1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.groundPictureBox)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.playerPictureBox)).BeginInit();
@@ -63,6 +65,8 @@
             ((System.ComponentModel.ISupportInitialize)(this.projectilPictureBox)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.bossPictureBox)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.bossProjectilPictureBox)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.menuButton_3)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.menuButton_4)).BeginInit();
             this.SuspendLayout();
             // 
             // platformPictureBox_1
@@ -184,7 +188,7 @@
             // 
             // menuButton_1
             // 
-            this.menuButton_1.Location = new System.Drawing.Point(39, 178);
+            this.menuButton_1.Location = new System.Drawing.Point(39, 140);
             this.menuButton_1.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.menuButton_1.Name = "menuButton_1";
             this.menuButton_1.Size = new System.Drawing.Size(100, 50);
@@ -195,7 +199,7 @@
             // 
             // menuButton_2
             // 
-            this.menuButton_2.Location = new System.Drawing.Point(39, 260);
+            this.menuButton_2.Location = new System.Drawing.Point(39, 222);
             this.menuButton_2.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.menuButton_2.Name = "menuButton_2";
             this.menuButton_2.Size = new System.Drawing.Size(100, 50);
@@ -239,13 +243,36 @@
             this.bossProjectilPictureBox.TabIndex = 15;
             this.bossProjectilPictureBox.TabStop = false;
             this.bossProjectilPictureBox.Tag = "bossProjectil";
-            this.bossProjectilPictureBox.Click += new System.EventHandler(this.bossProjectilPictureBox_Click);
+            // 
+            // menuButton_3
+            // 
+            this.menuButton_3.Location = new System.Drawing.Point(39, 302);
+            this.menuButton_3.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.menuButton_3.Name = "menuButton_3";
+            this.menuButton_3.Size = new System.Drawing.Size(100, 50);
+            this.menuButton_3.TabIndex = 16;
+            this.menuButton_3.TabStop = false;
+            this.menuButton_3.Tag = "button";
+            this.menuButton_3.Click += new System.EventHandler(this.playerClick);
+            // 
+            // menuButton_4
+            // 
+            this.menuButton_4.Location = new System.Drawing.Point(39, 383);
+            this.menuButton_4.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.menuButton_4.Name = "menuButton_4";
+            this.menuButton_4.Size = new System.Drawing.Size(100, 50);
+            this.menuButton_4.TabIndex = 17;
+            this.menuButton_4.TabStop = false;
+            this.menuButton_4.Tag = "button";
+            this.menuButton_4.Click += new System.EventHandler(this.highscoreClick);
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(997, 649);
+            this.ClientSize = new System.Drawing.Size(976, 666);
+            this.Controls.Add(this.menuButton_4);
+            this.Controls.Add(this.menuButton_3);
             this.Controls.Add(this.bossProjectilPictureBox);
             this.Controls.Add(this.bossPictureBox);
             this.Controls.Add(this.projectilPictureBox);
@@ -287,6 +314,8 @@
             ((System.ComponentModel.ISupportInitialize)(this.projectilPictureBox)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.bossPictureBox)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.bossProjectilPictureBox)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.menuButton_3)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.menuButton_4)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -311,6 +340,8 @@
         private System.Windows.Forms.Timer bossTickMovement;
         private System.Windows.Forms.PictureBox bossPictureBox;
         private System.Windows.Forms.PictureBox bossProjectilPictureBox;
+        private System.Windows.Forms.PictureBox menuButton_3;
+        private System.Windows.Forms.PictureBox menuButton_4;
     }
 }
 
