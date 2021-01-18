@@ -24,19 +24,34 @@ namespace Beskonačni_Toranj
         //originalne informacije, informacije o platformi pri stvaranju
         private int originalX, originalY;
         private int originalWidth, originalHeight;
+        private int originalPlatformType;
         //pointer na enemya koji mozebitno sjedi na platformi
        Enemy enemy;
         //pointer na bossa koji mozda sjedi na platformi;
        Boss boss;
+        //pointer na coin
+        Coin coin;
 
-        //konstruktor
-        public Platform()
-        {
+        //FLAG KOJI OZNACAVA TIP PLATFORME, DA SE NE ZEZAMO S DODATNIM PROVJERAMA
+        //0 = PLATFORMA BEZ ICEGA
+        //1 = PLATFORMA S ENEMYEM KOJI EVENTUALNO AKO GA SE UPUCA DROPPA COIN
+        //2 = PLATFORMA S BOSSOM KOJI EVENTUALNO KAD GA SE UPUCA DROPPA COIN
+        //3 = PLATFORMA S COINOM KOJI JE OSTAO NAKON KAJ SMO PROPUCALI NEKOGA
+        private int platformType;
+
+        //konstruktor koji stvara obicnu platformu 
+        public Platform() {
             tracer = new Color();
             enemy = null;
             boss = null;
+            coin = null;
+
+            platformType = 0;
+            originalPlatformType = 0;
+
         }
 
+        //konstruktor koji stvara platformu sa grafikom
         public Platform(System.Windows.Forms.PictureBox figure, Bitmap image)
         {
             tracer = new Color();
@@ -44,7 +59,141 @@ namespace Beskonačni_Toranj
             addImage(image);
             enemy = null;
             boss = null;
+            coin = null;
+
+            platformType = 0;
+            originalPlatformType = 0;
         }
+
+        //konstruktor koji stvara platformu
+
+        //-------------------------------------.LOGISTIKA PLATFORME.--------------------------
+        //funkcija koja updatea platformType
+        public void Update(object sender, EventArgs e, Form1 form)
+        {
+            //ako nema nicega
+            if (platformType == 0) return;
+
+            //ako je enemy na platformi 
+            if (platformType == 1) {
+
+                //updateaj enemya
+                enemy.Tick(sender, e, form);
+
+                //ako je neprijatelj mrtav, droppaj coin
+                if (enemy.isDead())
+                {
+                    coin.drop(enemy.X, enemy.Y);
+                    platformType = 3;
+                }
+            }
+
+            //ako je boss na platformi
+            if (platformType == 2)
+            {
+                //updateaj bossa
+                boss.Tick(sender, e, form);
+
+                //ako je boss mrtav, droppaj coin
+                if (boss.isDead())
+                 {
+                    coin.drop(boss.X, boss.Y);
+                    platformType = 3;
+                  }
+            }
+
+            //ako je coin na platformi (mozda je i droppan u gornjem if)
+            if (platformType == 3) {
+                //updateaj coin
+                coin.Tick(sender, e, form);
+
+                if (coin.isPickedUp(form)) {
+                    platformType_reset();
+                }
+               
+            };
+
+            //ako je izvan ekrana, samo ju lupi na dno i resetiraj platfromtypw
+            if (Y > 490) {
+                Y = -410;
+                platformType_reset();
+            }
+
+        }
+
+        //funkcija koja vraca platformu na originalne vrijednosti
+        public void platformType_reset() { 
+        
+        }
+
+        //funkcija koja pomice platformu
+        public void MoveDown(int platformSpeed) {
+            Y += platformSpeed;
+
+            //ako nema nicega
+            if (platformType == 0) return;
+
+            //ako je enemy na platformi
+            if (platformType == 1)  enemy.MoveDown(platformSpeed); 
+
+            //ako je boss na platformi
+            if (platformType ==2 ) boss.MoveDown(platformSpeed);
+
+            //ako je enemy na platformi
+            if (platformType == 3 ) coin.MoveDown(platformSpeed);
+        }
+
+
+
+        //funkcija resetira platformu na pocetnu poziciju
+        public void restart()
+        {
+            x = originalX;
+            y = originalY;
+            width = originalWidth;
+            height = originalHeight;
+
+            //jako bitno je i resetirati picturebox koji je dodjeljen platformi,
+            //jer po njemu se sve orijentira 
+            platform.Location = new Point(originalX, originalY);
+
+        }
+
+        //-------------------------------------ADD BOSS/COIN/ENEMY------------
+
+        public bool IsPlatformEmpty() {
+            if (platformType==0) return true;
+            return false;
+        }
+
+        public void Add(Enemy e, Coin c)
+        {
+            if (!this.IsPlatformEmpty()) return; 
+           
+            enemy = e;
+            coin = c;
+            platformType = 1;
+
+        }
+
+        public void Add(Boss b, Coin c) {
+            if (!this.IsPlatformEmpty()) return;
+
+            boss = b;
+            coin = c;
+            platformType = 2;
+        }
+
+        public void ClearPlatform() {
+            enemy = null;
+            boss = null;
+            coin = null;
+
+            platformType = 0;
+        }
+
+
+        //--------------------------------------------GRAFIKA---------------------------------
 
         //dodjeljuje klasi odgovarajuci picture box, kako bi lakse bilo crtati sliku platforme bez nagadanja gdje
         //bi se trebala nalaziti u formi
@@ -90,6 +239,8 @@ namespace Beskonačni_Toranj
             originalY = y;
         }
 
+        //--------------------------------------------SVOJSTVA PLATFORME--------------------
+
         public int X
         {
             get { return x; }
@@ -123,19 +274,6 @@ namespace Beskonačni_Toranj
         {
             set { originalWidth= value; }
             get { return originalWidth; }
-        }
-
-        //funkcija resetira platformu na pocetnu poziciju
-        public void restart()
-        {
-            x = originalX;
-            y = originalY;
-            width = originalWidth;
-            height = originalHeight;
-            //jako bitno je i resetirati picturebox koji je dodjeljen platformi, jer 
-            //po njemu se sve orijentira 
-            platform.Location = new Point(originalX, originalY);
-
         }
     }
 }

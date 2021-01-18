@@ -7,6 +7,15 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 //using System.Drawing
 
+/*
+ * podaci
+ * grafika (picturebox, addimage, addimages)
+ * pucanje (isHit)
+ * zivot (isDead, revive)
+ * svojstva
+*/
+
+
 namespace Beskonačni_Toranj
 {
 
@@ -20,14 +29,34 @@ namespace Beskonačni_Toranj
         protected int width, height;
         //broj zivota lika
         protected int life;
+        //originalni(pocetni) broj zivota lika
+        protected int originalLife;
         //zastavica koja govori da li je player ziv ili ne
         protected bool alive;
         //flag koji govori je li character visible;
         protected bool visible;
+        //boja tracer objekta za testiranje
+        protected Color tracer;
 
         //predstavlja picturebox koji u windows formi predstavlja lika
         protected System.Windows.Forms.PictureBox figure;
         protected List<Bitmap> pictures;
+
+        public Character() {
+            tracer = new Color();
+
+            alive = true;
+            visible = true;
+
+            //life ne postavljam jer je to custom
+        }
+
+        public Character(int l) : this(){
+            life = l;
+            originalLife = l;
+        }
+
+        //-------------------------------------GRAFIKA--------------------------------
 
         //dodavanje pictureboxa koji je stvoren u windows formi i predstavljat ce lika
         public virtual void addPictureBox(System.Windows.Forms.PictureBox figure)
@@ -55,13 +84,26 @@ namespace Beskonačni_Toranj
             this.pictures.Add(picture);
         }
 
-        //-------------------------------LIK POGODJEN
+        //-------------------------------LIK POGODJEN----------------------------------
         public virtual void isHit(){
             life--;
           //  Console.WriteLine("life " + life);
             if (life <= 0) alive = false;
         }
 
+        //------------------------------JEL MRTAV/OZIVI GA------------------
+
+        public bool isDead() {
+            if (alive) return true;
+            return false;
+        }
+
+        public void revive() {
+            if (!alive) {
+                life = originalLife;
+                alive = true;
+                }    
+        }
         //------------------------------SVOJSTVA--------------------------------------
         public virtual int X
         {

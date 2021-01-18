@@ -91,6 +91,12 @@ namespace Beskonačni_Toranj
             figure.Location = new Point(0, 0);
         }
 
+        //--------------------------------------------micanje metka dolje kako se pomice boss---
+        //pomice dolje za platformspeed
+        public virtual void MoveDown(int PlatformSpeed)
+        {
+            Y += PlatformSpeed;
+        }
         //---------------------------------------------funkcije vezane uz slike-----------------------------------
 
         //funkcija koja dodaje PictureBox
@@ -109,14 +115,14 @@ namespace Beskonačni_Toranj
         //------------------------------------------------svojstva--------------------------------------------------
         public int X
         {
-            set { x = value; figure.Location = new Point(value, figure.Location.Y); }
             get { return x; }
+            set { x = value; figure.Location = new Point(value, figure.Location.Y); }
         }
 
         public int Y
         {
-            set { y = value; figure.Location = new Point(figure.Location.X, value); }
             get { return y; }
+            set { y = value; figure.Location = new Point(x, value); }
         }
 
         public int Width
@@ -189,7 +195,7 @@ namespace Beskonačni_Toranj
             width = figure.Width + 70;
         }
 
-        public void projectilTick(object sender, EventArgs e, Form1 form)
+        public void Tick(object sender, EventArgs e, Form1 form)
         {
             //ako nije metak ispucan, ne moram ga tick-ati
             if (!fired) return;

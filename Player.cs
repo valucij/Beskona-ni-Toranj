@@ -21,6 +21,8 @@ namespace Beskonačni_Toranj
         private int force;
         //brzina kojom se krece lik dok hoda
         private int figureSpeed;
+        //je li igrac odskocio sa zemlje
+        private bool offground;
 
         //zastavice koje pokazuju da li player hoda ulijevo, udesno, ili da li skace
         private bool goingLeft;
@@ -70,6 +72,7 @@ namespace Beskonačni_Toranj
             alive = true;
             projectil = new ProjectilShotByPlayer();
             life = 10;//VRATITI BROJ ZIVOTA NA 10
+            offground = false;
         }
 
         //--------------------------FUNKCIJE KOJE  SE BAVE ODGOVOROM PLAYERA NA GUMBE------------------------------------------------------------------------------------------------
@@ -136,9 +139,9 @@ namespace Beskonačni_Toranj
         //platforme i ostalo; sve se obavlja na pictureboxu koji je stvoren u formi, tek se onda to prebacuje u informacije
         //koje se ticu bas playera; kad se god u komentarima sljedecim pojavljuje rijec "player" misli se zapravo na 
         //picture box;
-        public void timerTick(object sender, EventArgs e, Form1 form)
+        public void Tick(object sender, EventArgs e, Form1 form)
         {
-            projectil.projectilTick(sender, e, form);
+            projectil.Tick(sender, e, form);
 
             //ako je lupio svojim projektilom
             if (projectil.hasHit(form))
@@ -188,7 +191,7 @@ namespace Beskonačni_Toranj
 
             foreach (Control c in form.Controls)
             {
-                if ((string)c.Tag == "platform" || (string)c.Tag == "ground") 
+                if ((string)c.Tag == "platform"/* || (string)c.Tag == "ground"*/) 
                 {
                    
                     if (figure.Bounds.IntersectsWith(c.Bounds) && !jumping && c.Top > figure.Top)//detekcija da li player stoji na platformi
@@ -200,6 +203,19 @@ namespace Beskonačni_Toranj
                     }
                 }
 
+                if ( (string)c.Tag == "ground" && !offground)
+                {
+
+                    if (figure.Bounds.IntersectsWith(c.Bounds) && !jumping && c.Top > figure.Top)//detekcija da li player stoji na platformi
+                    {
+                        force = 8;
+                        figure.Top = c.Top - figure.Height + 26;
+                        jumpSpeed = 0;
+                        score++;
+                    }
+                }
+
+                //boss, enemy i bossprojectil (kao dio boss-a) se provjeravaju tu
                 if ((string)c.Tag == "boss" || (string)c.Tag == "enemy")
                 {
 
@@ -208,18 +224,8 @@ namespace Beskonačni_Toranj
                         life--;
                     }
                 }
-
-               /* if ((string)c.Tag == "bossProjectil")
-                {
-                    //Console.WriteLine("ima ga");
-                    //Console.WriteLine("c.bounds: " + c.Bounds + ", figure.location: " + figure.Location.X);
-                    if (figure.Bounds.IntersectsWith(c.Bounds))
-                    {
-                        life--;
-                        Console.WriteLine("ovdje smo");
-                    }
-                }*/
             }
+
             //uzmi informacije iz pictureboxa, kako bi znali nacrtati playera
             x = figure.Location.X;
             y = figure.Location.Y;
@@ -231,7 +237,7 @@ namespace Beskonačni_Toranj
         public void playerTickprojectil(object sender, EventArgs e, Form1 form)
         {
             //prvo obnovi projektil ako je ziv
-            projectil.projectilTick(sender, e, form);
+            projectil.Tick(sender, e, form);
 
             //ako je lupio svojim projektilom
             if (projectil.hasHit(form))
@@ -261,6 +267,7 @@ namespace Beskonačni_Toranj
             alive = true;
             figure.Location = new Point(100, 350);
             life = 10;
+            offground = false;
             //projectil = new ProjectilShotByPlayer(); OVO NE, MAKNUTI OVO NE!
 
             //vracam na pocetnu poziciju
@@ -383,6 +390,11 @@ namespace Beskonačni_Toranj
             projectil.removePictureBox();
         }
 
+        //---------------------------------FUNKCIJE VEZANO ZA NOVCIC/SCORE---------------------------------------------------------------------------------------
+
+        public void PickUp(int coinvalue) {
+            score += coinvalue;
+        }
 
         //-------------------------------SVOJSTVA-----------------------------------------------------------------------------------------------------------------------------
         public override int X
@@ -415,9 +427,19 @@ namespace Beskonačni_Toranj
             get { return force; }
         }
 
+        public bool offGround 
+        {
+            set { offground = value; }
+            get { return offground; }
+        
+        
+        }
+
         public string Name
         {
             get { return name; }
         }
+
+   
     }
 }
