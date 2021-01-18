@@ -29,10 +29,26 @@ namespace Beskonačni_Toranj
             foreach (Control c in form.Controls)
             {
                 //ako pogodi neprijatelja/bossa baca true
-                if (((string)c.Tag == "enemy" || (string)c.Tag == "boss" ) && figure.Bounds.IntersectsWith(c.Bounds))
+                if ((string)c.Tag == "boss" && !form.bossIsDead() && form.bossIsVisible())
                 {
-                    this.reset();
-                    return true;
+                    if (figure.Bounds.IntersectsWith(c.Bounds))
+                    {
+                        Console.WriteLine("I hit the " + (string)c.Tag);
+                        form.bossIsHit();
+                        this.reset();
+                        return true;
+                    }
+                }
+
+                if ((string)c.Tag == "enemy" && !form.enemyIsDead() && form.EnemyIsVisible())
+                {
+                    if (figure.Bounds.IntersectsWith(c.Bounds))
+                    {
+                        Console.WriteLine("I hit the " + (string)c.Tag);
+                        form.enemyIsHit();
+                        this.reset();
+                        return true;
+                    }
                 }
 
                 //ako pogodi tlo, vraca false

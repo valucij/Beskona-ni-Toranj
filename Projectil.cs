@@ -197,7 +197,6 @@ namespace Beskonačni_Toranj
         public virtual void setVisibility(bool b)
         {
             fired = b;
-            figure.Visible = b;
 
         }
 

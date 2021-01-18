@@ -89,8 +89,9 @@ namespace Beskonačni_Toranj
         //-------------------------------zastave----------------------------------
         public virtual void isHit(){
             life--;
-            Console.WriteLine("life " + life);
-            if (life <= 0) alive = false;
+            if (life <= 0) { alive = false; }
+
+
         }
 
         public bool isDead()
@@ -103,7 +104,8 @@ namespace Beskonačni_Toranj
             if (!alive) {
                 life = originalLife;
                 alive = true;
-                }    
+                }
+            setVisibility(true);
         }
 
          public void reset_position()
@@ -131,7 +133,6 @@ namespace Beskonačni_Toranj
         {
             
             visible = b;
-            figure.Visible = b;
 
 
             if (b == false) { figure.Location = new Point(-100, y); } else { figure.Location = new Point(x, y); }

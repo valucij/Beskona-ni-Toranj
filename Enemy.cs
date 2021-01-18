@@ -56,13 +56,13 @@ namespace Beskonačni_Toranj
         }
 
         public virtual void setLocation(int platform_x, int platform_y, int platform_width) {
-            x = platform_x+platform_width/2;
+            x = platform_x+platform_width/2-60;
             y = platform_y-70;
 
             figure.Location = new Point(x, y);
 
-            leftlimit_x = platform_x;
-            rightlimit_x = platform_x + platform_width;
+            leftlimit_x = platform_x-20;
+            rightlimit_x = platform_x + platform_width-10;
         }
 
         public virtual void setLocation(int platform_x, int platform_y)
@@ -80,6 +80,16 @@ namespace Beskonačni_Toranj
             e.Graphics.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.HighQualityBicubic;
             e.Graphics.PixelOffsetMode = System.Drawing.Drawing2D.PixelOffsetMode.HighQuality;
             //e.Graphics.DrawImage(image, x, y, width, height);
+
+            //OVO ZAKOMENTIRATI
+            // Create pen.
+              Pen blackPen = new Pen(Color.FromArgb(5,0,0), 3);
+
+            // Create rectangle.
+            Rectangle rect = new Rectangle(x, y, 60, 60);
+
+            // Draw rectangle to screen.
+            e.Graphics.DrawRectangle(blackPen, rect);
         }
 
 

@@ -111,7 +111,7 @@
             // 
             this.gameTimer.Enabled = true;
             this.gameTimer.Interval = 20;
-            this.gameTimer.Tick += new System.EventHandler(this.gameTimer_Tick);
+            this.gameTimer.Tick += new System.EventHandler(this.gameTick);
             // 
             // platformPictureBox_2
             // 
@@ -252,9 +252,9 @@
             this.bosscoinPictureBox.Margin = new System.Windows.Forms.Padding(2);
             this.bosscoinPictureBox.Name = "bosscoinPictureBox";
             this.bosscoinPictureBox.Size = new System.Drawing.Size(60, 60);
-            this.bosscoinPictureBox.TabIndex = 15;
+            this.bosscoinPictureBox.TabIndex = 16;
             this.bosscoinPictureBox.TabStop = false;
-            this.bosscoinPictureBox.Tag = "coin";
+            this.bosscoinPictureBox.Tag = "bosscoin";
             //
             // enemyPictureBox
             // 
@@ -262,7 +262,7 @@
             this.enemyPictureBox.Margin = new System.Windows.Forms.Padding(2);
             this.enemyPictureBox.Name = "enemyPictureBox";
             this.enemyPictureBox.Size = new System.Drawing.Size(61, 93);
-            this.enemyPictureBox.TabIndex = 14;
+            this.enemyPictureBox.TabIndex = 17;
             this.enemyPictureBox.TabStop = false;
             this.enemyPictureBox.Tag = "enemy";
             // 
@@ -272,7 +272,7 @@
             this.enemycoinPictureBox.Margin = new System.Windows.Forms.Padding(2);
             this.enemycoinPictureBox.Name = "enemycoinPictureBox";
             this.enemycoinPictureBox.Size = new System.Drawing.Size(60, 60);
-            this.enemycoinPictureBox.TabIndex = 15;
+            this.enemycoinPictureBox.TabIndex = 18;
             this.enemycoinPictureBox.TabStop = false;
             this.enemycoinPictureBox.Tag = "enemycoin";
             // 
@@ -282,7 +282,7 @@
             this.menuButton_3.Margin = new System.Windows.Forms.Padding(2);
             this.menuButton_3.Name = "menuButton_3";
             this.menuButton_3.Size = new System.Drawing.Size(75, 41);
-            this.menuButton_3.TabIndex = 16;
+            this.menuButton_3.TabIndex = 19;
             this.menuButton_3.TabStop = false;
             this.menuButton_3.Tag = "button";
             this.menuButton_3.Click += new System.EventHandler(this.playerClick);
@@ -293,7 +293,7 @@
             this.menuButton_4.Margin = new System.Windows.Forms.Padding(2);
             this.menuButton_4.Name = "menuButton_4";
             this.menuButton_4.Size = new System.Drawing.Size(75, 41);
-            this.menuButton_4.TabIndex = 17;
+            this.menuButton_4.TabIndex = 20;
             this.menuButton_4.TabStop = false;
             this.menuButton_4.Tag = "button";
             this.menuButton_4.Click += new System.EventHandler(this.highscoreClick);
@@ -321,6 +321,9 @@
             this.Controls.Add(this.platformPictureBox_1);
             this.Controls.Add(this.groundPictureBox);
             this.Controls.Add(this.playerPictureBox);
+            this.Controls.Add(this.enemyPictureBox);
+            this.Controls.Add(this.bosscoinPictureBox);
+            this.Controls.Add(this.enemycoinPictureBox);
             this.DoubleBuffered = true;
             this.KeyPreview = true;
             this.Margin = new System.Windows.Forms.Padding(2);

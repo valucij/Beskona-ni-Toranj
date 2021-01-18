@@ -137,6 +137,16 @@ namespace Beskonačni_Toranj
             e.Graphics.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.HighQualityBicubic;
             e.Graphics.PixelOffsetMode = System.Drawing.Drawing2D.PixelOffsetMode.HighQuality;
             //e.Graphics.DrawImage(image, x, y, width, height);
+
+            //OVO ZAKOMENTIRATI
+            // Create pen.
+            Pen blackPen = new Pen(Color.FromArgb(5, 0, 0), 3);
+
+            // Create rectangle.
+            Rectangle rect = new Rectangle(x, y, 20, 20);
+
+            // Draw rectangle to screen.
+            e.Graphics.DrawRectangle(blackPen, rect);
         }
 
         //dodavanje pictureboxa koji je stvoren u windows formi i predstavljat ce lika
@@ -177,8 +187,6 @@ namespace Beskonačni_Toranj
         public virtual void setVisibility(bool b)
         {
             visible = b;
-            figure.Visible = b;
-
         }
 
         //------------------------------SVOJSTVA--------------------------------------

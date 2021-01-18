@@ -116,7 +116,6 @@ namespace Beskonačni_Toranj
 
         public override void paint(object sender, PaintEventArgs e)
         {
-            // Bitmap walkFrame = returnFrame();
 
             e.Graphics.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.HighQuality;
             e.Graphics.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.HighQualityBicubic;

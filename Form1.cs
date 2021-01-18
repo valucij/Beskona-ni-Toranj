@@ -318,7 +318,7 @@ namespace Beskonačni_Toranj
 
         //akcije koje se obavljaju kako vrijeme tece; sve se salje u odgovarajuce funkcije clanova forme (playera i platforme)
         //na kraju se poziva funkcija koja crta objekte 
-        private void gameTimer_Tick(object sender, EventArgs e)
+        private void gameTick(object sender, EventArgs e)
         {
 
             if (!player.Alive)

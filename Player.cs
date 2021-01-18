@@ -208,7 +208,7 @@ namespace Beskonačni_Toranj
                     }
                 }
 
-                //boss, enemy i bossprojectil (kao dio boss-a) se provjeravaju tu
+                //boss i bossprojectil (kao dio boss-a) se provjeravaju tu
                 if ((string)c.Tag == "boss" && !form.bossIsDead() && form.bossIsVisible())
                 {
                     Console.WriteLine("contact with " + (string)c.Tag);
