@@ -45,9 +45,16 @@ namespace Beskonačni_Toranj
             enemy = null;
             boss = null;
             coin = null;
+           
 
             platformType = 0;
             originalPlatformType = 0;
+
+            //da mi ne baca exception
+            x = 0;
+            y = 0;
+            height = 1;
+            width = 2;
 
         }
 
@@ -91,6 +98,7 @@ namespace Beskonačni_Toranj
             //ako je boss na platformi
             if (platformType == 2)
             {
+
                 //updateaj bossa
                 boss.Tick(sender, e, form);
 
@@ -108,7 +116,7 @@ namespace Beskonačni_Toranj
                 coin.Tick(sender, e, form);
 
                 if (coin.isPickedUp(form)) {
-                    platformType_reset();
+                    platformType_restart();
                 }
                
             };
@@ -116,19 +124,16 @@ namespace Beskonačni_Toranj
             //ako je izvan ekrana, samo ju lupi na dno i resetiraj platfromtypw
             if (Y > 490) {
                 Y = -410;
-                platformType_reset();
+                platformType_restart();
             }
 
-        }
-
-        //funkcija koja vraca platformu na originalne vrijednosti
-        public void platformType_reset() { 
-        
         }
 
         //funkcija koja pomice platformu
         public void MoveDown(int platformSpeed) {
             Y += platformSpeed;
+
+            if (Y > 490)   Y = -410;
 
             //ako nema nicega
             if (platformType == 0) return;
@@ -157,15 +162,41 @@ namespace Beskonačni_Toranj
             //jer po njemu se sve orijentira 
             platform.Location = new Point(originalX, originalY);
 
+            //restarta content platforme 
+            platformType_restart();
+
         }
 
+        //funkcija koja vraca platformu na originalne vrijednosti
+        public void platformType_restart()
+        {
+            if (originalPlatformType == 0) ClearPlatform();
+
+            if (originalPlatformType == 1) {
+                enemy.revive();
+                enemy.setLocation(x, y, width);
+                coin.reset();
+                platformType = 1;
+            }
+
+            if (originalPlatformType == 2)
+            {
+                boss.revive();
+                boss.setLocation(x, y, width);
+                coin.reset();
+                platformType = 2;
+            }
+
+        }
         //-------------------------------------ADD BOSS/COIN/ENEMY------------
 
+        //jel vrste 0
         public bool IsPlatformEmpty() {
             if (platformType==0) return true;
             return false;
         }
 
+        //dodaje enemya s coinom
         public void Add(Enemy e, Coin c)
         {
             if (!this.IsPlatformEmpty()) return; 
@@ -173,23 +204,33 @@ namespace Beskonačni_Toranj
             enemy = e;
             coin = c;
             platformType = 1;
+            originalPlatformType = 1;
 
+            //postavi lokaciju
+            enemy.setLocation(x, y, width);
         }
 
+        //dodaje bossa s njegovim coinom
         public void Add(Boss b, Coin c) {
             if (!this.IsPlatformEmpty()) return;
 
             boss = b;
             coin = c;
             platformType = 2;
+            originalPlatformType = 2;
+
+            //postavi lokaciju
+            boss.setLocation(x, y, width);
         }
 
+        //vraca platformu na tip 0
         public void ClearPlatform() {
             enemy = null;
             boss = null;
             coin = null;
 
             platformType = 0;
+            originalPlatformType = 0;
         }
 
 

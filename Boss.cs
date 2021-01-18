@@ -27,6 +27,7 @@ namespace Beskonačni_Toranj
         //jel se boss krece lijevo ili desno
         private bool left, right;
 
+
         //nasljedjuje konstruktor
         public Boss():base()
         {
@@ -49,13 +50,24 @@ namespace Beskonačni_Toranj
 
         //-----------------------------------------------. LOGISTIKA BOSSA .-------------------------------------
         //pomice dolje za platformspeed
-        public virtual void MoveDown(int PlatformSpeed)
+        public override void MoveDown(int PlatformSpeed)
         {
             Y += PlatformSpeed;
             projectil.MoveDown(PlatformSpeed);
-        }
 
-        public override void Tick(object sender, EventArgs e, Form1 form)
+            //Ako nije doseglo 490 jos, samo mijenjamo na invisible kako se
+            //udaljenost platforma-boss ne bi mijenjala
+            if (Y > 350) visible = false;
+
+            if (Y > 490)
+            {
+                Y = -410;
+                this.revive();
+            }
+        }
+    
+
+    public override void Tick(object sender, EventArgs e, Form1 form)
         {
 
             projectil.Tick(sender, e, form);
@@ -74,7 +86,7 @@ namespace Beskonačni_Toranj
                 x += bossSpeed;
             }
 
-            if (x > 670)
+            if (x > rightlimit_x)
             {
                 right = false;
                 left = true;
@@ -82,7 +94,7 @@ namespace Beskonačni_Toranj
                 projectil.pucajlijevo(x, y);      
             }
 
-            if (x < 50)
+            if (x < leftlimit_x)
             {
                 right = true;
                 left = false;
@@ -99,7 +111,7 @@ namespace Beskonačni_Toranj
         }
        
 
-        public void restart()
+        public override void restart()
         {
             tracer = new Color();
            // projectil = new ProjectilShotByBoss(); MAKNUTI OVO, OVO NE!
@@ -109,14 +121,16 @@ namespace Beskonačni_Toranj
             left = true;
             right = false;
 
-           
+            X = (leftlimit_x + rightlimit_x) / 2;
+
             returnOriginalFigurePostion();
 
         }
 
+        
         //--------------------------------------------------.KONTROLA SLIKE/FIGURE-A.-------------------------------------------------
 
-        public void paint(object sender, PaintEventArgs e)
+        public override void paint(object sender, PaintEventArgs e)
         {
             // Bitmap walkFrame = returnFrame();
 
@@ -138,7 +152,7 @@ namespace Beskonačni_Toranj
 
 
         //funckija koja kopira 
-        protected virtual void copyFigureInformation()
+        protected override void copyFigureInformation()
         {
             figure.Visible = false;
 
@@ -189,16 +203,5 @@ namespace Beskonačni_Toranj
         }
 
 
-        //------------------------------SVOJSTVA------------------
-        public int X
-        {
-            get { return x; }
-            set { x = value; figure.Location = new Point(value, figure.Location.Y); }
-        }
-        public override int Y
-        {
-            get { return y; }
-            set { y = value; figure.Location = new Point(x, value); }
-        }
     }
 }

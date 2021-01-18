@@ -96,6 +96,13 @@ namespace Beskonačni_Toranj
         public virtual void MoveDown(int PlatformSpeed)
         {
             Y += PlatformSpeed;
+
+
+            if (Y > 490)
+            {
+                Y = -410;
+                this.reset();
+            }
         }
         //---------------------------------------------funkcije vezane uz slike-----------------------------------
 

@@ -29,9 +29,6 @@ namespace Beskonačni_Toranj
         private bool goingRight;
         private bool jumping;
 
-        //element koji nam sluzi kako bi rubove slika playera ucinili transparentnim
-        private Color tracer;
-
         //nepotrebno; buduci da imamo vise slike playera koje cine animaciju playera dok hoda
         Bitmap image;
         

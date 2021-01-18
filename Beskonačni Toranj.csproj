@@ -156,5 +156,9 @@
   <ItemGroup>
     <None Include="Resources\playerImage.jpg" />
   </ItemGroup>
+  <ItemGroup>
+    <Content Include="coin_star.jpg" />
+    <Content Include="Resources\coin_star.jpg" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

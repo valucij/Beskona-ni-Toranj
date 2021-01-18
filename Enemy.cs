@@ -13,11 +13,21 @@ namespace Beskonačni_Toranj
         //slika enemy-a
         protected Bitmap image;
 
+        //lijevi i desni limit moje platforme
+        protected int leftlimit_x;
+        protected int rightlimit_x;
+
         //nasljedjuje konstruktor
-        public Enemy() : base() { }
+        public Enemy() : base() {
+            leftlimit_x = 50;
+            rightlimit_x = 670;
+        }
 
         //nasljedjuje konstruktor sa brojem zivota
-        public Enemy(int l) : base(l) { }
+        public Enemy(int l) : base(l) {
+            leftlimit_x = 50;
+            rightlimit_x = 670;
+        }
 
 
 
@@ -25,6 +35,15 @@ namespace Beskonačni_Toranj
         //pomice dolje za platformspeed
         public virtual void MoveDown(int PlatformSpeed) {
             Y += PlatformSpeed;
+
+            //Ako nije doseglo 490 jos, samo mijenjamo na invisible kako se
+            //udaljenost platforma-enemy ne bi mijenjala
+            if (Y > 420) visible = false;
+
+            if (Y > 490) { 
+                Y = -410;
+                this.revive();
+            }
         }
 
 
@@ -37,13 +56,40 @@ namespace Beskonačni_Toranj
         }
 
 
-        public void restart()
+        public virtual void restart()
         {
             //TO DO
         }
 
+        public virtual void setLocation(int platform_x, int platform_y, int platform_width) {
+            x = platform_x+platform_width/2;
+            y = platform_y-70;
+
+            figure.Location = new Point(x, y);
+
+            leftlimit_x = platform_x;
+            rightlimit_x = platform_x + platform_width;
+        }
+
+        public virtual void setLocation(int platform_x, int platform_y)
+        {
+            X = platform_x;
+            Y = platform_y;
+        }
+
         //---------------------------------------------. GRAFIKA ENEMYA .-------------------------------
-        //funkcija koja daje image neprijatelju
+        public virtual void paint(object sender, PaintEventArgs e)
+        {
+            // Bitmap walkFrame = returnFrame();
+
+            e.Graphics.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.HighQuality;
+            e.Graphics.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.HighQualityBicubic;
+            e.Graphics.PixelOffsetMode = System.Drawing.Drawing2D.PixelOffsetMode.HighQuality;
+            e.Graphics.DrawImage(image, x, y, width, height);
+        }
+
+
+            //funkcija koja daje image neprijatelju
         public override void addImage(Bitmap image)
         {
             this.image = image;

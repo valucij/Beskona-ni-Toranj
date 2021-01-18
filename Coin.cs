@@ -148,6 +148,11 @@ namespace Beskonačni_Toranj
         public void MoveDown(int PlatformSpeed)
         {
             y += PlatformSpeed;
+            if (Y > 490)
+            {
+                Y = -410;
+                this.reset();
+            }
         }
 
         //crtacoin
