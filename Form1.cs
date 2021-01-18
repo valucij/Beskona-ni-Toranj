@@ -166,7 +166,7 @@ namespace Beskonačni_Toranj
 
             //dodajem slike za enemycoin
             enemycoin.addPictureBox(enemycoinPictureBox);
-            enemycoin.addImage(Properties.Resources.coin_star);
+           // enemycoin.addImage(Properties.Resources.);
 
           //dodajem slike za projektil playera
              player.addProjectilPictureBox(projectilPictureBox);
