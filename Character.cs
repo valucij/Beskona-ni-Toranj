@@ -89,7 +89,10 @@ namespace Beskonačni_Toranj
         //-------------------------------zastave----------------------------------
         public virtual void isHit(){
             life--;
-            if (life <= 0) { alive = false; }
+            if (life <= 0) { 
+                alive = false;
+                setVisibility(false);
+            }
 
 
         }
@@ -100,6 +103,7 @@ namespace Beskonačni_Toranj
             return true;
         }
         //------------------------------RESETI------------------
+        
         public void revive() {
             if (!alive) {
                 life = originalLife;
@@ -107,6 +111,7 @@ namespace Beskonačni_Toranj
                 }
             setVisibility(true);
         }
+        
 
          public void reset_position()
            {
@@ -124,7 +129,6 @@ namespace Beskonačni_Toranj
             tracer = new Color();
             revive();
             reset_position();
-            setVisibility(true);
 
               //slika i ostale stvari se ne mijenjaju, tako da tjt
                 }

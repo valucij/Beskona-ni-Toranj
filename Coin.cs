@@ -25,8 +25,7 @@ namespace Beskonačni_Toranj
         private int coinvalue;
         //zastavica koja govori da li je coin dropped ili ne
         private bool dropped;
-        //flag koji govori je li character visible;
-        private bool visible;
+
 
         //predstavlja picturebox koji u windows formi predstavlja novcic
         protected System.Windows.Forms.PictureBox figure;
@@ -37,7 +36,9 @@ namespace Beskonačni_Toranj
         public Coin() {
             dropped = false;
             coinvalue = 1;
-            visible = false;
+
+            x = -100;
+            y = -100;
         }
 
         //konstruktor koji generira novcic vece vrijednosti
@@ -45,7 +46,9 @@ namespace Beskonačni_Toranj
         {
             dropped = false;
             coinvalue = cv;
-            visible = false;
+
+            x = -100;
+           y = -100;
         }
 
         //ovaj konstruktor mi probs ne treba, ali neka ga je
@@ -66,40 +69,14 @@ namespace Beskonačni_Toranj
         //funkcija koja droppa novcic na danu lokaciju
         public void drop(int x_wheretodrop, int y_wheretodrop) 
         {
-            //ako je novcic vec droppan, return
-            if (dropped) return;
-
-            //ako novcic nije droppan
+            Console.WriteLine("DROPPED COIN");
             dropped = true;
-            visible = true;
             x = x_wheretodrop;
             y = y_wheretodrop;
+
+            figure.Visible = true;
+            figure.Location = new Point(x, y);
         }
-
-        //funkcija koja droppa novcic
-        public void drop()
-        {
-
-            //ako je novcic vec droppan, return
-            if (dropped) return;
-
-            //ako novcic nije droppan
-            dropped = true;
-            visible = true;
-
-        }
-
-        //funkcija koja vraca bool je li novcic pokupljen
-        public bool isPickedUp()
-        {
-            //ako novcic je droppan, vrati false jer nije picked up
-            if (dropped) return false;
-
-            //inace vrati true
-            return true;
-        }
-
-       
 
         //funkcija koja resetira (un-dropa) novcic
         public void reset() {
@@ -108,7 +85,8 @@ namespace Beskonačni_Toranj
 
             //ako je droppan novcic
             dropped = false;
-            visible = false;
+            figure.Visible = false;
+            figure.Location = new Point(-100, y);
         }
 
         //mijenja lokaciju novcica
@@ -122,10 +100,11 @@ namespace Beskonačni_Toranj
         //pomice dolje za platformspeed
         public void MoveDown(int PlatformSpeed)
         {
-            y += PlatformSpeed;
+            Y += PlatformSpeed;
+
             if (Y > 490)
             {
-                Y = -410;
+               Y = -410;
                 this.reset();
             }
         }
@@ -137,22 +116,13 @@ namespace Beskonačni_Toranj
             e.Graphics.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.HighQualityBicubic;
             e.Graphics.PixelOffsetMode = System.Drawing.Drawing2D.PixelOffsetMode.HighQuality;
             //e.Graphics.DrawImage(image, x, y, width, height);
-
-            //OVO ZAKOMENTIRATI
-            // Create pen.
-            Pen blackPen = new Pen(Color.FromArgb(5, 0, 0), 3);
-
-            // Create rectangle.
-            Rectangle rect = new Rectangle(x, y, 20, 20);
-
-            // Draw rectangle to screen.
-            e.Graphics.DrawRectangle(blackPen, rect);
         }
 
         //dodavanje pictureboxa koji je stvoren u windows formi i predstavljat ce lika
         public void addPictureBox(System.Windows.Forms.PictureBox figure)
         {
             this.figure = figure;
+            copyFigureInformation();
         }
 
         //mice picturebox
@@ -170,8 +140,8 @@ namespace Beskonačni_Toranj
         //funkcija koja postavlja x,y,height,width
         protected void copyFigureInformation()
         {
-            //za pocetak je figure nevidljiv
-            setVisibility(false);
+            //neka je isprva nevidljiva figura (dakle pri startu, ne replayu)
+            figure.Visible = false;
 
             //uzmi informacije iz pictureboxa, kako bi znali nacrtati enemya
             x = figure.Location.X;
@@ -183,24 +153,18 @@ namespace Beskonačni_Toranj
             figure.Location = new Point(x, y);
         }
 
-        //-----------------------------VISIBILITY----------------------------------
-        public virtual void setVisibility(bool b)
-        {
-            visible = b;
-        }
-
         //------------------------------SVOJSTVA--------------------------------------
-        public virtual int X
+        public int X
         {
-            set { x = value; }
             get { return x; }
+            set { x = value; figure.Location = new Point(value, y); }
+        }
+        public int Y
+        {
+            get { return y; }
+            set { y = value; figure.Location = new Point(x, value); }
         }
 
-        public virtual int Y
-        {
-            set { y = value; }
-            get { return y; }
-        }
 
         public int Width
         {
@@ -217,17 +181,12 @@ namespace Beskonačni_Toranj
             set { coinvalue = value; }
             get { return coinvalue; }
         }
+        
         public bool Dropped
         {
             set { dropped = value; }
             get { return dropped; }
         }
-
-        public bool Visible
-        {
-            set { visible = value; }
-            get { return visible; }
-
-        }
+        
     }
 }

@@ -63,12 +63,9 @@ namespace Beskonačni_Toranj
 
             leftlimit_x = platform_x-20;
             rightlimit_x = platform_x + platform_width-10;
-        }
 
-        public virtual void setLocation(int platform_x, int platform_y)
-        {
-            X = platform_x;
-            Y = platform_y;
+            originalX = X;
+            originalY = Y;
         }
 
         //---------------------------------------------. GRAFIKA ENEMYA .-------------------------------
@@ -105,7 +102,7 @@ namespace Beskonačni_Toranj
         public override int X
         {
             get { return x; }
-            set { x = value; figure.Location = new Point(value, figure.Location.Y); }
+            set { x = value; figure.Location = new Point(value, y); }
         }
         public override int Y
         {

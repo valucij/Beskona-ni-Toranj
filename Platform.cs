@@ -90,7 +90,8 @@ namespace Beskonačni_Toranj
                 //ako je neprijatelja ubio player, droppaj coin
                 if (enemy.isDead())
                 {
-                    coin.drop(enemy.X, enemy.Y);
+                    enemy.setVisibility(false);
+                    coin.drop(enemy.X, enemy.Y+30);
                     platformType = 3;
                 }
             }
@@ -105,7 +106,8 @@ namespace Beskonačni_Toranj
                 //ako je boss mrtav, droppaj coin
                 if (boss.isDead())
                  {
-                    coin.drop(boss.X, boss.Y);
+
+                    coin.drop(boss.X, boss.Y+30);
                     platformType = 3;
                   }
             }
@@ -114,18 +116,7 @@ namespace Beskonačni_Toranj
             if (platformType == 3) {
                 //updateaj coin
                 coin.Tick(sender, e, form);
-
-                if (coin.isPickedUp()) {
-                    platformType_restart();
-                }
-               
             };
-
-            //ako je izvan ekrana, samo ju lupi na dno i resetiraj platfromtypw
-            if (Y > 490) {
-                Y = -410;
-                platformType_restart();
-            }
 
         }
 
@@ -133,10 +124,15 @@ namespace Beskonačni_Toranj
         public void MoveDown(int platformSpeed) {
             Y += platformSpeed;
 
-            if (Y > 490)   Y = -410;
+            //ako je izvan ekrana, samo ju lupi na dno i resetiraj platfromtypw
+            if (Y > 490)
+            {
+                Y = -410;
+                platform_content_restart();
+            }
 
-            //ako nema nicega
-            if (platformType == 0) return;
+                //ako nema nicega
+                if (platformType == 0) return;
 
             //ako je enemy na platformi
             if (platformType == 1)  enemy.MoveDown(platformSpeed); 
@@ -163,30 +159,33 @@ namespace Beskonačni_Toranj
             platform.Location = new Point(originalX, originalY);
 
             //restarta content platforme 
-            platformType_restart();
+            platform_content_restart();
 
         }
 
         //funkcija koja vraca platformu na originalne vrijednosti
-        public void platformType_restart()
+        public void platform_content_restart()
         {
+            Console.WriteLine("originalni tip platforme prije restarta je " + originalPlatformType);
+            platformType = originalPlatformType;
+
             if (originalPlatformType == 0) ClearPlatform();
 
-            if (originalPlatformType == 1) {
+            if (originalPlatformType == 1)
+            {
                 enemy.revive();
-                enemy.setLocation(x, y, width);
+                enemy.setLocation(x,y,width);
                 coin.reset();
-                platformType = 1;
             }
 
             if (originalPlatformType == 2)
             {
+                Console.WriteLine("reset it");
                 boss.revive();
                 boss.setLocation(x, y, width);
+                boss.resetProjectile();
                 coin.reset();
-                platformType = 2;
             }
-
         }
         //-------------------------------------ADD BOSS/COIN/ENEMY------------
 

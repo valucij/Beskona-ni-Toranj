@@ -148,6 +148,7 @@ namespace Beskonačni_Toranj
 
             if (figure.Location.Y > 500 || life <= 0)
             {
+                Console.WriteLine("i died");
                 alive = false;
                 //return;
             }
@@ -184,6 +185,8 @@ namespace Beskonačni_Toranj
 
             foreach (Control c in form.Controls)
             {
+                //Console.WriteLine("listing out " + (string)c.Tag);
+
                 if ((string)c.Tag == "platform") 
                 {
                    
@@ -211,9 +214,9 @@ namespace Beskonačni_Toranj
                 //boss i bossprojectil (kao dio boss-a) se provjeravaju tu
                 if ((string)c.Tag == "boss" && !form.bossIsDead() && form.bossIsVisible())
                 {
-                    Console.WriteLine("contact with " + (string)c.Tag);
                     if (figure.Bounds.IntersectsWith(c.Bounds) )
                     {
+                        Console.WriteLine("contact with " + (string)c.Tag);
                         life--;
                     }
                 }
@@ -221,24 +224,26 @@ namespace Beskonačni_Toranj
                 //boss, enemy i bossprojectil (kao dio boss-a) se provjeravaju tu
                 if ((string)c.Tag == "enemy" && !form.enemyIsDead() && form.EnemyIsVisible())
                 {
-                    Console.WriteLine("contact with " + (string)c.Tag);
                     if (figure.Bounds.IntersectsWith(c.Bounds))
                     {
+                        Console.WriteLine("contact with " + (string)c.Tag);
                         life--;
                     }
                 }
 
                 //dotakne bossocin
-                if ((string)c.Tag == "bosscoin" && form.BossCoinDropped())
+                if ((string)c.Tag == "bosscoin" && form.BossCoinDropped() && figure.Bounds.IntersectsWith(c.Bounds))
                 {
+                    Console.WriteLine("contact with " + (string)c.Tag);
                     score = score + form.BossCoinValue();
                     form.resetBossCoin();
                 }
 
                 //dotakne enemycoin
-                if ((string)c.Tag == "enemycoin" && form.EnemyCoinDropped())
+                if ((string)c.Tag == "enemycoin" && form.EnemyCoinDropped() && figure.Bounds.IntersectsWith(c.Bounds))
                 {
-                    score=score+form.EnemyCoinValue();
+                    Console.WriteLine("contact with " + (string)c.Tag);
+                    score =score+form.EnemyCoinValue();
                     form.resetEnemyCoin();
                 }
             }
@@ -285,7 +290,7 @@ namespace Beskonačni_Toranj
             figure.Location = new Point(100, 350);
             life = 10;
             offground = false;
-            //projectil = new ProjectilShotByPlayer(); OVO NE, MAKNUTI OVO NE!
+            projectil.reset();
 
             //vracam na pocetnu poziciju
             x = originalX;

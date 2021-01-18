@@ -32,8 +32,8 @@ namespace Beskonačni_Toranj
             fired = false;
             left = false;
             right = false;
-            x = 0;
-            y = 0;
+            x = -100;
+            y = -100;
         }
 
         //-----------------------. logistika projektila (Tick).----------------------------------
@@ -53,7 +53,7 @@ namespace Beskonačni_Toranj
         public void Tick(object sender, EventArgs e, Form1 form)
         {
             //ako nije metak ispucan, ne moram ga tick-ati
-            if (!fired) return;
+            if (!Fired) { X = -100; setVisibility(false);  return; }
 
             //Ako je metak ispucan, prvo ga pomakni
             if (right)
@@ -87,7 +87,7 @@ namespace Beskonačni_Toranj
         {
             left = true;
             right = false;
-            fired = true;
+            setVisibility(true);
             figure.Location = new Point(shooter_x, shooter_y + 10);
 
             x = shooter_x;
@@ -101,7 +101,7 @@ namespace Beskonačni_Toranj
         {
             right = true;
             left = false;
-            fired = true;
+            setVisibility(true);
 
             figure.Location = new Point(shooter_x, shooter_y + 10);
 
@@ -114,7 +114,7 @@ namespace Beskonačni_Toranj
 
         //funkcija koja postavlja zastavicu i koordinate za pucanje u kojem god smjeru da su vec zastavice postavljene
         public void pucaj(int shooter_x, int shooter_y) {
-            fired = true;
+            setVisibility(true);
 
             figure.Location = new Point(shooter_x, shooter_y + 10);
 
@@ -126,13 +126,11 @@ namespace Beskonačni_Toranj
         //funkcija koja vraca metak u cahuru (na pocetno stanje)
         public void reset() {
             frameCounter = 0;
-            fired = false;
+            setVisibility(false);
             left = false;
             right = false;
-            x = 0;
-            y = 0;
-
-            figure.Location = new Point(0, 0);
+            X = -100;
+            Y = -100;
         }
 
         //-------------------------------------------------------isHit virtualna funkcija
@@ -165,7 +163,7 @@ namespace Beskonačni_Toranj
         public void paint(object sender, PaintEventArgs e)
         {
             //ako metak nije ispucan ne crtam ga
-            if (!fired)  return;
+            if (!Fired)  return;
 
             Bitmap frame = returnNewFrame();
             e.Graphics.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.HighQuality;
@@ -189,6 +187,7 @@ namespace Beskonačni_Toranj
 
         private void copyFigureInformation()
         {
+
             setVisibility(false);
             height = figure.Height + 70;
             width = figure.Width + 70;
@@ -196,8 +195,8 @@ namespace Beskonačni_Toranj
 
         public virtual void setVisibility(bool b)
         {
-            fired = b;
-
+            Fired = b;
+            if (b = true) { figure.Visible = true; } else { figure.Visible = false; }
         }
 
         //vrati novi BitMap frame (tj sliku projektila među frameovima)

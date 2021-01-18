@@ -73,8 +73,8 @@ namespace Beskonačni_Toranj
             //score nakon kojeg se pojavljuje boss
             bossScore = 0;
 
-                //konstruiram meni
-                menu = new Menu();
+            //konstruiram meni
+            menu = new Menu();
 
             //inicijalizacija playera
             player = new Player();
@@ -94,13 +94,13 @@ namespace Beskonačni_Toranj
             ground = new Platform();
 
             //inicijaliziram brzinu igre (tj brzinu kojom platforme idu)
-            platformSpeed =1;
+            platformSpeed = 2;
             //da li se platforme micu
             platformMoving = false;
 
             //inicijalizacija i postavljanje platformi
             allPlatforms = new List<Platform>();
-           
+
 
             //allPlatforms.Add(new Platform(groundPictureBox, Properties.Resources.b_fotfor_lush2));
             allPlatforms.Add(ground);
@@ -175,10 +175,10 @@ namespace Beskonačni_Toranj
 
             //dodajem slike za enemycoin
             enemycoin.addPictureBox(enemycoinPictureBox);
-           //enemycoin.addImage(Properties.Resources.coin);
+            //enemycoin.addImage(Properties.Resources.coin);
 
-          //dodajem slike za projektil playera
-             player.addProjectilPictureBox(projectilPictureBox);
+            //dodajem slike za projektil playera
+            player.addProjectilPictureBox(projectilPictureBox);
 
             player.addProjectilImage(Properties.Resources.projectil_1);
             player.addProjectilImage(Properties.Resources.projectil_2);
@@ -247,7 +247,7 @@ namespace Beskonačni_Toranj
             {
                 player.keyDown(sender, e);
             }
-            
+
         }
 
         //akcije koje se obavljaju kad se otpusti neka tipka; sve se salje u odgovarajuce funkcije kod playera
@@ -257,7 +257,7 @@ namespace Beskonačni_Toranj
             {
                 player.keyUp(sender, e);
             }
-            
+
         }
 
         //forma javlja playeru da je pritisnut key za pucanje 
@@ -298,7 +298,7 @@ namespace Beskonačni_Toranj
             if (menuFlag)
             {
                 string playerName = Interaction.InputBox("Unesite svoje ime!", "Player name input", "Player", 100, 100);
-              //  Console.WriteLine(playerName);
+                //  Console.WriteLine(playerName);
             }
         }
 
@@ -341,8 +341,7 @@ namespace Beskonačni_Toranj
                 //..........HANDLING VISIBILITY..........
                 if (player.Score >= bossScore && !boss.isDead()) { boss.setVisibility(true); } else { boss.setVisibility(false); }
                 if (!enemy.isDead()) { enemy.setVisibility(true); } else { enemy.setVisibility(false); }
-                if (enemycoin.Dropped) { enemycoin.setVisibility(true); } else { enemycoin.setVisibility(false); }
-                if (bosscoin.Dropped) { bosscoin.setVisibility(true); } else { bosscoin.setVisibility(false); }
+
             }
 
 
@@ -365,29 +364,29 @@ namespace Beskonačni_Toranj
                 //za prvo put: ako igrac skoci i platforme se jos ne micu, samo droppaj ground iz allPlatforms
                 //i pocni kretati platforme
                 if (player.Y < 200 && !player.offGround)
-                { 
+                {
                     player.offGround = true;
                     platformMoving = true;
                 }
                 //ako micemo platformu, pomakni ju dolje
                 if (platformMoving)
                 {
-                    p.MoveDown(platformSpeed); 
+                    p.MoveDown(platformSpeed);
                 }
 
                 //..........KRETANJE PLATFORMI (TOCNIJE CHARACTERA) PO X OSI
-                p.Tick_X(sender,e,this);
+                p.Tick_X(sender, e, this);
             }
 
         }
 
-    //----------------------------------------------------------RESTART funkcije--------------------------------------------------------------------------------------------------------------------------
+        //----------------------------------------------------------RESTART funkcije--------------------------------------------------------------------------------------------------------------------------
 
-    //funkcija restartira igru, restartira playera i platforme
-    private void restartGame()
+        //funkcija restartira igru, restartira playera i platforme
+        private void restartGame()
         {
             //restartam charactere
-             player.restart();
+            player.restart();
 
             //restartam igru
             platformRestart();
@@ -422,7 +421,7 @@ namespace Beskonačni_Toranj
 
         //---------------------------------PUCANJE-----------------------------------------------------------------------------------------------------------------------------
 
-        public void playerIsHit() 
+        public void playerIsHit()
         {
             player.isHit();
         }
@@ -432,84 +431,84 @@ namespace Beskonačni_Toranj
             boss.isHit();
         }
 
-        public void enemyIsHit() 
+        public void enemyIsHit()
         {
 
             enemy.isHit();
-        
+
         }
 
         //-------------------------------------------NOVCIC FUNKCIJE-------------------------------
 
-        public void hasPickedUp(int coinvalue) {
+        public void hasPickedUp(int coinvalue)
+        {
             player.PickUp(coinvalue);
-
         }
 
-        public void dropBosscoin(){
-            if (boss.isDead()) bosscoin.drop(boss.X, boss.Y);
-        }
+            //-------------------------------------------STVARI GENERIRANE FORM DESIGNEROM-------------
+            private void highscoreClick(object sender, EventArgs e)
+            {
+                //treba napisati jos
+            }
 
-        public void dropEnemycoin()
-        {
-            if (enemy.isDead()) enemycoin.drop(enemy.X, enemy.Y);
-        }
 
-        //-------------------------------------------STVARI GENERIRANE FORM DESIGNEROM-------------
-        private void highscoreClick(object sender, EventArgs e)
-        {
-            //treba napisati jos
-        }
 
- 
+            private void Form1_Load(object sender, EventArgs e)
+            {
 
-        private void Form1_Load(object sender, EventArgs e)
-        {
+            }
 
-        }
+            //---------------------------.VISIBILITY TO PLAYER.-------------------
+            public bool bossIsDead()
+            {
+                return boss.isDead();
+            }
 
-        //---------------------------.VISIBILITY TO PLAYER.-------------------
-        public bool bossIsDead() {
-            return boss.isDead();
-        }
+            public bool enemyIsDead()
+            {
+                return enemy.isDead();
+            }
 
-        public bool enemyIsDead() {
-            return enemy.isDead();
-        }
+            public bool bossIsVisible()
+            {
+                return boss.Visible;
+            }
 
-        public bool bossIsVisible()
-        {
-            return boss.Visible;
-        }
+            public bool EnemyIsVisible()
+            {
+                return enemy.Visible;
+            }
 
-        public bool EnemyIsVisible() {
-            return enemy.Visible;
-        }
+            public bool EnemyCoinDropped()
+            {
+                return enemycoin.Dropped;
+            }
 
-        public bool EnemyCoinDropped() {
-            return enemycoin.Dropped;
-        }
+            public bool BossCoinDropped()
+            {
+                return bosscoin.Dropped;
+            }
 
-        public bool BossCoinDropped() {
-            return bosscoin.Dropped;
-        }
+            public int BossCoinValue()
+            {
+                return bosscoin.CoinValue;
+            }
 
-        public int BossCoinValue() {
-            return bosscoin.CoinValue;
-        }
+            public int EnemyCoinValue()
+            {
+                return enemycoin.CoinValue;
+            }
 
-        public int EnemyCoinValue()
-        {
-            return enemycoin.CoinValue;
-        }
+            public void resetBossCoin()
+            {
+                bosscoin.reset();
+            }
 
-        public void resetBossCoin() {
-            bosscoin.reset();
-        }
-
-        public void resetEnemyCoin() {
-            enemycoin.reset();
+            public void resetEnemyCoin()
+            {
+                enemycoin.reset();
+            }
         }
     }
-}
+
 

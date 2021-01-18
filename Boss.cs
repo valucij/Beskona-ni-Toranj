@@ -55,6 +55,7 @@ namespace Beskonačni_Toranj
             {
                 Y = -410;
                 this.revive();
+                this.resetProjectile();
             }
         }
     
@@ -100,15 +101,19 @@ namespace Beskonačni_Toranj
         {
             //elemente boss-a restartam
             bossSpeed = 3;
-            alive = true;
             left = true;
-            projectil.reset();
+            resetProjectile();
 
             //restartam nasljedjene elemente
             tracer = new Color();
             revive();
             reset_position();
 
+        }
+
+
+        public void resetProjectile() {
+            projectil.reset();
         }
 
         
@@ -149,10 +154,24 @@ namespace Beskonačni_Toranj
 
             figure.Location = new Point(x, originalY);
         }
-        
-  
+
+
 
         //-------------------------------------STVARI VEZANE UZ PUCANJE/PROJEKTIL-------------
+
+        public override void isHit()
+        {
+            life--;
+            if (life <= 0)
+            {
+                alive = false;
+                setVisibility(false);
+                resetProjectile();
+            }
+
+
+        }
+
         public void addProjectilImage(Bitmap image)
         {
             projectil.addImage(image);

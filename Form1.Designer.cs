@@ -218,13 +218,13 @@
             // 
             // projectilPictureBox
             // 
-            this.projectilPictureBox.Location = new System.Drawing.Point(154, 485);
+            this.projectilPictureBox.Location = new System.Drawing.Point(-100, -100);
             this.projectilPictureBox.Margin = new System.Windows.Forms.Padding(2);
             this.projectilPictureBox.Name = "projectilPictureBox";
             this.projectilPictureBox.Size = new System.Drawing.Size(45, 37);
             this.projectilPictureBox.TabIndex = 13;
             this.projectilPictureBox.TabStop = false;
-            this.projectilPictureBox.Tag = "projectil";
+            this.projectilPictureBox.Tag = "playerprojectil";
             // 
             // bossPictureBox
             // 
@@ -238,13 +238,13 @@
             // 
             // bossProjectilPictureBox
             // 
-            this.bossProjectilPictureBox.Location = new System.Drawing.Point(669, 483);
+            this.bossProjectilPictureBox.Location = new System.Drawing.Point(-100, -100);
             this.bossProjectilPictureBox.Margin = new System.Windows.Forms.Padding(2);
             this.bossProjectilPictureBox.Name = "bossProjectilPictureBox";
             this.bossProjectilPictureBox.Size = new System.Drawing.Size(33, 40);
             this.bossProjectilPictureBox.TabIndex = 15;
             this.bossProjectilPictureBox.TabStop = false;
-            this.bossProjectilPictureBox.Tag = "bossProjectil";
+            this.bossProjectilPictureBox.Tag = "bossprojectil";
             // 
             // bosscoin
             // 

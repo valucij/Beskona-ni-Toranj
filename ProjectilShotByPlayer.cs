@@ -14,8 +14,8 @@ namespace Beskonačni_Toranj
     {
         //konstruktor
         public ProjectilShotByPlayer() : base() {
-            x = 0;
-            y = 0;
+            x = -100;
+            y = -100;
         }
 
 
