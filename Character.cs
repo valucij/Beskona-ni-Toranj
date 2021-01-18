@@ -25,6 +25,8 @@ namespace Beskonačni_Toranj
 
         //koordinate lika na ekranu
         protected int x, y;
+        //originalnekoordinate
+        protected int originalX, originalY;
         //velicina slike na ekranu
         protected int width, height;
         //broj zivota lika
@@ -84,25 +86,69 @@ namespace Beskonačni_Toranj
             this.pictures.Add(picture);
         }
 
-        //-------------------------------LIK POGODJEN----------------------------------
+        //-------------------------------zastave----------------------------------
         public virtual void isHit(){
             life--;
-          //  Console.WriteLine("life " + life);
+            Console.WriteLine("life " + life);
             if (life <= 0) alive = false;
         }
 
-        //------------------------------JEL MRTAV/OZIVI GA------------------
-
-        public bool isDead() {
-            if (alive) return true;
-            return false;
+        public bool isDead()
+        {
+            if (alive) return false;
+            return true;
         }
-
+        //------------------------------RESETI------------------
         public void revive() {
             if (!alive) {
                 life = originalLife;
                 alive = true;
                 }    
+        }
+
+         public void reset_position()
+           {
+
+            x = originalX;
+            y = originalY;
+
+            figure.Location = new Point(originalX, originalY);
+
+            }
+
+
+        //funkcija koja se koristi pri kompletnom resetu 
+        public virtual void reset() {
+            tracer = new Color();
+            revive();
+            reset_position();
+            setVisibility(true);
+
+              //slika i ostale stvari se ne mijenjaju, tako da tjt
+                }
+       
+        public virtual void setVisibility(bool b)
+        {
+            
+            visible = b;
+            figure.Visible = b;
+
+
+            if (b == false) { figure.Location = new Point(-100, y); } else { figure.Location = new Point(x, y); }
+
+        }
+        
+        //funkcija koja postavlja x,y,height,width
+        protected virtual void copyFigureInformation()
+        { 
+            //uzmi informacije iz pictureboxa, kako bi znali nacrtati enemya
+            x = figure.Location.X;
+            y = figure.Location.Y;
+            width = figure.Width;
+            height = figure.Height;
+
+            //ovaj dio koda je relevantan ako cu y pomicati prema gore kad dolje postavljam :)
+            figure.Location = new Point(x, y);
         }
         //------------------------------SVOJSTVA--------------------------------------
         public virtual int X

@@ -36,6 +36,50 @@ namespace Beskonačni_Toranj
             y = 0;
         }
 
+        //-----------------------. logistika projektila (Tick).----------------------------------
+        //pomice dolje za platformspeed
+        public virtual void MoveDown(int PlatformSpeed)
+        {
+            Y += PlatformSpeed;
+
+
+            if (Y > 490)
+            {
+                Y = -410;
+                this.reset();
+            }
+        }
+
+        public void Tick(object sender, EventArgs e, Form1 form)
+        {
+            //ako nije metak ispucan, ne moram ga tick-ati
+            if (!fired) return;
+
+            //Ako je metak ispucan, prvo ga pomakni
+            if (right)
+            {
+                figure.Left += projectilSpeed;
+            }
+            else if (left)
+            {
+                figure.Left -= projectilSpeed;
+            }
+
+            //ako je metak izasao van granica ekrana
+            if (x + width > form.ClientSize.Width || x < 0 || y + height > form.ClientSize.Height || y < 0)
+            {
+                this.reset();
+                return;
+            };
+
+            //uzimamo te informacije iz figura da znamo nacrtati projectil
+            x = figure.Location.X;
+            y = figure.Location.Y;
+            width = figure.Width;
+            height = figure.Height;
+
+        }
+
         //--------------------------------------------funkcije vezane uz pucanje---------------------------------
 
         //funkcija koja postavlja zastavice i koordinate za pucanje lijevo
@@ -91,19 +135,16 @@ namespace Beskonačni_Toranj
             figure.Location = new Point(0, 0);
         }
 
-        //--------------------------------------------micanje metka dolje kako se pomice boss---
-        //pomice dolje za platformspeed
-        public virtual void MoveDown(int PlatformSpeed)
+        //-------------------------------------------------------isHit virtualna funkcija
+
+        //vraća je li character pogođen, poziva se iz player.tick ili boss.tick
+        public virtual bool hasHit(Form1 form)
         {
-            Y += PlatformSpeed;
-
-
-            if (Y > 490)
-            {
-                Y = -410;
-                this.reset();
-            }
+            return false;
         }
+
+       
+       
         //---------------------------------------------funkcije vezane uz slike-----------------------------------
 
         //funkcija koja dodaje PictureBox
@@ -118,6 +159,70 @@ namespace Beskonačni_Toranj
             this.figure = null;
         }
 
+        
+        //----------------------------------.GRAFIKA.----------------------------------------
+        //crta metak
+        public void paint(object sender, PaintEventArgs e)
+        {
+            //ako metak nije ispucan ne crtam ga
+            if (!fired)  return;
+
+            Bitmap frame = returnNewFrame();
+            e.Graphics.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.HighQuality;
+            e.Graphics.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.HighQualityBicubic;
+            e.Graphics.PixelOffsetMode = System.Drawing.Drawing2D.PixelOffsetMode.HighQuality;
+            e.Graphics.DrawImage(frame, x, y, width, height);
+        }
+
+        public void addImage(List<Bitmap> images)
+        {
+            this.images = images;
+            copyFigureInformation();
+            
+        }
+
+        public void addImage(Bitmap image)
+        {
+            this.images.Add(image);
+            copyFigureInformation();
+        }
+
+        private void copyFigureInformation()
+        {
+            setVisibility(false);
+            height = figure.Height + 70;
+            width = figure.Width + 70;
+        }
+
+        public virtual void setVisibility(bool b)
+        {
+            fired = b;
+            figure.Visible = b;
+
+        }
+
+        //vrati novi BitMap frame (tj sliku projektila među frameovima)
+        public Bitmap returnNewFrame()
+        {
+            Bitmap returnValue = images[0];
+
+            if(frameCounter < images.Count)
+            {
+                returnValue = images[frameCounter];
+                frameCounter++;
+            }
+
+            if (frameCounter == images.Count)
+            {
+                frameCounter = 0;
+            }
+
+            tracer = returnValue.GetPixel(1, 1);
+            returnValue.MakeTransparent(tracer);
+
+            return returnValue;
+        
+        }
 
         //------------------------------------------------svojstva--------------------------------------------------
         public int X
@@ -165,105 +270,6 @@ namespace Beskonačni_Toranj
         {
             set { right = value; }
             get { return right; }
-        }
-
-
-  
-        //crta metak
-        public void paint(object sender, PaintEventArgs e)
-        {
-            //ako metak nije ispucan ne crtam ga
-            if (!fired)  return;
-
-            Bitmap frame = returnNewFrame();
-            e.Graphics.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.HighQuality;
-            e.Graphics.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.HighQualityBicubic;
-            e.Graphics.PixelOffsetMode = System.Drawing.Drawing2D.PixelOffsetMode.HighQuality;
-            e.Graphics.DrawImage(frame, x, y, width, height);
-        }
-
-        public void addImage(List<Bitmap> images)
-        {
-            this.images = images;
-            copyFigureInformation();
-            
-        }
-
-        public void addImage(Bitmap image)
-        {
-            this.images.Add(image);
-            copyFigureInformation();
-        }
-
-        private void copyFigureInformation()
-        {
-            figure.Visible = false;
-            height = figure.Height + 70;
-            width = figure.Width + 70;
-        }
-
-        public void Tick(object sender, EventArgs e, Form1 form)
-        {
-            //ako nije metak ispucan, ne moram ga tick-ati
-            if (!fired) return;
-
-            //Ako je metak ispucan, prvo ga pomakni
-                if (right)
-                {
-                    figure.Left += projectilSpeed;
-                }
-                else if (left)
-                {
-                    figure.Left -= projectilSpeed;
-                }
-
-            //ako je metak izasao van granica ekrana
-            if (x + width > form.ClientSize.Width || x < 0 || y + height > form.ClientSize.Height || y < 0)
-            {
-                this.reset();
-                return;
-                };
-
-            //inace updateaj sliku metka
-            //figure.Location = new Point(x, y);
-
-            //uzimamo te informacije iz figura da znamo nacrtati projectil
-            x = figure.Location.X;
-            y = figure.Location.Y;
-            width = figure.Width;
-            height = figure.Height;
-
-        }
-
-        //-------------------------------------------------------isHit virtualna funkcija
-
-        //vraća je li character pogođen, poziva se iz player.tick ili boss.tick
-        public virtual bool hasHit(Form1 form)
-        {
-            return false;
-        }
-
-        //vrati novi BitMap frame (tj sliku projektila među frameovima)
-        public Bitmap returnNewFrame()
-        {
-            Bitmap returnValue = images[0];
-
-            if(frameCounter < images.Count)
-            {
-                returnValue = images[frameCounter];
-                frameCounter++;
-            }
-
-            if (frameCounter == images.Count)
-            {
-                frameCounter = 0;
-            }
-
-            tracer = returnValue.GetPixel(1, 1);
-            returnValue.MakeTransparent(tracer);
-
-            return returnValue;
-        
         }
     }
 }

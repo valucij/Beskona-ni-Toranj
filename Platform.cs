@@ -76,7 +76,7 @@ namespace Beskonačni_Toranj
 
         //-------------------------------------.LOGISTIKA PLATFORME.--------------------------
         //funkcija koja updatea platformType
-        public void Update(object sender, EventArgs e, Form1 form)
+        public void Tick_X(object sender, EventArgs e, Form1 form)
         {
             //ako nema nicega
             if (platformType == 0) return;
@@ -87,7 +87,7 @@ namespace Beskonačni_Toranj
                 //updateaj enemya
                 enemy.Tick(sender, e, form);
 
-                //ako je neprijatelj mrtav, droppaj coin
+                //ako je neprijatelja ubio player, droppaj coin
                 if (enemy.isDead())
                 {
                     coin.drop(enemy.X, enemy.Y);
@@ -115,7 +115,7 @@ namespace Beskonačni_Toranj
                 //updateaj coin
                 coin.Tick(sender, e, form);
 
-                if (coin.isPickedUp(form)) {
+                if (coin.isPickedUp()) {
                     platformType_restart();
                 }
                

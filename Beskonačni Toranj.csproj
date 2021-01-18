@@ -159,6 +159,9 @@
   <ItemGroup>
     <Content Include="coin_star.jpg" />
     <Content Include="Resources\coin_star.jpg" />
+    <Content Include="Resources\coin.png" />
+    <Content Include="Resources\enemy.jpg" />
+    <Content Include="Resources\enemy_jotaro.jpg" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

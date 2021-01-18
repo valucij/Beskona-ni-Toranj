@@ -46,10 +46,6 @@ namespace Beskonačni_Toranj
         //metak koja player ispucava klase projectil
         ProjectilShotByPlayer projectil;
 
-        //originalne informacije
-        private int originalX;
-        private int originalY;
-
         //konstruktor
         public Player()
         {
@@ -188,7 +184,7 @@ namespace Beskonačni_Toranj
 
             foreach (Control c in form.Controls)
             {
-                if ((string)c.Tag == "platform"/* || (string)c.Tag == "ground"*/) 
+                if ((string)c.Tag == "platform") 
                 {
                    
                     if (figure.Bounds.IntersectsWith(c.Bounds) && !jumping && c.Top > figure.Top)//detekcija da li player stoji na platformi
@@ -213,13 +209,37 @@ namespace Beskonačni_Toranj
                 }
 
                 //boss, enemy i bossprojectil (kao dio boss-a) se provjeravaju tu
-                if ((string)c.Tag == "boss" || (string)c.Tag == "enemy")
+                if ((string)c.Tag == "boss" && !form.bossIsDead() && form.bossIsVisible())
                 {
-
+                    Console.WriteLine("contact with " + (string)c.Tag);
                     if (figure.Bounds.IntersectsWith(c.Bounds) )
                     {
                         life--;
                     }
+                }
+
+                //boss, enemy i bossprojectil (kao dio boss-a) se provjeravaju tu
+                if ((string)c.Tag == "enemy" && !form.enemyIsDead() && form.EnemyIsVisible())
+                {
+                    Console.WriteLine("contact with " + (string)c.Tag);
+                    if (figure.Bounds.IntersectsWith(c.Bounds))
+                    {
+                        life--;
+                    }
+                }
+
+                //dotakne bossocin
+                if ((string)c.Tag == "bosscoin" && form.BossCoinDropped())
+                {
+                    score = score + form.BossCoinValue();
+                    form.resetBossCoin();
+                }
+
+                //dotakne enemycoin
+                if ((string)c.Tag == "enemycoin" && form.EnemyCoinDropped())
+                {
+                    score=score+form.EnemyCoinValue();
+                    form.resetEnemyCoin();
                 }
             }
 

@@ -10,10 +10,10 @@ namespace Beskonačni_Toranj
 {
     class Enemy : Character
     {
-        //slika enemy-a
+        //slika enemy-a 
         protected Bitmap image;
 
-        //lijevi i desni limit moje platforme
+        //lijevi i desni limit moje platforme 
         protected int leftlimit_x;
         protected int rightlimit_x;
 
@@ -36,10 +36,6 @@ namespace Beskonačni_Toranj
         public virtual void MoveDown(int PlatformSpeed) {
             Y += PlatformSpeed;
 
-            //Ako nije doseglo 490 jos, samo mijenjamo na invisible kako se
-            //udaljenost platforma-enemy ne bi mijenjala
-            if (Y > 420) visible = false;
-
             if (Y > 490) { 
                 Y = -410;
                 this.revive();
@@ -49,16 +45,14 @@ namespace Beskonačni_Toranj
 
         public virtual void Tick(object sender, EventArgs e, Form1 form)
         {
-
-            if (!alive) {
-                form.dropEnemycoin();
-            }
+            //enemy samo sjedi na platformi, tako da se tu zapravo nista ne dogadja
         }
 
 
         public virtual void restart()
         {
-            //TO DO
+            revive();
+
         }
 
         public virtual void setLocation(int platform_x, int platform_y, int platform_width) {
@@ -85,7 +79,7 @@ namespace Beskonačni_Toranj
             e.Graphics.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.HighQuality;
             e.Graphics.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.HighQualityBicubic;
             e.Graphics.PixelOffsetMode = System.Drawing.Drawing2D.PixelOffsetMode.HighQuality;
-            e.Graphics.DrawImage(image, x, y, width, height);
+            //e.Graphics.DrawImage(image, x, y, width, height);
         }
 
 
@@ -96,22 +90,6 @@ namespace Beskonačni_Toranj
             copyFigureInformation();
         }
 
-
-        //funkcija koja postavlja x,y,height,width
-        protected virtual void copyFigureInformation()
-        {
-            //za pocetak je figure nevidljiv
-            figure.Visible = false;
-
-            //uzmi informacije iz pictureboxa, kako bi znali nacrtati enemya
-            x = figure.Location.X;
-            y = figure.Location.Y;
-            width = figure.Width;
-            height = figure.Height;
-
-            //ovaj dio koda je relevantan ako cu y pomicati prema gore kad dolje postavljam :)
-            figure.Location = new Point(x, y);
-        }
 
         //-----------------------------------------SVOJSTVA-----------------
         public override int X

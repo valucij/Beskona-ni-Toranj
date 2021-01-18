@@ -60,8 +60,7 @@ namespace Beskonačni_Toranj
 
         public virtual void Tick(object sender, EventArgs e, Form1 form)
         {
-            //pokusava pick upati coin, postavlja zastavice i javlja formi ako je pickupan
-            this.Try_PickUpCoin(form);
+            //coin sam po sebi nista ne radi, on se sam returna ako player naleti na njega
         }
 
         //funkcija koja droppa novcic na danu lokaciju
@@ -91,43 +90,19 @@ namespace Beskonačni_Toranj
         }
 
         //funkcija koja vraca bool je li novcic pokupljen
-        public bool isPickedUp(Form1 form)
+        public bool isPickedUp()
         {
-            //ako novcic nije droppan, vrati false
-            if (!dropped) return false;
+            //ako novcic je droppan, vrati false jer nije picked up
+            if (dropped) return false;
 
-            //ako je novcic droppan
-            foreach (Control c in form.Controls)
-            {
-                //ako dodirne playera, vraca formi informaciju
-                if ((string)c.Tag == "player" && figure.Bounds.IntersectsWith(c.Bounds))
-                {
-                    return true;
-                }
-
-            }
-
-            //inace vrati false
-            return false;
+            //inace vrati true
+            return true;
         }
 
-        public void Try_PickUpCoin(Form1 form) {
-
-            if (dropped && this.isPickedUp(form)) {
-
-                //javlja formi da je coin picked up
-                form.hasPickedUp(coinvalue);
-
-                //resetira coin, undroppa ga
-                this.reset();
-            }
-        
-        
-        }
+       
 
         //funkcija koja resetira (un-dropa) novcic
         public void reset() {
-
             //ako nije droppan novcic, vrati se
             if (!dropped) return;
 
@@ -161,7 +136,7 @@ namespace Beskonačni_Toranj
             e.Graphics.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.HighQuality;
             e.Graphics.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.HighQualityBicubic;
             e.Graphics.PixelOffsetMode = System.Drawing.Drawing2D.PixelOffsetMode.HighQuality;
-            e.Graphics.DrawImage(image, x, y, width, height);
+            //e.Graphics.DrawImage(image, x, y, width, height);
         }
 
         //dodavanje pictureboxa koji je stvoren u windows formi i predstavljat ce lika
@@ -183,10 +158,10 @@ namespace Beskonačni_Toranj
         }
 
         //funkcija koja postavlja x,y,height,width
-        protected virtual void copyFigureInformation()
+        protected void copyFigureInformation()
         {
             //za pocetak je figure nevidljiv
-            figure.Visible = false;
+            setVisibility(false);
 
             //uzmi informacije iz pictureboxa, kako bi znali nacrtati enemya
             x = figure.Location.X;
@@ -198,6 +173,13 @@ namespace Beskonačni_Toranj
             figure.Location = new Point(x, y);
         }
 
+        //-----------------------------VISIBILITY----------------------------------
+        public virtual void setVisibility(bool b)
+        {
+            visible = b;
+            figure.Visible = b;
+
+        }
 
         //------------------------------SVOJSTVA--------------------------------------
         public virtual int X

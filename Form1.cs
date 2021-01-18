@@ -55,6 +55,9 @@ namespace Beskonačni_Toranj
         //objekt klase menu
         Menu menu;
 
+        //score nakon kojega se pojavljuje boss
+        int bossScore;
+
         private string playerName;
 
         //KONSTRUKTOR
@@ -67,8 +70,11 @@ namespace Beskonačni_Toranj
             gameFlag = false;
             endgameFlag = false;
 
-            //konstruiram meni
-            menu = new Menu();
+            //score nakon kojeg se pojavljuje boss
+            bossScore = 0;
+
+                //konstruiram meni
+                menu = new Menu();
 
             //inicijalizacija playera
             player = new Player();
@@ -82,6 +88,7 @@ namespace Beskonačni_Toranj
             //inicijaliziram novcice
             enemycoin = new Coin();
             bosscoin = new Coin(2);
+
 
             //inicijalizacija tla (klase platforma)
             ground = new Platform();
@@ -160,13 +167,15 @@ namespace Beskonačni_Toranj
 
             //dodajem slike za enemya
             enemy.addPictureBox(enemyPictureBox);
+            //enemy.addImage(Properties.Resources.enemy);
 
             //dodajem slike za bosscoin
             bosscoin.addPictureBox(bosscoinPictureBox);
+            //bosscoin.addImage(Properties.Resources.coin);
 
             //dodajem slike za enemycoin
             enemycoin.addPictureBox(enemycoinPictureBox);
-           // enemycoin.addImage(Properties.Resources.);
+           //enemycoin.addImage(Properties.Resources.coin);
 
           //dodajem slike za projektil playera
              player.addProjectilPictureBox(projectilPictureBox);
@@ -214,8 +223,12 @@ namespace Beskonačni_Toranj
                 {
                     p.platformPaint(sender, e);
                 }
-                enemy.paint(sender, e);
-                if (player.Score>20)boss.paint(sender, e);
+
+                //crtaj charactere
+                if (boss.Visible) boss.paint(sender, e);
+                if (enemy.Visible) enemy.paint(sender, e);
+
+                //crtaj coinove
                 if (enemycoin.Dropped) enemycoin.paint(sender, e);
                 if (bosscoin.Dropped) bosscoin.paint(sender, e);
             }
@@ -322,7 +335,14 @@ namespace Beskonačni_Toranj
             if (gameFlag)
             {
                 player.Tick(sender, e, this);
-                platformTick();
+                platformTick(sender, e);
+
+
+                //..........HANDLING VISIBILITY..........
+                if (player.Score >= bossScore && !boss.isDead()) { boss.setVisibility(true); } else { boss.setVisibility(false); }
+                if (!enemy.isDead()) { enemy.setVisibility(true); } else { enemy.setVisibility(false); }
+                if (enemycoin.Dropped) { enemycoin.setVisibility(true); } else { enemycoin.setVisibility(false); }
+                if (bosscoin.Dropped) { bosscoin.setVisibility(true); } else { bosscoin.setVisibility(false); }
             }
 
 
@@ -331,7 +351,7 @@ namespace Beskonačni_Toranj
         }
 
         //---------------------------------------------TICKER za platformu-------------------------------------------------------------------------------------------
-        private void platformTick()
+        private void platformTick(object sender, EventArgs e)
         {
             if (player.offGround == true) {
                 allPlatforms.Remove(ground);
@@ -340,6 +360,8 @@ namespace Beskonačni_Toranj
             //pomakni sve platforme prema "dolje"
             foreach (Platform p in allPlatforms)
             {
+                //...........KRETANJE PLATFORMI PO Y OSI
+                //
                 //za prvo put: ako igrac skoci i platforme se jos ne micu, samo droppaj ground iz allPlatforms
                 //i pocni kretati platforme
                 if (player.Y < 200 && !player.offGround)
@@ -347,11 +369,16 @@ namespace Beskonačni_Toranj
                     player.offGround = true;
                     platformMoving = true;
                 }
-
                 //ako micemo platformu, pomakni ju dolje
-                if (platformMoving)  p.MoveDown(platformSpeed);
+                if (platformMoving)
+                {
+                    p.MoveDown(platformSpeed); 
+                }
 
+                //..........KRETANJE PLATFORMI (TOCNIJE CHARACTERA) PO X OSI
+                p.Tick_X(sender,e,this);
             }
+
         }
 
     //----------------------------------------------------------RESTART funkcije--------------------------------------------------------------------------------------------------------------------------
@@ -441,6 +468,48 @@ namespace Beskonačni_Toranj
 
         }
 
+        //---------------------------.VISIBILITY TO PLAYER.-------------------
+        public bool bossIsDead() {
+            return boss.isDead();
+        }
+
+        public bool enemyIsDead() {
+            return enemy.isDead();
+        }
+
+        public bool bossIsVisible()
+        {
+            return boss.Visible;
+        }
+
+        public bool EnemyIsVisible() {
+            return enemy.Visible;
+        }
+
+        public bool EnemyCoinDropped() {
+            return enemycoin.Dropped;
+        }
+
+        public bool BossCoinDropped() {
+            return bosscoin.Dropped;
+        }
+
+        public int BossCoinValue() {
+            return bosscoin.CoinValue;
+        }
+
+        public int EnemyCoinValue()
+        {
+            return enemycoin.CoinValue;
+        }
+
+        public void resetBossCoin() {
+            bosscoin.reset();
+        }
+
+        public void resetEnemyCoin() {
+            enemycoin.reset();
+        }
     }
 }
 

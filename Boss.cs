@@ -18,14 +18,12 @@ namespace Beskonačni_Toranj
 {
     class Boss : Enemy
     {
-        //originalne koordinate
-        private int originalX, originalY;
         //brzina boss-a
         private int bossSpeed;
         //metak od neprijatelja
         ProjectilShotByBoss projectil;
         //jel se boss krece lijevo ili desno
-        private bool left, right;
+        private bool left;
 
 
         //nasljedjuje konstruktor
@@ -35,7 +33,6 @@ namespace Beskonačni_Toranj
             projectil = new ProjectilShotByBoss();
             bossSpeed = 3;
             left = true;
-            right = false;
         }
 
         //nasljedjuje konstruktor sa brojem zivota
@@ -45,7 +42,6 @@ namespace Beskonačni_Toranj
             projectil = new ProjectilShotByBoss();
             bossSpeed = 3;
             left = true;
-            right = false;
         }
 
         //-----------------------------------------------. LOGISTIKA BOSSA .-------------------------------------
@@ -54,10 +50,6 @@ namespace Beskonačni_Toranj
         {
             Y += PlatformSpeed;
             projectil.MoveDown(PlatformSpeed);
-
-            //Ako nije doseglo 490 jos, samo mijenjamo na invisible kako se
-            //udaljenost platforma-boss ne bi mijenjala
-            if (Y > 350) visible = false;
 
             if (Y > 490)
             {
@@ -69,61 +61,53 @@ namespace Beskonačni_Toranj
 
     public override void Tick(object sender, EventArgs e, Form1 form)
         {
-
+            //prvo chekiramo bossov projektil, da li je mozda ubio playera (javlja se playeru kroy formu)
             projectil.Tick(sender, e, form);
             if (projectil.hasHit(form))
             {
                 form.playerIsHit();
             }
 
+            //sada pomicemo bossa
             if (left)
             {
                 figure.Left -= bossSpeed;
-                x -= bossSpeed;
+                X -= bossSpeed;
             }
             else {
                 figure.Left += bossSpeed;
-                x += bossSpeed;
+                X += bossSpeed;
             }
 
-            if (x > rightlimit_x)
+            if (X > rightlimit_x)
             {
-                right = false;
                 left = true;
 
-                projectil.pucajlijevo(x, y);      
+                projectil.pucajlijevo(X, Y);      
             }
 
-            if (x < leftlimit_x)
+            if (X < leftlimit_x)
             {
-                right = true;
                 left = false;
 
-                projectil.pucajdesno(x, y);
+                projectil.pucajdesno(X, Y);
             }
-
-            //uzimamo informaciju if pictureboxa kako bi znali nacrtati bossa
-            x = figure.Location.X;
-            y = figure.Location.Y;
-            width = figure.Width;
-            height = figure.Height;
 
         }
        
-
+        //funkcija za restart igre
         public override void restart()
         {
-            tracer = new Color();
-           // projectil = new ProjectilShotByBoss(); MAKNUTI OVO, OVO NE!
+            //elemente boss-a restartam
             bossSpeed = 3;
             alive = true;
-
             left = true;
-            right = false;
+            projectil.reset();
 
-            X = (leftlimit_x + rightlimit_x) / 2;
-
-            returnOriginalFigurePostion();
+            //restartam nasljedjene elemente
+            tracer = new Color();
+            revive();
+            reset_position();
 
         }
 
@@ -154,7 +138,6 @@ namespace Beskonačni_Toranj
         //funckija koja kopira 
         protected override void copyFigureInformation()
         {
-            figure.Visible = false;
 
             x = figure.Location.X;
             y = figure.Location.Y + 20; //+20 je da se slika lijepo prikazuje
@@ -166,17 +149,6 @@ namespace Beskonačni_Toranj
             originalY = figure.Location.Y + 20; //+20 je da se slika lijepo prikazuje
 
             figure.Location = new Point(x, originalY);
-        }
-
-        private void returnOriginalFigurePostion()
-        {
-            figure.Visible = false;
-
-            x = originalX;
-            y = originalY;
-
-            figure.Location = new Point(originalX, originalY);
-            
         }
         
   
