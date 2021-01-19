@@ -2,6 +2,9 @@
 using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.IO;
+using System.Linq;
+using System.Reflection;
 using System.Windows.Forms;
 
 /* struktura forme
@@ -167,15 +170,15 @@ namespace Beskonačni_Toranj
 
             //dodajem slike za enemya
             enemy.addPictureBox(enemyPictureBox);
-            //enemy.addImage(Properties.Resources.enemy);
+            enemy.addImage(Properties.Resources.enemy);
 
             //dodajem slike za bosscoin
             bosscoin.addPictureBox(bosscoinPictureBox);
-            //bosscoin.addImage(Properties.Resources.coin);
+            bosscoin.addImage(Properties.Resources.coin);
 
             //dodajem slike za enemycoin
             enemycoin.addPictureBox(enemycoinPictureBox);
-            //enemycoin.addImage(Properties.Resources.coin);
+            enemycoin.addImage(Properties.Resources.coin);
 
             //dodajem slike za projektil playera
             player.addProjectilPictureBox(projectilPictureBox);
@@ -270,6 +273,7 @@ namespace Beskonačni_Toranj
         //samo ako se nalazimo u menu modeu
         private void startClick(object sender, EventArgs e)
         {
+            highscoreUserControl.Visible = false;
             if (menuFlag)
             {
                 menuFlag = false;
@@ -294,10 +298,11 @@ namespace Beskonačni_Toranj
         //samo ako se nalazimo u menu modeu; otvara se prozor gdje unosimo ime lika
         private void playerClick(object sender, EventArgs e)
         {
+            highscoreUserControl.Visible = false;
             //Console.WriteLine("player name prije unosa: " + playerName);
             if (menuFlag)
             {
-                string playerName = Interaction.InputBox("Unesite svoje ime!", "Player name input", "Player", 100, 100);
+                playerName = Interaction.InputBox("Unesite svoje ime!", "Player name input", "Player", 100, 100);
                 //  Console.WriteLine(playerName);
             }
         }
@@ -323,6 +328,7 @@ namespace Beskonačni_Toranj
 
             if (!player.Alive)
             {
+                setHighscore();
                 endgameFlag = true;
 
                 // menuFlag = false; OVO TREBA ODKOMENTIRATI KAD SE NAPRAVI ENDGAME MODE
@@ -330,6 +336,7 @@ namespace Beskonačni_Toranj
                 menu.Visible(true);//OVO OBRISATI KAD SE NAPRAVI ENDGAME MODE
                 gameFlag = false;
                 restartGame();
+                
             }
 
             if (gameFlag)
@@ -347,6 +354,67 @@ namespace Beskonačni_Toranj
 
             Invalidate();//poziva Form1_Paint metodu
 
+        }
+
+        private void setHighscore()
+        {
+            //Console.WriteLine("Upisivanje highscora");
+            int x = player.Score;
+
+            string[] lines = System.IO.File.ReadAllLines("highscoreList.txt");
+            var map = new Dictionary<string, int>();
+
+            foreach (string s in lines)
+            {
+                string tmpName = s.Split(',')[0];
+                int tmpScore = Int32.Parse(s.Split(',')[1]);
+                map.Add(tmpName, tmpScore);
+            }
+
+            if (map.ContainsKey(playerName))
+            {
+                int value;
+                map.TryGetValue(playerName, out value);
+
+                if (x > value)
+                {
+                    map.Remove(playerName);
+                    map.Add(playerName, x);
+
+                    var myList = map.ToList();
+                    myList.Sort((pair1, pair2) => pair2.Value.CompareTo(pair1.Value));
+                    //Console.WriteLine("Upisujemo highdscore koji vec postoji");
+                    writeInFile(myList);
+                }
+            }
+            else 
+            {
+                Console.WriteLine("Upisujemo novi");
+                map.Add(playerName, x);
+                var myList = map.ToList();
+                myList.Sort((pair1, pair2) => pair2.Value.CompareTo(pair1.Value));
+
+                writeInFile(myList);
+            }
+        }
+
+
+        private void writeInFile(List<KeyValuePair<string, int>> map)
+        {
+            List<string> lines = new List<string>();
+            foreach (var item in map)
+            {
+                lines.Add(item.Key + "," + item.Value);
+               // Console.WriteLine(item.Key + "," + item.Value);
+            }
+
+            using (System.IO.StreamWriter file = new System.IO.StreamWriter("highscoreList.txt"))
+            {
+                foreach (string line in lines)
+                {
+                    file.WriteLine(line);   
+                }
+            }
         }
 
         //---------------------------------------------TICKER za platformu-------------------------------------------------------------------------------------------
@@ -446,69 +514,86 @@ namespace Beskonačni_Toranj
         }
 
             //-------------------------------------------STVARI GENERIRANE FORM DESIGNEROM-------------
-            private void highscoreClick(object sender, EventArgs e)
+        private void highscoreClick(object sender, EventArgs e)
+        {
+            if (!menuFlag)
             {
-                //treba napisati jos
+                return;
             }
 
+            string[] lines = System.IO.File.ReadAllLines("highscoreList.txt");
+
+            highscoreUserControl.Label1 = "1. " + lines[0].Split(',')[0] + " " + lines[0].Split(',')[1];
+            highscoreUserControl.Label2 = "2. " + lines[1].Split(',')[0] + " " + lines[1].Split(',')[1];
+            highscoreUserControl.Label3 = "3. " + lines[2].Split(',')[0] + " " + lines[2].Split(',')[1];
+            highscoreUserControl.Label4 = "4. " + lines[3].Split(',')[0] + " " + lines[3].Split(',')[1];
+            highscoreUserControl.Label5 = "5. " + lines[4].Split(',')[0] + " " + lines[4].Split(',')[1];
+            highscoreUserControl.Label6 = "6. " + lines[5].Split(',')[0] + " " + lines[5].Split(',')[1];
+            highscoreUserControl.Label7 = "7. " + lines[6].Split(',')[0] + " " + lines[6].Split(',')[1];
+            highscoreUserControl.Label8 = "8. " + lines[7].Split(',')[0] + " " + lines[7].Split(',')[1];
+            highscoreUserControl.Label9 = "9. " + lines[8].Split(',')[0] + " " + lines[8].Split(',')[1];
+            highscoreUserControl.Label10 = "10. " + lines[9].Split(',')[0] + " " + lines[9].Split(',')[1];
+
+            highscoreUserControl.Visible = true;
+        }
 
 
-            private void Form1_Load(object sender, EventArgs e)
-            {
+        private void Form1_Load(object sender, EventArgs e)
+        {
 
-            }
+        }
 
             //---------------------------.VISIBILITY TO PLAYER.-------------------
-            public bool bossIsDead()
-            {
-                return boss.isDead();
-            }
+        public bool bossIsDead()
+        {
+            return boss.isDead();
+        }
 
-            public bool enemyIsDead()
-            {
-                return enemy.isDead();
-            }
+        public bool enemyIsDead()
+        {
+            return enemy.isDead();
+        }
 
-            public bool bossIsVisible()
-            {
-                return boss.Visible;
-            }
+        public bool bossIsVisible()
+        {
+            return boss.Visible;
+        }
 
-            public bool EnemyIsVisible()
-            {
-                return enemy.Visible;
-            }
+        public bool EnemyIsVisible()
+        {
+            return enemy.Visible;
+        }
 
-            public bool EnemyCoinDropped()
-            {
-                return enemycoin.Dropped;
-            }
+        public bool EnemyCoinDropped()
+        {
+            return enemycoin.Dropped;
+        }
 
-            public bool BossCoinDropped()
-            {
-                return bosscoin.Dropped;
-            }
+        public bool BossCoinDropped()
+        {
+            return bosscoin.Dropped;
+        }
 
-            public int BossCoinValue()
-            {
-                return bosscoin.CoinValue;
-            }
+        public int BossCoinValue()
+        {
+            return bosscoin.CoinValue;
+        }
 
-            public int EnemyCoinValue()
-            {
-                return enemycoin.CoinValue;
-            }
+        public int EnemyCoinValue()
+        {
+            return enemycoin.CoinValue;
+        }
 
-            public void resetBossCoin()
-            {
-                bosscoin.reset();
-            }
+        public void resetBossCoin()
+        {
+            bosscoin.reset();
+        }
 
-            public void resetEnemyCoin()
-            {
-                enemycoin.reset();
-            }
+        public void resetEnemyCoin()
+        {
+            enemycoin.reset();
         }
     }
+}
 
 

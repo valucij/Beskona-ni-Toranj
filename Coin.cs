@@ -25,6 +25,7 @@ namespace Beskonačni_Toranj
         private int coinvalue;
         //zastavica koja govori da li je coin dropped ili ne
         private bool dropped;
+        Color tracer;
 
 
         //predstavlja picturebox koji u windows formi predstavlja novcic
@@ -34,6 +35,7 @@ namespace Beskonačni_Toranj
 
         //konstruktor
         public Coin() {
+            tracer = new Color();
             dropped = false;
             coinvalue = 1;
 
@@ -69,12 +71,12 @@ namespace Beskonačni_Toranj
         //funkcija koja droppa novcic na danu lokaciju
         public void drop(int x_wheretodrop, int y_wheretodrop) 
         {
-            Console.WriteLine("DROPPED COIN");
+           // Console.WriteLine("DROPPED COIN");
             dropped = true;
             x = x_wheretodrop;
             y = y_wheretodrop;
 
-            figure.Visible = true;
+            figure.Visible = false;
             figure.Location = new Point(x, y);
         }
 
@@ -112,10 +114,14 @@ namespace Beskonačni_Toranj
         //crtacoin
         public void paint(object sender, PaintEventArgs e)
         {
+            tracer = image.GetPixel(1, 1);
+            image.MakeTransparent(tracer);
+
+
             e.Graphics.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.HighQuality;
             e.Graphics.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.HighQualityBicubic;
             e.Graphics.PixelOffsetMode = System.Drawing.Drawing2D.PixelOffsetMode.HighQuality;
-            //e.Graphics.DrawImage(image, x, y, width, height);
+            e.Graphics.DrawImage(image, x, y, width, height);
         }
 
         //dodavanje pictureboxa koji je stvoren u windows formi i predstavljat ce lika

@@ -166,7 +166,7 @@ namespace Beskonačni_Toranj
         //funkcija koja vraca platformu na originalne vrijednosti
         public void platform_content_restart()
         {
-            Console.WriteLine("originalni tip platforme prije restarta je " + originalPlatformType);
+            //Console.WriteLine("originalni tip platforme prije restarta je " + originalPlatformType);
             platformType = originalPlatformType;
 
             if (originalPlatformType == 0) ClearPlatform();
@@ -180,7 +180,7 @@ namespace Beskonačni_Toranj
 
             if (originalPlatformType == 2)
             {
-                Console.WriteLine("reset it");
+               // Console.WriteLine("reset it");
                 boss.revive();
                 boss.setLocation(x, y, width);
                 boss.resetProjectile();

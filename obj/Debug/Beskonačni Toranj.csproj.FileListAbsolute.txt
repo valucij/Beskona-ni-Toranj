@@ -18,3 +18,4 @@ C:\Users\Iva\Documents\GitHub\Beskona-ni-Toranj\obj\Debug\Beskonačni Toranj.csp
 C:\Users\Iva\Documents\GitHub\Beskona-ni-Toranj\obj\Debug\Beskonačni Toranj.csproj.CoreCompileInputs.cache
 C:\Users\Iva\Documents\GitHub\Beskona-ni-Toranj\obj\Debug\Beskonačni Toranj.exe
 C:\Users\Iva\Documents\GitHub\Beskona-ni-Toranj\obj\Debug\Beskonačni Toranj.pdb
+C:\Users\Lucija\Documents\Računarski praktikum 3\Beskonačni Toranj\obj\Debug\Beskonačni_Toranj.HighscoreUserControl.resources

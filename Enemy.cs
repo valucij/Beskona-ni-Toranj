@@ -72,12 +72,15 @@ namespace Beskonačni_Toranj
         public virtual void paint(object sender, PaintEventArgs e)
         {
             // Bitmap walkFrame = returnFrame();
+            figure.Visible = false;
+            tracer = image.GetPixel(1, 1);
+            image.MakeTransparent(tracer);
 
             e.Graphics.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.HighQuality;
             e.Graphics.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.HighQualityBicubic;
             e.Graphics.PixelOffsetMode = System.Drawing.Drawing2D.PixelOffsetMode.HighQuality;
-            //e.Graphics.DrawImage(image, x, y, width, height);
-
+            e.Graphics.DrawImage(image, x, y, width, height);
+            /*
             //OVO ZAKOMENTIRATI
             // Create pen.
               Pen blackPen = new Pen(Color.FromArgb(5,0,0), 3);
@@ -86,7 +89,7 @@ namespace Beskonačni_Toranj
             Rectangle rect = new Rectangle(x, y, 60, 60);
 
             // Draw rectangle to screen.
-            e.Graphics.DrawRectangle(blackPen, rect);
+            e.Graphics.DrawRectangle(blackPen, rect);*/
         }
 
 

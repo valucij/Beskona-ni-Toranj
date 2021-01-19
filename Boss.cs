@@ -109,6 +109,7 @@ namespace Beskonačni_Toranj
             revive();
             reset_position();
 
+            figure.Visible = false;
         }
 
 
@@ -121,7 +122,7 @@ namespace Beskonačni_Toranj
 
         public override void paint(object sender, PaintEventArgs e)
         {
-
+            figure.Visible = false;
             e.Graphics.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.HighQuality;
             e.Graphics.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.HighQualityBicubic;
             e.Graphics.PixelOffsetMode = System.Drawing.Drawing2D.PixelOffsetMode.HighQuality;

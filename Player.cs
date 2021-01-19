@@ -243,7 +243,7 @@ namespace Beskonačni_Toranj
                 if ((string)c.Tag == "enemycoin" && form.EnemyCoinDropped() && figure.Bounds.IntersectsWith(c.Bounds))
                 {
                     Console.WriteLine("contact with " + (string)c.Tag);
-                    score =score+form.EnemyCoinValue();
+                    score = score + form.EnemyCoinValue();
                     form.resetEnemyCoin();
                 }
             }

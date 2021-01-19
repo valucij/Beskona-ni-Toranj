@@ -21,6 +21,7 @@ namespace Beskonačni_Toranj
         //zastavica unutar ove klase kako bi se kontroliralo crtanje projektila
         protected bool fired;
         protected bool left, right;
+        private bool visible;
          
         //konstruktor
         public Projectil()
@@ -34,6 +35,7 @@ namespace Beskonačni_Toranj
             right = false;
             x = -100;
             y = -100;
+            visible = false;
         }
 
         //-----------------------. logistika projektila (Tick).----------------------------------
@@ -166,6 +168,7 @@ namespace Beskonačni_Toranj
             if (!Fired)  return;
 
             Bitmap frame = returnNewFrame();
+            //figure.Visible = false;
             e.Graphics.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.HighQuality;
             e.Graphics.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.HighQualityBicubic;
             e.Graphics.PixelOffsetMode = System.Drawing.Drawing2D.PixelOffsetMode.HighQuality;
@@ -196,7 +199,7 @@ namespace Beskonačni_Toranj
         public virtual void setVisibility(bool b)
         {
             Fired = b;
-            if (b = true) { figure.Visible = true; } else { figure.Visible = false; }
+            if (b = true) { figure.Visible = false; visible = true; } else { figure.Visible = false; }
         }
 
         //vrati novi BitMap frame (tj sliku projektila među frameovima)
