@@ -148,11 +148,32 @@
   <data name="highscoreImage" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\highscoreImage.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="highscoreImage2" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\highscoreImage2.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="highscoreImage3" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\highscoreImage3.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="highscoreList" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\highscoreList.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>
   <data name="playerImage" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\playerImage.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="playerImage3" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\playerImage3.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="projectil2_1" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\projectil2_1.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="projectil2_2" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\projectil2_2.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="projectil2_3" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\projectil2_3.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="projectil2_4" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\projectil2_4.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="projectil_1" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\projectil_1.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -172,11 +193,17 @@
   <data name="quitImage" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\quitImage.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="quitImage3" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\quitImage3.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="stand" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\stand.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="startImage" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\startImage.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="startImage3" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\startImage3.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="walkLeft_1" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\walkLeft_1.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>

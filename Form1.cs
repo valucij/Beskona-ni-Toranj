@@ -140,10 +140,10 @@ namespace Beskonačni_Toranj
             this.BackgroundImageLayout = ImageLayout.Stretch;
 
             //dodajem slike za menu buttons 
-            menu.addPictureBoxAndImage(menuButton_1, Properties.Resources.startImage);
-            menu.addPictureBoxAndImage(menuButton_2, Properties.Resources.quitImage);
-            menu.addPictureBoxAndImage(menuButton_3, Properties.Resources.playerImage);
-            menu.addPictureBoxAndImage(menuButton_4, Properties.Resources.highscoreImage);
+            menu.addPictureBoxAndImage(menuButton_1, Properties.Resources.startImage3);
+            menu.addPictureBoxAndImage(menuButton_2, Properties.Resources.quitImage3);
+            menu.addPictureBoxAndImage(menuButton_3, Properties.Resources.playerImage3);
+            menu.addPictureBoxAndImage(menuButton_4, Properties.Resources.highscoreImage3);
 
             //dodajem slike za tlo
             ground.addPictureBox(groundPictureBox);
@@ -183,20 +183,20 @@ namespace Beskonačni_Toranj
             //dodajem slike za projektil playera
             player.addProjectilPictureBox(projectilPictureBox);
 
-            player.addProjectilImage(Properties.Resources.projectil_1);
-            player.addProjectilImage(Properties.Resources.projectil_2);
-            player.addProjectilImage(Properties.Resources.projectil_3);
-            player.addProjectilImage(Properties.Resources.projectil_4);
-            player.addProjectilImage(Properties.Resources.projectil_5);
+            player.addProjectilImage(Properties.Resources.projectil2_1);
+            player.addProjectilImage(Properties.Resources.projectil2_2);
+            player.addProjectilImage(Properties.Resources.projectil2_3);
+            player.addProjectilImage(Properties.Resources.projectil2_4);
+            //player.addProjectilImage(Properties.Resources.projectil_5);
 
             //dodajem slike za projektil bossa
             boss.addProjectilPictureBox(bossProjectilPictureBox);
 
-            boss.addProjectilImage(Properties.Resources.projectil_1);
-            boss.addProjectilImage(Properties.Resources.projectil_2);
-            boss.addProjectilImage(Properties.Resources.projectil_3);
-            boss.addProjectilImage(Properties.Resources.projectil_4);
-            boss.addProjectilImage(Properties.Resources.projectil_5);
+            boss.addProjectilImage(Properties.Resources.projectil2_1);
+            boss.addProjectilImage(Properties.Resources.projectil2_2);
+            boss.addProjectilImage(Properties.Resources.projectil2_3);
+            boss.addProjectilImage(Properties.Resources.projectil2_4);
+            //boss.addProjectilImage(Properties.Resources.projectil_5);
 
 
             //ovo obrisati, ovo je samo za testiranje, mijenjamo polazaj playera, samo za testiranje bossa
@@ -389,7 +389,7 @@ namespace Beskonačni_Toranj
             }
             else 
             {
-                Console.WriteLine("Upisujemo novi");
+                //Console.WriteLine("Upisujemo novi");
                 map.Add(playerName, x);
                 var myList = map.ToList();
                 myList.Sort((pair1, pair2) => pair2.Value.CompareTo(pair1.Value));

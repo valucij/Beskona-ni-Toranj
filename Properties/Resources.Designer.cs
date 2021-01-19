@@ -163,9 +163,57 @@ namespace Beskonačni_Toranj.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap highscoreImage2 {
+            get {
+                object obj = ResourceManager.GetObject("highscoreImage2", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap highscoreImage3 {
+            get {
+                object obj = ResourceManager.GetObject("highscoreImage3", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to player1,10
+        ///player2,9
+        ///player3,8
+        ///player4,7
+        ///player5,6
+        ///player6,5
+        ///player7,4
+        ///player8,3
+        ///player9,2
+        ///player10,1.
+        /// </summary>
+        internal static string highscoreList {
+            get {
+                return ResourceManager.GetString("highscoreList", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap playerImage {
             get {
                 object obj = ResourceManager.GetObject("playerImage", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap playerImage3 {
+            get {
+                object obj = ResourceManager.GetObject("playerImage3", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -223,9 +271,59 @@ namespace Beskonačni_Toranj.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap projectil2_1 {
+            get {
+                object obj = ResourceManager.GetObject("projectil2_1", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap projectil2_2 {
+            get {
+                object obj = ResourceManager.GetObject("projectil2_2", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap projectil2_3 {
+            get {
+                object obj = ResourceManager.GetObject("projectil2_3", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap projectil2_4 {
+            get {
+                object obj = ResourceManager.GetObject("projectil2_4", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap quitImage {
             get {
                 object obj = ResourceManager.GetObject("quitImage", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap quitImage3 {
+            get {
+                object obj = ResourceManager.GetObject("quitImage3", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -246,6 +344,16 @@ namespace Beskonačni_Toranj.Properties {
         internal static System.Drawing.Bitmap startImage {
             get {
                 object obj = ResourceManager.GetObject("startImage", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap startImage3 {
+            get {
+                object obj = ResourceManager.GetObject("startImage3", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

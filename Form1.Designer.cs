@@ -206,7 +206,7 @@
             // 
             // menuButton_2
             // 
-            this.menuButton_2.Location = new System.Drawing.Point(39, 222);
+            this.menuButton_2.Location = new System.Drawing.Point(39, 373);
             this.menuButton_2.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.menuButton_2.Name = "menuButton_2";
             this.menuButton_2.Size = new System.Drawing.Size(100, 50);
@@ -277,7 +277,7 @@
             // 
             // menuButton_3
             // 
-            this.menuButton_3.Location = new System.Drawing.Point(39, 302);
+            this.menuButton_3.Location = new System.Drawing.Point(39, 222);
             this.menuButton_3.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.menuButton_3.Name = "menuButton_3";
             this.menuButton_3.Size = new System.Drawing.Size(100, 50);
@@ -288,7 +288,7 @@
             // 
             // menuButton_4
             // 
-            this.menuButton_4.Location = new System.Drawing.Point(39, 383);
+            this.menuButton_4.Location = new System.Drawing.Point(39, 302);
             this.menuButton_4.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.menuButton_4.Name = "menuButton_4";
             this.menuButton_4.Size = new System.Drawing.Size(100, 50);

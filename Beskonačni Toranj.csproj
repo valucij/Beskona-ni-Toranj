@@ -175,6 +175,15 @@
     <Content Include="Resources\coin.png" />
     <Content Include="Resources\enemy.jpg" />
     <Content Include="Resources\enemy_jotaro.jpg" />
+    <None Include="Resources\quitImage3.png" />
+    <None Include="Resources\playerImage3.png" />
+    <None Include="Resources\highscoreImage3.png" />
+    <None Include="Resources\startImage3.png" />
+    <None Include="Resources\highscoreImage2.png" />
+    <None Include="Resources\projectil2_4.png" />
+    <None Include="Resources\projectil2_3.png" />
+    <None Include="Resources\projectil2_2.png" />
+    <None Include="Resources\projectil2_1.png" />
     <None Include="Resources\highscoreList.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
