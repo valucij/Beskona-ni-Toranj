@@ -1,2 +1,2 @@
-# Beskonacni-Toranj
+# Beskonacni - Toranj
  Projekt iz Računarskog praktikuma 3
