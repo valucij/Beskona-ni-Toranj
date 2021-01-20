@@ -74,7 +74,7 @@ namespace Beskonačni_Toranj
             endgameFlag = false;
 
             //score nakon kojeg se pojavljuje boss
-            bossScore = 0;
+            bossScore = 250;
 
             //konstruiram meni
             menu = new Menu();
@@ -228,7 +228,7 @@ namespace Beskonačni_Toranj
                 }
 
                 //crtaj charactere
-                if (boss.Visible) boss.paint(sender, e);
+                if (boss.Visible && player.Score >= bossScore) boss.paint(sender, e);
                 if (enemy.Visible) enemy.paint(sender, e);
 
                 //crtaj coinove

@@ -1,4 +1,5 @@
-default,1058
+default,1203
+Iva ,428
 Lucija,165
 player1,10
 player2,9
